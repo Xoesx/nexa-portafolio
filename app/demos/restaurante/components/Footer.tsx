@@ -94,7 +94,7 @@ export function Footer() {
           <div className="flex gap-6">
             <Link href="/" className="hover:text-[#C1440E]">Volver a NEXA</Link>
             <a
-              href="https://github.com/TU-USUARIO/nexa-portafolio"
+              href="https://github.com/Xoesx/nexa-portafolio"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#C1440E]"
