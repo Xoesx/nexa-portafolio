@@ -1,0 +1,29 @@
+import type { MetadataRoute } from "next";
+import { ARTICULOS } from "./demos/restaurante/data/blog";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = "https://nexasoluciones.com";
+  const ahora = new Date();
+
+  const estaticas: MetadataRoute.Sitemap = [
+    { url: base, lastModified: ahora, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${base}/demos/restaurante`, lastModified: ahora, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/demos/restaurante/menu`, lastModified: ahora, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${base}/demos/restaurante/nosotros`, lastModified: ahora, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/demos/restaurante/blog`, lastModified: ahora, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/demos/restaurante/reservar`, lastModified: ahora, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/demos/restaurante/contacto`, lastModified: ahora, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/demos/restaurante/legal/terminos`, lastModified: ahora, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/demos/restaurante/legal/privacidad`, lastModified: ahora, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/demos/restaurante/legal/cookies`, lastModified: ahora, changeFrequency: "yearly", priority: 0.3 },
+  ];
+
+  const articulos: MetadataRoute.Sitemap = ARTICULOS.map((a) => ({
+    url: `${base}/demos/restaurante/blog/${a.slug}`,
+    lastModified: ahora,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...estaticas, ...articulos];
+}
