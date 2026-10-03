@@ -99,7 +99,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="hover:text-[#C1440E]"
             >
-              Ver código en GitHub
+              Ver el código del proyecto
             </a>
           </div>
         </div>
