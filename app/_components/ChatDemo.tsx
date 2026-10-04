@@ -121,79 +121,81 @@ export default function ChatDemo() {
   }, [mensajes, escribiendo]);
 
   return (
-    <div id="demo" className="relative scroll-mt-28">
-      <div
-        aria-hidden
-        className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl bg-[#0E3A34]"
-      />
-      <div className="relative overflow-hidden rounded-2xl border border-[#13201E]/20 bg-white">
-        <div className="flex items-center gap-3 bg-[#0E3A34] px-4 py-3 text-white">
-          <div className="grid h-9 w-9 place-items-center rounded-full bg-[#F3F5F1] text-sm font-bold text-[#0E3A34]">
-            B
-          </div>
-          <div className="leading-tight">
-            <p className="text-sm font-semibold">Barbería Demo</p>
-            <p className="text-xs text-white/70">{escribiendo ? "escribiendo…" : "en línea"}</p>
-          </div>
-        </div>
-
+    <div id="demo" className="scroll-mt-28">
+      <div className="relative">
         <div
-          ref={lista}
-          role="log"
-          aria-live="polite"
-          aria-label="Conversación de ejemplo con el asistente"
-          className="h-[320px] space-y-2 overflow-y-auto bg-[#EFEAE2] px-3 py-4"
-        >
-          {mensajes.map((m) => (
-            <div
-              key={m.id}
-              className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-snug shadow-sm ${
-                m.de === "cliente"
-                  ? "ml-auto rounded-tr-sm bg-[#D9FDD3]"
-                  : "mr-auto rounded-tl-sm bg-white"
-              }`}
-            >
-              {m.texto}
+          aria-hidden
+          className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl bg-selva"
+        />
+        <div className="relative overflow-hidden rounded-2xl border border-tinta/20 bg-white">
+          <div className="flex items-center gap-3 bg-selva px-4 py-3 text-white">
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-papel text-sm font-bold text-selva">
+              B
             </div>
-          ))}
-          {escribiendo && (
-            <div className="mr-auto flex w-16 justify-center gap-1 rounded-xl rounded-tl-sm bg-white px-3 py-3 shadow-sm">
-              {[0, 1, 2].map((i) => (
-                <span
-                  key={i}
-                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#13201E]/40 motion-reduce:animate-none"
-                  style={{ animationDelay: `${i * 160}ms` }}
-                />
-              ))}
+            <div className="leading-tight">
+              <p className="text-sm font-semibold">Barbería Demo</p>
+              <p className="text-xs text-white/70">{escribiendo ? "escribiendo…" : "en línea"}</p>
             </div>
-          )}
-        </div>
+          </div>
 
-        <div className="min-h-[104px] border-t border-[#13201E]/10 bg-white p-3">
-          {opciones.length > 0 && (
-            <>
-              <p className="mb-2 text-xs text-[#13201E]/60">Toca una opción para responder:</p>
-              <div className="flex flex-wrap gap-2">
-                {opciones.map((o) => (
-                  <button
-                    key={o}
-                    type="button"
-                    onClick={() => {
-                      window.clearTimeout(autoplay.current);
-                      enviar(o);
-                    }}
-                    className="rounded-full border border-[#0E3A34]/30 px-3 py-1.5 text-sm text-[#0E3A34] transition-colors hover:bg-[#0E3A34] hover:text-white"
-                  >
-                    {o}
-                  </button>
+          <div
+            ref={lista}
+            role="log"
+            aria-live="polite"
+            aria-label="Conversación de ejemplo con el asistente"
+            className="h-[320px] space-y-2 overflow-y-auto bg-[#EFEAE2] px-3 py-4"
+          >
+            {mensajes.map((m) => (
+              <div
+                key={m.id}
+                className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-snug shadow-sm ${
+                  m.de === "cliente"
+                    ? "ml-auto rounded-tr-sm bg-[#D9FDD3]"
+                    : "mr-auto rounded-tl-sm bg-white"
+                }`}
+              >
+                {m.texto}
+              </div>
+            ))}
+            {escribiendo && (
+              <div className="mr-auto flex w-16 justify-center gap-1 rounded-xl rounded-tl-sm bg-white px-3 py-3 shadow-sm">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="h-1.5 w-1.5 animate-pulse rounded-full bg-tinta/40 motion-reduce:animate-none"
+                    style={{ animationDelay: `${i * 160}ms` }}
+                  />
                 ))}
               </div>
-            </>
-          )}
+            )}
+          </div>
+
+          <div className="min-h-[104px] border-t border-tinta/10 bg-white p-3">
+            {opciones.length > 0 && (
+              <>
+                <p className="mb-2 text-xs text-tinta/60">Toca una opción para responder:</p>
+                <div className="flex flex-wrap gap-2">
+                  {opciones.map((o) => (
+                    <button
+                      key={o}
+                      type="button"
+                      onClick={() => {
+                        window.clearTimeout(autoplay.current);
+                        enviar(o);
+                      }}
+                      className="min-h-10 rounded-full border border-selva/30 px-3.5 py-1.5 text-sm text-selva transition-colors hover:bg-selva hover:text-white"
+                    >
+                      {o}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      <p className="mt-7 max-w-sm text-sm text-[#13201E]/60">
+      <p className="mt-7 max-w-sm text-sm text-tinta/60">
         Demo con datos de ejemplo. El tuyo respondería con tus horarios, tus precios y tus turnos.
       </p>
     </div>

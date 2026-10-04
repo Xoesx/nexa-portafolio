@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Marca NEXA
+ * tinta   — texto y superficies oscuras
+ * selva   — verde profundo de la marca (Ucayali)
+ * papel   — fondo general
+ * arcilla — acento para acciones principales
+ * mango   — acento sobre fondos oscuros
+ */
+@theme {
+  --color-tinta: #13201e;
+  --color-selva: #0e3a34;
+  --color-selva-claro: #1d5a50;
+  --color-papel: #f3f5f1;
+  --color-papel-hondo: #e7ebe4;
+  --color-arcilla: #c2410c;
+  --color-arcilla-hondo: #9a3412;
+  --color-mango: #ffb27a;
+  --color-whatsapp: #1f9d55;
+
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+  --font-serif: var(--font-young-serif), Georgia, "Times New Roman", serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-papel);
+  color: var(--color-tinta);
+}
+
+:where(a, button, summary):focus-visible {
+  outline: 2px solid var(--color-arcilla);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sobre-oscuro :where(a, button, summary):focus-visible {
+  outline-color: var(--color-mango);
+}
+
+::selection {
+  background: var(--color-arcilla);
+  color: #fff;
+}
+
+/*
+ * Movimiento: entrada del hero al cargar y revelado al hacer scroll.
+ * Solo CSS. Si el navegador no soporta scroll-driven animations,
+ * el contenido se muestra sin animación (nunca queda oculto).
+ */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-entrada] {
+    animation: aparecer 0.8s var(--ease-suave) both;
+    animation-delay: var(--retraso, 0ms);
+  }
+
+  @supports (animation-timeline: view()) {
+    [data-revelar] {
+      animation: aparecer linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
