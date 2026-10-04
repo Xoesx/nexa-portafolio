@@ -19,7 +19,7 @@ export function MarcoNavegador({ src, alt, sizes, ruta = "", prioridad = false, 
     <figure
       className={`overflow-hidden rounded-xl border border-tinta/15 bg-white shadow-[0_24px_60px_-30px_rgb(19_32_30/0.45)] ${className}`}
     >
-      <div className="flex items-center gap-3 border-b border-tinta/10 bg-papel-hondo px-3 py-2">
+      <div className="flex items-center gap-3 border-b border-tinta/10 bg-niebla px-3 py-2">
         <span className="flex gap-1.5" aria-hidden="true">
           <span className="h-2 w-2 rounded-full bg-tinta/20" />
           <span className="h-2 w-2 rounded-full bg-tinta/20" />

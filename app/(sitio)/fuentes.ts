@@ -1,16 +1,15 @@
-import { Figtree, Young_Serif } from "next/font/google";
+import { Instrument_Sans, Schibsted_Grotesk } from "next/font/google";
 
 // Fuentes de la marca NEXA. Se cargan en el layout de (sitio) y no en el raíz,
 // así los demos no descargan fuentes que no usan.
-export const youngSerif = Young_Serif({
+export const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  weight: "400",
   display: "swap",
-  variable: "--font-young-serif",
+  variable: "--font-schibsted",
 });
 
-export const figtree = Figtree({
+export const instrument = Instrument_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-figtree",
+  variable: "--font-instrument",
 });

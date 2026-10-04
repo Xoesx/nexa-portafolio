@@ -27,7 +27,7 @@ export function Puntaje({ valor, etiqueta, tam = 76, oscuro = false }: Props) {
             strokeDasharray={`${valor} 100`}
           />
         </svg>
-        <span className="absolute inset-0 grid place-items-center font-serif text-[1.35rem] tabular-nums" style={{ color: colorDe(valor) }}>
+        <span className="absolute inset-0 grid place-items-center font-display text-[1.35rem] tabular-nums" style={{ color: colorDe(valor) }}>
           {valor}
         </span>
       </div>

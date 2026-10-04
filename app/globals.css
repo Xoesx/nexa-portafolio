@@ -2,21 +2,22 @@
 
 /*
  * Marca NEXA
- * tinta   — texto y superficies oscuras
- * selva   — verde profundo de la marca (Ucayali)
- * papel   — fondo general
- * arcilla — acento para acciones principales
- * mango   — acento sobre fondos oscuros
+ * tinta      — texto principal (azul marino casi negro)
+ * marino     — superficies oscuras de la marca
+ * papel      — fondo general (blanco)
+ * niebla     — fondo alterno y superficies suaves
+ * azul       — acciones principales y acentos
+ * cielo      — acento sobre fondos oscuros
  */
 @theme {
-  --color-tinta: #13201e;
-  --color-selva: #0e3a34;
-  --color-selva-claro: #1d5a50;
-  --color-papel: #f3f5f1;
-  --color-papel-hondo: #e7ebe4;
-  --color-arcilla: #c2410c;
-  --color-arcilla-hondo: #9a3412;
-  --color-mango: #ffb27a;
+  --color-tinta: #0b1f3a;
+  --color-marino: #0a1a33;
+  --color-papel: #ffffff;
+  --color-niebla: #f2f5fa;
+  --color-linea: #dde3ec;
+  --color-azul: #2457f5;
+  --color-azul-hondo: #1a41c9;
+  --color-cielo: #9dbbff;
   --color-whatsapp: #1f9d55;
 
   --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
@@ -24,8 +25,8 @@
 
 /* Las variables de fuente se definen en el layout de (sitio), por eso van "inline". */
 @theme inline {
-  --font-sans: var(--font-figtree), system-ui, sans-serif;
-  --font-serif: var(--font-young-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-instrument), system-ui, sans-serif;
+  --font-display: var(--font-schibsted), system-ui, sans-serif;
 }
 
 html {
@@ -38,17 +39,17 @@ body {
 }
 
 :where(a, button, summary):focus-visible {
-  outline: 2px solid var(--color-arcilla);
+  outline: 2px solid var(--color-azul);
   outline-offset: 3px;
   border-radius: 6px;
 }
 
 .sobre-oscuro :where(a, button, summary):focus-visible {
-  outline-color: var(--color-mango);
+  outline-color: var(--color-cielo);
 }
 
 ::selection {
-  background: var(--color-arcilla);
+  background: var(--color-azul);
   color: #fff;
 }
 
@@ -86,5 +87,13 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Títulos de la marca: peso y espaciado por defecto (las utilidades de Tailwind lo pueden cambiar). */
+@layer base {
+  .font-display {
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 }
