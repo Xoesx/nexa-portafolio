@@ -29,7 +29,7 @@ export default function SteakhousePage() {
       {(idioma) => (
         <div
           lang={idioma}
-          className="min-h-screen bg-[#111111] text-white antialiased"
+          className="min-h-screen overflow-x-clip bg-[#111111] text-white antialiased"
           style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
         >
           <Header />

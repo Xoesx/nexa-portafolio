@@ -1,3 +1,11 @@
+export type Pantalla = {
+  src: string;
+  alt: string;
+  titulo: string;
+  texto: string;
+  movil?: boolean;
+};
+
 export type Proyecto = {
   slug: string;
   nombre: string;
@@ -7,7 +15,14 @@ export type Proyecto = {
   ruta: string;
   codigo: string;
   captura: { escritorio: string; movil: string };
-  nota?: string;
+  /** Datos concretos del alcance, para la ficha del caso. */
+  alcance: { etiqueta: string; valor: string }[];
+  reto: string;
+  solucion: string[];
+  pantallas: Pantalla[];
+  tecnico: { titulo: string; texto: string }[];
+  /** Nombre del plan de PLANES más parecido a este proyecto. */
+  plan: string;
 };
 
 export const PROYECTOS: Proyecto[] = [
@@ -26,29 +41,132 @@ export const PROYECTOS: Proyecto[] = [
     ruta: "/demos/restaurante",
     codigo: "https://github.com/Xoesx/nexa-portafolio/tree/main/app/demos/restaurante",
     captura: {
-      escritorio: "/proyectos/sabor-criollo-escritorio.png",
-      movil: "/proyectos/sabor-criollo-movil.png",
+      escritorio: "/proyectos/sabor-criollo/inicio.webp",
+      movil: "/proyectos/sabor-criollo/inicio-movil.webp",
     },
+    alcance: [
+      { etiqueta: "Páginas públicas", valor: "12" },
+      { etiqueta: "Panel de administración", valor: "4 pantallas" },
+      { etiqueta: "Rutas de API", valor: "3" },
+      { etiqueta: "Idioma", valor: "Español" },
+    ],
+    reto:
+      "Un restaurante que recibe pedidos y reservas por teléfono pierde clientes cuando no puede contestar, y cada cambio de precio en la carta depende de alguien que sepa editar la web.",
+    solucion: [
+      "Armamos un sitio de doce páginas donde el cliente ve la carta con fotos, filtra por categoría y reserva su mesa en un formulario que valida los datos antes de enviarlos.",
+      "Para el dueño hicimos un panel propio: agrega o edita platos, cambia precios, sube fotos (que se comprimen solas en el navegador) y revisa las reservas que llegan.",
+      "Completamos con blog para aparecer en Google, páginas legales y un aviso de cookies que solo activa analítica y chat si el visitante lo acepta.",
+    ],
+    pantallas: [
+      {
+        src: "/proyectos/sabor-criollo/menu.webp",
+        alt: "Carta del restaurante con filtros por categoría",
+        titulo: "Carta con filtros",
+        texto: "Entradas, principales, postres y bebidas en un toque. Las etiquetas destacan los platos más pedidos.",
+      },
+      {
+        src: "/proyectos/sabor-criollo/reservar.webp",
+        alt: "Formulario de reserva de mesa",
+        titulo: "Reservas sin llamadas",
+        texto: "El formulario revisa nombre, teléfono, fecha y hora antes de enviar. Los grupos grandes pasan directo a WhatsApp.",
+      },
+      {
+        src: "/proyectos/sabor-criollo/admin.webp",
+        alt: "Panel de administración con la lista de platos",
+        titulo: "Panel para el dueño",
+        texto: "Buscar, agregar, editar o pausar un plato toma segundos. Los cambios se ven al instante en el sitio público.",
+      },
+      {
+        src: "/proyectos/sabor-criollo/blog.webp",
+        alt: "Blog con artículos de cocina peruana",
+        titulo: "Blog para Google",
+        texto: "Artículos sobre la cocina de la casa que ayudan a que el restaurante aparezca en más búsquedas.",
+      },
+      {
+        src: "/proyectos/sabor-criollo/menu-movil.webp",
+        alt: "La carta del restaurante vista en un celular",
+        titulo: "Pensado para el celular",
+        texto: "La mayoría de clientes llega desde el teléfono, así que cada pantalla se diseñó primero para ahí.",
+        movil: true,
+      },
+    ],
+    tecnico: [
+      { titulo: "Validación en el servidor", texto: "Las reservas y mensajes se validan con Zod en la API, no solo en el navegador." },
+      { titulo: "Límite de solicitudes", texto: "Un proxy frena a quien envía demasiados formularios por minuto desde la misma IP." },
+      { titulo: "Cabeceras de seguridad", texto: "Content-Security-Policy, HSTS y protección contra iframes en todas las respuestas." },
+      { titulo: "Textos limpios", texto: "Lo que se escribe en el panel se sanea antes de guardarse para evitar código malicioso." },
+      { titulo: "Fotos livianas", texto: "Las imágenes que sube el dueño se reducen a 1200 px y se comprimen antes de guardarse." },
+      { titulo: "Privacidad por defecto", texto: "Analítica y chat en vivo solo se cargan si el visitante acepta las cookies." },
+    ],
+    plan: "Negocio",
   },
   {
     slug: "steakhouse",
     nombre: "Steakhouse",
     rubro: "Parrilla y carnes premium",
     resumen:
-      "Una sola página pensada para que el comensal quiera reservar: fotografía a pantalla completa, historia de la casa, carta por tiempos y agenda de eventos.",
+      "Una sola página pensada para que el comensal quiera reservar: fotografía protagonista, historia de la casa, carta por tiempos, eventos y reserva en línea, en español y en inglés.",
     incluye: [
-      "Diseño oscuro con tipografía editorial",
-      "Animaciones suaves al recorrer la página",
+      "Versión en español y en inglés",
+      "Formulario de reserva con validación",
       "Carta por tiempos y agenda de eventos",
-      "Llamado directo a reservar mesa",
+      "Animaciones suaves al recorrer la página",
     ],
     ruta: "/demos/steakhouse",
     codigo: "https://github.com/Xoesx/nexa-portafolio/tree/main/app/demos/steakhouse",
     captura: {
-      escritorio: "/proyectos/steakhouse-escritorio.png",
-      movil: "/proyectos/steakhouse-movil.png",
+      escritorio: "/proyectos/steakhouse/inicio.webp",
+      movil: "/proyectos/steakhouse/inicio-movil.webp",
     },
-    nota: "Sitio en inglés, para un público internacional.",
+    alcance: [
+      { etiqueta: "Formato", valor: "Landing de una página" },
+      { etiqueta: "Secciones", valor: "6" },
+      { etiqueta: "Idiomas", valor: "Español e inglés" },
+      { etiqueta: "Reserva", valor: "Formulario validado" },
+    ],
+    reto:
+      "Una parrilla de ticket alto necesita transmitir experiencia antes de que el cliente llegue, atender también a turistas y convertir esa primera impresión en una mesa reservada.",
+    solucion: [
+      "Diseñamos una landing oscura y editorial donde la fotografía manda, con tipografía clásica y animaciones que acompañan el recorrido sin distraer.",
+      "Toda la página funciona en español y en inglés: el visitante cambia de idioma con un toque y el sitio lo recuerda en su próxima visita.",
+      "La reserva se hace ahí mismo, con un formulario que valida teléfono, fecha y horario de atención antes de enviar.",
+    ],
+    pantallas: [
+      {
+        src: "/proyectos/steakhouse/carta.webp",
+        alt: "Sección de la carta con platos en fotografía circular",
+        titulo: "Carta por tiempos",
+        texto: "Entrada, plato fuerte, para compartir y postre, cada uno con su foto y una descripción corta.",
+      },
+      {
+        src: "/proyectos/steakhouse/reserva.webp",
+        alt: "Formulario de reserva sobre fotografía del salón",
+        titulo: "Reserva en la misma página",
+        texto: "Si falta un dato, el formulario lo dice junto al campo y lleva el cursor ahí. Sin recargar ni perder lo escrito.",
+      },
+      {
+        src: "/proyectos/steakhouse/ingles.webp",
+        alt: "La misma página en inglés",
+        titulo: "Bilingüe de verdad",
+        texto: "No es un traductor automático: cada texto está escrito para su idioma y la página avisa al navegador en qué idioma está.",
+      },
+      {
+        src: "/proyectos/steakhouse/menu-movil.webp",
+        alt: "Menú de navegación abierto en un celular",
+        titulo: "Menú móvil accesible",
+        texto: "Se abre a pantalla completa, se cierra con la tecla Escape y funciona con lectores de pantalla.",
+        movil: true,
+      },
+    ],
+    tecnico: [
+      { titulo: "Idioma recordado", texto: "La preferencia se guarda en el navegador y el atributo lang cambia con ella." },
+      { titulo: "Carga rápida", texto: "Las fotos se sirven en formatos modernos y al tamaño de cada pantalla." },
+      { titulo: "Primer pantallazo inmediato", texto: "El título y la foto principal aparecen sin esperar a que cargue JavaScript." },
+      { titulo: "Validación bajo demanda", texto: "La librería de validación se descarga recién cuando el cliente envía la reserva." },
+      { titulo: "Accesible con teclado", texto: "Errores ligados a cada campo, foco al primer error y menú controlable con teclado." },
+      { titulo: "Animación respetuosa", texto: "Los efectos de entrada son suaves y se pueden desactivar desde el sistema." },
+    ],
+    plan: "Emprendedor",
   },
 ];
 

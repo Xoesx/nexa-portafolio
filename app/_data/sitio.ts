@@ -21,6 +21,7 @@ export const EXTERNO = { target: "_blank", rel: "noopener noreferrer" } as const
 
 export const NAVEGACION = [
   { label: "Proyectos", href: "#proyectos" },
+  { label: "Calidad", href: "#calidad" },
   { label: "Servicios", href: "#servicios" },
   { label: "Cómo trabajamos", href: "#proceso" },
   { label: "Precios", href: "#precios" },

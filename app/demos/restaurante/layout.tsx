@@ -15,7 +15,7 @@ export default function RestauranteLayout({ children }: { children: React.ReactN
   for (const href of FUENTES_CRITICAS) preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
 
   return (
-    <div className={inter.variable} style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}>
+    <div className={`${inter.variable} overflow-x-clip`} style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}>
       <PlatosProvider>
         {children}
         <CookieBanner />

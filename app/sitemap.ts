@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITIO } from "./_data/sitio";
+import { PROYECTOS } from "./_data/contenido";
 import { ARTICULOS } from "./demos/restaurante/data/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -27,5 +28,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...estaticas, ...articulos];
+  const casos: MetadataRoute.Sitemap = PROYECTOS.map((p) => ({
+    url: `${base}/proyectos/${p.slug}`,
+    lastModified: ahora,
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
+  return [...estaticas, ...casos, ...articulos];
 }

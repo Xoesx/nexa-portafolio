@@ -6,7 +6,7 @@ export function Contacto() {
     <section id="contacto" className="scroll-mt-28 border-t border-tinta/10">
       <div
         data-revelar
-        className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.4fr_1fr] md:items-end md:py-28"
+        className="mx-auto grid grid-cols-1 max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.4fr_1fr] md:items-end md:py-28"
       >
         <div>
           <h2 className="max-w-2xl font-serif text-4xl leading-[1.1] tracking-tight text-balance sm:text-5xl">

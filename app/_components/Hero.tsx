@@ -6,7 +6,7 @@ const retraso = (ms: number) => ({ "--retraso": `${ms}ms` }) as React.CSSPropert
 
 export function Hero() {
   return (
-    <section className="mx-auto grid max-w-6xl items-center gap-14 px-5 pb-20 pt-12 md:pb-28 md:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+    <section className="mx-auto grid grid-cols-1 max-w-6xl items-center gap-14 px-5 pb-20 pt-12 md:pb-28 md:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
       <div>
         <p data-entrada className="text-sm font-semibold text-selva">
           Estudio de desarrollo en Pucallpa, Perú

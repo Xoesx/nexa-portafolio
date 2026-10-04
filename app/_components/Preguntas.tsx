@@ -3,7 +3,7 @@ import { PREGUNTAS } from "../_data/contenido";
 export function Preguntas() {
   return (
     <section id="faq" className="scroll-mt-28 border-t border-tinta/10">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1fr_1.7fr] md:py-28">
+      <div className="mx-auto grid grid-cols-1 max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1fr_1.7fr] md:py-28">
         <h2 data-revelar className="font-serif text-3xl tracking-tight sm:text-4xl">
           Preguntas frecuentes
         </h2>

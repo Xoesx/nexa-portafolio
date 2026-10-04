@@ -1,3 +1,4 @@
+import { Calidad } from "../_components/Calidad";
 import { Contacto } from "../_components/Contacto";
 import { Footer } from "../_components/Footer";
 import { Header } from "../_components/Header";
@@ -38,6 +39,7 @@ export default function Home() {
       <main id="inicio">
         <Hero />
         <Proyectos />
+        <Calidad />
         <Servicios />
         <Proceso />
         <Precios />
