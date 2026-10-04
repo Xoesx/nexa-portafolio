@@ -4,12 +4,12 @@ import { Logo } from "./Logo";
 export function Footer({ enInicio = true }: { enInicio?: boolean }) {
   const base = enInicio ? "" : "/";
   return (
-    <footer className="sobre-oscuro bg-tinta pb-20 text-papel/70 md:pb-0">
+    <footer className="sobre-oscuro bg-marino pb-20 text-papel/70 md:pb-0">
       <div className="mx-auto grid grid-cols-1 max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.5fr_1fr]">
         <div>
-          <Logo className="text-papel" />
+          <Logo className="text-papel" sobreOscuro />
           <p className="mt-5 max-w-md text-sm leading-relaxed">
-            Páginas web, asistentes de WhatsApp y automatizaciones para negocios de {SITIO.ciudad} y de todo el Perú.
+            Páginas web, agendas de citas, catálogos con buscador y sistemas a medida para negocios de {SITIO.ciudad} y de todo el Perú.
           </p>
         </div>
         <nav aria-label="Pie de página" className="flex flex-wrap gap-x-7 gap-y-1 text-sm md:justify-end md:self-end">

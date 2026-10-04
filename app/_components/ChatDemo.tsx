@@ -7,8 +7,8 @@ type Respuesta = { texto: string; opciones: string[] };
 
 const INICIO = [
   "¿Qué horario tienen?",
-  "¿Cuánto cuesta un corte?",
-  "Quiero reservar",
+  "¿Cuánto cuesta una limpieza?",
+  "Quiero una cita",
   "¿Dónde están?",
 ];
 
@@ -20,29 +20,29 @@ function responder(pregunta: string): Respuesta {
     case "¿Qué horario tienen?":
       return {
         texto:
-          "Atendemos de lunes a sábado, de 9:00 a. m. a 8:00 p. m. Los domingos, de 10:00 a. m. a 2:00 p. m.",
+          "Atendemos de lunes a viernes de 9:00 a. m. a 8:00 p. m., y los sábados de 9:00 a. m. a 2:00 p. m.",
         opciones: otras,
       };
-    case "¿Cuánto cuesta un corte?":
+    case "¿Cuánto cuesta una limpieza?":
       return {
         texto:
-          "Corte clásico: S/ 15. Corte y barba: S/ 25. Puedes pagar en efectivo, con Yape o con Plin.",
+          "La evaluación con limpieza cuesta S/ 80 e incluye radiografía digital. Dura 45 minutos y puedes pagar con Yape, Plin o tarjeta.",
         opciones: otras,
       };
     case "¿Dónde están?":
       return {
         texto:
-          "Estamos en Jr. Ejemplo 123, Pucallpa. Te envío la ubicación en el mapa para que llegues fácil.",
+          "Estamos en Jr. Raimondi 355, Pucallpa. Te envío la ubicación en el mapa para que llegues fácil.",
         opciones: otras,
       };
-    case "Quiero reservar":
+    case "Quiero una cita":
       return {
-        texto: "Claro. ¿Para qué día quieres tu cita?",
+        texto: "¡Claro! ¿Para qué día quieres tu cita de evaluación?",
         opciones: ["Hoy", "Mañana"],
       };
     case "Hoy":
       return {
-        texto: "Hoy quedan turnos a las 4:00 p. m. y a las 6:30 p. m. ¿Cuál prefieres?",
+        texto: "Hoy quedan dos espacios: 4:00 p. m. y 6:30 p. m. ¿Cuál prefieres?",
         opciones: ["Hoy 4:00 p. m.", "Hoy 6:30 p. m."],
       };
     case "Mañana":
@@ -57,12 +57,12 @@ function responder(pregunta: string): Respuesta {
   if (pregunta.startsWith("Hoy ") || pregunta.startsWith("Mañana ")) {
     const [dia, ...hora] = pregunta.split(" ");
     return {
-      texto: `Listo, tu cita quedó anotada para ${dia.toLowerCase()} a las ${hora.join(" ")}. Te escribiré por aquí un rato antes para recordártelo.`,
+      texto: `Listo, tu cita quedó para ${dia.toLowerCase()} a las ${hora.join(" ")} con la Dra. Ríos. Te escribiré por aquí un rato antes para recordártelo.`,
       opciones: ["Volver al inicio"],
     };
   }
 
-  return { texto: "Déjame pasarte con una persona del negocio.", opciones: INICIO };
+  return { texto: "Déjame pasarte con una persona de la clínica.", opciones: INICIO };
 }
 
 const sinMovimiento = () =>
@@ -71,7 +71,7 @@ const sinMovimiento = () =>
 
 export default function ChatDemo() {
   const [mensajes, setMensajes] = useState<Mensaje[]>([
-    { id: 0, de: "bot", texto: "¡Hola! Soy el asistente de Barbería Demo. ¿En qué te ayudo?" },
+    { id: 0, de: "bot", texto: "¡Hola! Soy el asistente de Clínica Dental Alba. ¿En qué te ayudo?" },
   ]);
   const [opciones, setOpciones] = useState<string[]>(INICIO);
   const [escribiendo, setEscribiendo] = useState(false);
@@ -125,15 +125,15 @@ export default function ChatDemo() {
       <div className="relative">
         <div
           aria-hidden
-          className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl bg-selva"
+          className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl bg-azul"
         />
         <div className="relative overflow-hidden rounded-2xl border border-tinta/20 bg-white">
-          <div className="flex items-center gap-3 bg-selva px-4 py-3 text-white">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-papel text-sm font-bold text-selva">
-              B
+          <div className="flex items-center gap-3 bg-marino px-4 py-3 text-white">
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-papel text-sm font-bold text-marino">
+              A
             </div>
             <div className="leading-tight">
-              <p className="text-sm font-semibold">Barbería Demo</p>
+              <p className="text-sm font-semibold">Clínica Dental Alba</p>
               <p className="text-xs text-white/70">{escribiendo ? "escribiendo…" : "en línea"}</p>
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function ChatDemo() {
                         window.clearTimeout(autoplay.current);
                         enviar(o);
                       }}
-                      className="min-h-10 rounded-full border border-selva/30 px-3.5 py-1.5 text-sm text-selva transition-colors hover:bg-selva hover:text-white"
+                      className="min-h-10 rounded-full border border-marino/30 px-3.5 py-1.5 text-sm text-marino transition-colors hover:bg-marino hover:text-white"
                     >
                       {o}
                     </button>
@@ -196,7 +196,7 @@ export default function ChatDemo() {
       </div>
 
       <p className="mt-7 max-w-sm text-sm text-tinta/70">
-        Demo con datos de ejemplo. El tuyo respondería con tus horarios, tus precios y tus turnos.
+        Así responde un asistente de WhatsApp hecho por nosotros. Toca una opción: el tuyo respondería con tus horarios, precios y turnos.
       </p>
     </div>
   );

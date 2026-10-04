@@ -1,6 +1,6 @@
 /**
- * Resultados de Lighthouse (Google) en modo celular, medidos sobre el sitio publicado.
- * Para actualizarlos: npx lighthouse <url> --output=json y copiar las cuatro categorías.
+ * Resultados de PageSpeed Insights (Lighthouse de Google) en modo celular, medidos sobre el sitio publicado.
+ * Solo se muestran los proyectos que tienen medición: nunca se publican números estimados.
  */
 export type Metrica = {
   rendimiento: number;
@@ -11,11 +11,7 @@ export type Metrica = {
 
 export const FECHA_MEDICION = "2026-10-04";
 
-export const METRICAS: Record<string, Metrica> = {
-  inicio: { rendimiento: 92, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
-  "sabor-criollo": { rendimiento: 86, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
-  steakhouse: { rendimiento: 81, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
-};
+export const METRICAS: Partial<Record<string, Metrica>> = {};
 
 export const ETIQUETAS: Record<keyof Metrica, string> = {
   rendimiento: "Rendimiento",

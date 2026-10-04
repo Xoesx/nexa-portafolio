@@ -39,8 +39,8 @@ export default function Home() {
       <main id="inicio">
         <Hero />
         <Proyectos />
-        <Calidad />
         <Servicios />
+        <Calidad />
         <Proceso />
         <Precios />
         <Preguntas />
