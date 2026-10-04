@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Playfair_Display, Cormorant_Garamond, Great_Vibes, Inter } from "next/font/google";
 
 const playfair = Playfair_Display({
@@ -28,6 +29,17 @@ const inter = Inter({
   display: "swap",
   variable: "--font-inter",
 });
+
+export const metadata: Metadata = {
+  title: "Steakhouse | Demo de NEXA",
+  description:
+    "Demo de NEXA: landing bilingüe (español e inglés) para una parrilla premium, con carta por tiempos, eventos y formulario de reserva validado.",
+  openGraph: {
+    title: "Steakhouse | Demo de NEXA",
+    description: "Landing bilingüe para una parrilla premium, hecha por NEXA.",
+    url: "/demos/steakhouse",
+  },
+};
 
 export default function SteakhouseLayout({ children }: { children: React.ReactNode }) {
   return (

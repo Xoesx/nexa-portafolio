@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "Sabor Criollo | Cocina peruana en Pucallpa",
   description:
     "Recetas familiares preparadas al momento. Reserva tu mesa por WhatsApp. Jr. Comercio 245, Pucallpa.",
+  openGraph: {
+    title: "Sabor Criollo | Demo de NEXA",
+    description: "Sitio completo para un restaurante, con carta, reservas y panel de administración. Hecho por NEXA.",
+    url: "/demos/restaurante",
+  },
 };
 
 export default function RestauranteHome() {

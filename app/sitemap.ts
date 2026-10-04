@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
+import { SITIO } from "./_data/sitio";
 import { ARTICULOS } from "./demos/restaurante/data/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://nexasoluciones.com";
+  const base = SITIO.url;
   const ahora = new Date();
 
   const estaticas: MetadataRoute.Sitemap = [
     { url: base, lastModified: ahora, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${base}/demos/steakhouse`, lastModified: ahora, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/demos/restaurante`, lastModified: ahora, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/demos/restaurante/menu`, lastModified: ahora, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/demos/restaurante/nosotros`, lastModified: ahora, changeFrequency: "monthly", priority: 0.7 },
