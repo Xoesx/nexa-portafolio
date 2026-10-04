@@ -10,6 +10,7 @@ import { BestIngredients } from "./components/BestIngredients";
 import { Reservation } from "./components/Reservation";
 import { Footer } from "./components/Footer";
 import { useScrollReveal } from "./hooks/useScrollReveal";
+import { IdiomaProvider } from "./i18n";
 
 export default function SteakhousePage() {
   // Activamos las animaciones de scroll
@@ -24,20 +25,25 @@ export default function SteakhousePage() {
   }, []);
 
   return (
-    <div
-      className="min-h-screen bg-[#111111] text-white antialiased"
-      style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
-    >
-      <Header />
-      <main>
-        <Hero />
-        <OurStory />
-        <OurMenu />
-        <UpcomingEvents />
-        <BestIngredients />
-        <Reservation />
-      </main>
-      <Footer />
-    </div>
+    <IdiomaProvider>
+      {(idioma) => (
+        <div
+          lang={idioma}
+          className="min-h-screen bg-[#111111] text-white antialiased"
+          style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+        >
+          <Header />
+          <main>
+            <Hero />
+            <OurStory />
+            <OurMenu />
+            <UpcomingEvents />
+            <BestIngredients />
+            <Reservation />
+          </main>
+          <Footer />
+        </div>
+      )}
+    </IdiomaProvider>
   );
 }

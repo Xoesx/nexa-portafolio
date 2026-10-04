@@ -1,4 +1,9 @@
+import Link from "next/link";
+import { useIdioma } from "../i18n";
+
 export function Footer() {
+  const { t } = useIdioma();
+
   return (
     <footer id="contact" className="border-t border-[#C9A96E]/30 bg-[#1A1A1A] py-20">
       <div className="mx-auto grid max-w-[1300px] gap-12 px-6 md:grid-cols-3 md:px-10">
@@ -8,13 +13,13 @@ export function Footer() {
             className="text-[13px] font-bold uppercase tracking-[0.2em] text-white"
             style={{ fontFamily: "var(--font-inter), sans-serif" }}
           >
-            Location
+            {t.pie.ubicacion}
           </p>
           <div className="mt-3 h-px w-10 bg-[#C9A96E]" />
           <p className="mt-5 text-[14px] leading-[1.8] text-[#B0B0B0]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-            Start with our fresh Steakhouse,
+            {t.pie.direccion[0]}
             <br />
-            and 1223 Roosevelt, NY
+            {t.pie.direccion[1]}
           </p>
         </div>
 
@@ -24,13 +29,13 @@ export function Footer() {
             className="text-[13px] font-bold uppercase tracking-[0.2em] text-white"
             style={{ fontFamily: "var(--font-inter), sans-serif" }}
           >
-            Working Hours
+            {t.pie.horario}
           </p>
           <div className="mt-3 h-px w-10 bg-[#C9A96E]" />
           <div className="mt-5 space-y-1.5 text-[14px] leading-[2] text-[#B0B0B0]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-            <p>Monday – Thursday → 10 am – 9 pm</p>
-            <p>Friday → 10 am – 11 pm</p>
-            <p>Saturday – Sunday → 10 am – 11 pm</p>
+            {t.pie.horas.map((h) => (
+              <p key={h}>{h}</p>
+            ))}
           </div>
         </div>
 
@@ -43,8 +48,14 @@ export function Footer() {
             Steakhouse
           </p>
           <p className="mt-3 text-[14px] text-[#B0B0B0]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-            info@kitchen.com
+            reservas@steakhouse.demo
           </p>
+          <Link
+            href="/#proyectos"
+            className="mt-6 inline-block text-[12px] uppercase tracking-[0.15em] text-white/50 transition-colors hover:text-[#C9A96E]"
+          >
+            {t.pie.demo} →
+          </Link>
         </div>
       </div>
     </footer>

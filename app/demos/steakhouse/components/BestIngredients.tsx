@@ -1,6 +1,8 @@
 import { SaltParticles } from "./SaltParticles";
+import { useIdioma } from "../i18n";
 
 export function BestIngredients() {
+  const { t } = useIdioma();
   return (
     <section className="relative bg-[#111111] py-28 md:py-40">
       <div className="mx-auto max-w-[1300px] px-6 md:px-10">
@@ -11,7 +13,7 @@ export function BestIngredients() {
             style={{ fontFamily: "var(--font-script), cursive" }}
             data-reveal
           >
-            Discover
+            {t.ingredientes.antetitulo}
           </p>
           <h2
             className="mt-2 text-[38px] leading-[1.15] text-white md:text-[48px]"
@@ -19,7 +21,7 @@ export function BestIngredients() {
             data-reveal
             data-delay="100"
           >
-            The Best Ingredients
+            {t.ingredientes.titulo}
           </h2>
           <p
             className="mx-auto mt-6 max-w-xl text-[15px] leading-[1.8] text-[#B0B0B0]"
@@ -27,8 +29,7 @@ export function BestIngredients() {
             data-reveal
             data-delay="200"
           >
-            We take an enormous amount of pride in sourcing our ingredients carefully to ensure
-            that the flavors of our food are as delicious and authentic as possible.
+            {t.ingredientes.texto}
           </p>
         </div>
 
@@ -39,7 +40,7 @@ export function BestIngredients() {
             <div className="absolute left-1/2 top-1/2 h-[55%] w-[55%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]">
               <img
                 src="https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=900&q=85"
-                alt="Corte de carne cruda"
+                alt={t.ingredientes.alt}
                 className="h-full w-full object-cover"
               />
             </div>

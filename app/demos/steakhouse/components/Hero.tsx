@@ -1,6 +1,8 @@
 import { SaltParticles } from "./SaltParticles";
+import { useIdioma } from "../i18n";
 
 export function Hero() {
+  const { t } = useIdioma();
   return (
     <section
       id="home"
@@ -14,11 +16,11 @@ export function Hero() {
             style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontWeight: 700 }}
             data-reveal
           >
-            A Premium
+            {t.hero.titulo[0]}
             <br />
-            And Authentic
+            {t.hero.titulo[1]}
             <br />
-            Steakhouse
+            {t.hero.titulo[2]}
           </h1>
 
           <div data-reveal data-delay="300" className="mt-10">
@@ -26,7 +28,7 @@ export function Hero() {
               href="#reservation"
               className="inline-block border border-white px-8 py-3.5 text-[13px] font-medium uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-white hover:text-black"
             >
-              Book A Table
+              {t.hero.cta}
             </a>
           </div>
         </div>
@@ -36,8 +38,8 @@ export function Hero() {
           <div className="relative mx-auto aspect-square w-full max-w-[560px]">
             {/* Imagen principal: sartén con steak */}
             <img
-              src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=1000&q=85"
-              alt="Steak en sartén de hierro"
+              src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=1000&q=85"
+              alt={t.hero.alt}
               className="relative z-10 h-full w-full rounded-full object-cover shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)]"
             />
             {/* Sal alrededor de la imagen */}

@@ -1,34 +1,29 @@
 import { SaltParticles } from "./SaltParticles";
+import { useIdioma } from "../i18n";
 
+// Fotos y diseño de cada plato; los textos vienen del diccionario de idiomas.
 const platos = [
   {
-    nombre: "Appetizer",
-    descripcion: "Start with our fresh baked bread with an egg and basil on top.",
     img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=85",
     align: "left" as const,
   },
   {
-    nombre: "Main Dish",
-    descripcion: "Our juicy fresh grilled steak is served to satisfy your appetite.",
-    img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=1000&q=85",
+    img: "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=1000&q=85",
     align: "right" as const,
     grande: true,
   },
   {
-    nombre: "Side Dish",
-    descripcion: "Have a healthy salad mixed with light sliced meat to complement your steak.",
     img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=85",
     align: "left" as const,
   },
   {
-    nombre: "Dessert",
-    descripcion: "Finish your Kitchen experience with a cake to cleanse your mouth.",
     img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&q=85",
     align: "right" as const,
   },
 ];
 
 export function OurMenu() {
+  const { t } = useIdioma();
   return (
     <section id="menu" className="relative bg-[#111111] py-28 md:py-40">
       <div className="mx-auto max-w-[1300px] px-6 md:px-10">
@@ -39,7 +34,7 @@ export function OurMenu() {
             style={{ fontFamily: "var(--font-script), cursive" }}
             data-reveal
           >
-            Discover
+            {t.carta.antetitulo}
           </p>
           <h2
             className="mt-2 text-[38px] leading-[1.15] text-white md:text-[48px]"
@@ -47,7 +42,7 @@ export function OurMenu() {
             data-reveal
             data-delay="100"
           >
-            Our Menu
+            {t.carta.titulo}
           </h2>
           <p
             className="mx-auto mt-6 max-w-xl text-[15px] leading-[1.8] text-[#B0B0B0]"
@@ -55,8 +50,7 @@ export function OurMenu() {
             data-reveal
             data-delay="200"
           >
-            Few things come close to the joy of steak and chips — cooked simply with tender,
-            loving care. Rest assured that our chefs treat our beef with the respect it deserves.
+            {t.carta.texto}
           </p>
         </div>
 
@@ -64,7 +58,7 @@ export function OurMenu() {
         <div className="relative mt-24 space-y-32">
           {platos.map((p, i) => (
             <div
-              key={p.nombre}
+              key={p.img}
               className={`grid items-center gap-10 md:grid-cols-2 md:gap-16 ${
                 p.align === "right" ? "" : ""
               }`}
@@ -80,7 +74,7 @@ export function OurMenu() {
                 >
                   <img
                     src={p.img}
-                    alt={p.nombre}
+                    alt={t.carta.platos[i].nombre}
                     className="h-full w-full object-cover shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)]"
                   />
                 </div>
@@ -93,7 +87,7 @@ export function OurMenu() {
                   className={`text-[28px] text-[#C9A96E] ${p.align === "right" ? "md:text-right" : ""}`}
                   style={{ fontFamily: "var(--font-script), cursive" }}
                 >
-                  {p.nombre}
+                  {t.carta.platos[i].nombre}
                 </p>
                 <p
                   className="mt-4 max-w-md text-[14px] leading-[1.8] text-[#CCCCCC] md:max-w-sm"
@@ -102,7 +96,7 @@ export function OurMenu() {
                     marginLeft: p.align === "right" ? "auto" : undefined,
                   }}
                 >
-                  {p.descripcion}
+                  {t.carta.platos[i].descripcion}
                 </p>
               </div>
             </div>
