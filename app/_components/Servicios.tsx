@@ -18,7 +18,7 @@ export function Servicios() {
               <h3 className="font-serif text-xl">{s.titulo}</h3>
               <div>
                 <p className="leading-relaxed">{s.texto}</p>
-                <p className="mt-2 text-sm text-tinta/60">{s.ejemplo}</p>
+                <p className="mt-2 text-sm text-tinta/70">{s.ejemplo}</p>
               </div>
             </li>
           ))}

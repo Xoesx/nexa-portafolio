@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const categorias = [
@@ -35,7 +36,7 @@ export function Categorias() {
               className="group flex flex-col items-center gap-4"
             >
               <div className="relative aspect-square w-full max-w-[130px] overflow-hidden rounded-full border-4 border-[#FBF9F4] shadow-[0_10px_30px_-10px_rgba(31,26,21,0.25)] transition group-hover:border-[#C1440E]/20">
-                <img src={c.img} alt={c.nombre} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                <Image width={260} height={260} sizes="130px" src={c.img} alt="" className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
               </div>
               <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-[#1F1A15]/80 transition group-hover:text-[#C1440E]">
                 {c.nombre}

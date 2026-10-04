@@ -19,10 +19,13 @@
   --color-mango: #ffb27a;
   --color-whatsapp: #1f9d55;
 
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Las variables de fuente se definen en el layout de (sitio), por eso van "inline". */
+@theme inline {
   --font-sans: var(--font-figtree), system-ui, sans-serif;
   --font-serif: var(--font-young-serif), Georgia, "Times New Roman", serif;
-
-  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {

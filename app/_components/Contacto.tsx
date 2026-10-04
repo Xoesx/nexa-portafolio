@@ -25,7 +25,7 @@ export function Contacto() {
             <IconoWhatsApp tam={24} />
             {SITIO.telefonoVisible}
           </a>
-          <p className="mt-3 text-sm text-tinta/60">Atendemos de lunes a sábado.</p>
+          <p className="mt-3 text-sm text-tinta/70">Atendemos de lunes a sábado.</p>
         </div>
       </div>
     </section>

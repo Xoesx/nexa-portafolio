@@ -17,7 +17,7 @@ export function Footer() {
                 Sabor Criollo
               </p>
             </div>
-            <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-[#1F1A15]/60">
+            <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-[#1F1A15]/70">
               Cocina peruana preparada al momento. Ingredientes frescos, recetas familiares y atención de barrio.
             </p>
             <div className="mt-6 flex gap-3">
@@ -34,7 +34,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/50">Visitar</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/70">Visitar</p>
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
               <li><Link href="/demos/restaurante" className="hover:text-[#C1440E]">Inicio</Link></li>
               <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Menú</Link></li>
@@ -46,7 +46,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/50">Carta</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/70">Carta</p>
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
               <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Entradas</Link></li>
               <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Principales</Link></li>
@@ -56,7 +56,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/50">Contacto</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/70">Contacto</p>
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
               <li>Jr. Comercio 245<br />Pucallpa, Ucayali</li>
               <li>
@@ -74,7 +74,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 border-t border-[#1F1A15]/8 pt-8">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[13px] text-[#1F1A15]/60 md:justify-start">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[13px] text-[#1F1A15]/70 md:justify-start">
             <Link href="/demos/restaurante/legal/terminos" className="hover:text-[#C1440E]">
               Términos y condiciones
             </Link>
@@ -89,7 +89,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[#1F1A15]/8 pt-6 text-[12px] text-[#1F1A15]/50 md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[#1F1A15]/8 pt-6 text-[12px] text-[#1F1A15]/70 md:flex-row">
           <p>© 2026 Sabor Criollo. Demo de NEXA Soluciones Digitales.</p>
           <div className="flex gap-6">
             <Link href="/" className="hover:text-[#C1440E]">Volver a NEXA</Link>

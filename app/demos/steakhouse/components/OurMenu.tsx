@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SaltParticles } from "./SaltParticles";
 import { useIdioma } from "../i18n";
 
@@ -72,7 +73,7 @@ export function OurMenu() {
                     p.grande ? "max-w-[520px]" : "max-w-[420px]"
                   }`}
                 >
-                  <img
+                  <Image width={800} height={800} sizes="(min-width: 768px) 520px, 90vw"
                     src={p.img}
                     alt={t.carta.platos[i].nombre}
                     className="h-full w-full object-cover shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)]"

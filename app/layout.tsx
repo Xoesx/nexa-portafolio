@@ -1,20 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree, Young_Serif } from "next/font/google";
 import { SITIO } from "./_data/sitio";
 import "./globals.css";
-
-const youngSerif = Young_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-  variable: "--font-young-serif",
-});
-
-const figtree = Figtree({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-figtree",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO.url),
@@ -45,8 +31,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${youngSerif.variable} ${figtree.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+    <html lang="es" className="h-full antialiased">
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

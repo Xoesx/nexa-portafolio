@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SaltParticles } from "./SaltParticles";
 import { useIdioma } from "../i18n";
 
@@ -38,7 +39,7 @@ export function BestIngredients() {
           <div className="relative mx-auto aspect-square w-full max-w-[700px]">
             {/* Carne central */}
             <div className="absolute left-1/2 top-1/2 h-[55%] w-[55%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]">
-              <img
+              <Image width={900} height={900} sizes="(min-width: 768px) 390px, 55vw"
                 src="https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=900&q=85"
                 alt={t.ingredientes.alt}
                 className="h-full w-full object-cover"

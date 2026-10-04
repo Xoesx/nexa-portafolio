@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "../components/Header";
@@ -24,7 +25,7 @@ export default function BlogPage() {
           >
             Historias de la cocina peruana
           </h1>
-          <p className="mt-4 text-[16px] leading-relaxed text-[#1F1A15]/60">
+          <p className="mt-4 text-[16px] leading-relaxed text-[#1F1A15]/70">
             Ingredientes, técnicas y recetas contadas por quienes las cocinan todos los días.
           </p>
         </div>
@@ -37,14 +38,14 @@ export default function BlogPage() {
               className="group flex flex-col"
             >
               <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-[#F0E7D5]">
-                <img
+                <Image width={800} height={600} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   src={a.imagen}
                   alt={a.titulo}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                 />
               </div>
               <div className="mt-5">
-                <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#8A7F72]">
+                <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#6E6457]">
                   <span className="text-[#C1440E]">{a.categoria}</span>
                   <span>·</span>
                   <span>{a.lectura} de lectura</span>
@@ -55,10 +56,10 @@ export default function BlogPage() {
                 >
                   {a.titulo}
                 </h2>
-                <p className="mt-2 text-[14px] leading-relaxed text-[#1F1A15]/60">
+                <p className="mt-2 text-[14px] leading-relaxed text-[#1F1A15]/70">
                   {a.extracto}
                 </p>
-                <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[#8A7F72]">
+                <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[#6E6457]">
                   {a.fecha}
                 </p>
               </div>

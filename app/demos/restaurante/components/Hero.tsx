@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
@@ -53,7 +54,7 @@ export function Hero() {
                 <p className="text-3xl text-[#E8A87C]" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 500 }}>
                   {s.n}
                 </p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/40">{s.l}</p>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">{s.l}</p>
               </div>
             ))}
           </div>
@@ -63,11 +64,16 @@ export function Hero() {
         <div className="relative lg:col-span-7">
           <div className="relative mx-auto aspect-square w-full max-w-[620px]">
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#C1440E]/30 via-transparent to-transparent blur-2xl" />
-            <img
-              src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&q=85"
-              alt="Plato de comida peruana"
-              className="absolute inset-[4%] rounded-full object-cover shadow-[0_30px_100px_-20px_rgba(193,68,14,0.5)]"
-            />
+            <div className="absolute inset-[4%] overflow-hidden rounded-full shadow-[0_30px_100px_-20px_rgba(193,68,14,0.5)]">
+              <Image
+                src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&q=85"
+                alt="Plato de comida peruana"
+                fill
+                priority
+                sizes="(min-width: 1024px) 570px, 92vw"
+                className="object-cover"
+              />
+            </div>
             <div className="absolute right-0 top-12 rounded-full bg-[#0F0F12]/90 px-5 py-4 text-center shadow-xl backdrop-blur">
               <p className="text-3xl text-[#E8A87C]" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 500 }}>
                 30+

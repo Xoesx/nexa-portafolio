@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Nosotros() {
@@ -7,7 +8,7 @@ export function Nosotros() {
         {/* Foto del local con badge */}
         <div className="relative">
           <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_60px_-20px_rgba(31,26,21,0.35)]">
-            <img
+            <Image width={1200} height={900} sizes="(min-width: 768px) 50vw, 100vw"
               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85"
               alt="Interior del restaurante"
               className="h-full w-full object-cover"
@@ -20,7 +21,7 @@ export function Nosotros() {
             >
               10+
             </p>
-            <p className="mt-1 text-[10px] uppercase tracking-[0.2em] opacity-90">
+            <p className="mt-1 text-[11px] uppercase tracking-[0.2em]">
               Años de<br />experiencia
             </p>
           </div>
@@ -56,7 +57,7 @@ export function Nosotros() {
                 </div>
                 <div>
                   <p className="text-[14px] font-semibold text-[#1F1A15]">{f.t}</p>
-                  <p className="mt-0.5 text-[13px] text-[#8A7F72]">{f.s}</p>
+                  <p className="mt-0.5 text-[13px] text-[#6E6457]">{f.s}</p>
                 </div>
               </div>
             ))}

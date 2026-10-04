@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const platos = [
@@ -64,7 +65,7 @@ export function Recomendados() {
                     {p.badge}
                   </span>
                 )}
-                <img
+                <Image width={600} height={750} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                   src={p.img}
                   alt={p.nombre}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
@@ -78,7 +79,7 @@ export function Recomendados() {
                   >
                     {p.nombre}
                   </h3>
-                  <p className="mt-1 text-[12px] leading-snug text-[#8A7F72]">
+                  <p className="mt-1 text-[12px] leading-snug text-[#6E6457]">
                     {p.descripcion}
                   </p>
                 </div>

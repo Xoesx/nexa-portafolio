@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SaltParticles } from "./SaltParticles";
 import { useIdioma } from "../i18n";
 
@@ -9,7 +10,7 @@ export function UpcomingEvents() {
         {/* Imagen con sal */}
         <div className="relative" data-reveal>
           <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
-            <img
+            <Image width={1200} height={900} sizes="(min-width: 768px) 50vw, 100vw"
               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85"
               alt={t.eventos.alt}
               className="h-full w-full object-cover"

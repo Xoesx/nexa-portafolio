@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "../components/Header";
@@ -72,7 +73,7 @@ export default function NosotrosPage() {
             <br />
             <span className="italic text-[#C1440E]">servida con calma.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-[16px] leading-relaxed text-[#1F1A15]/60">
+          <p className="mx-auto mt-6 max-w-xl text-[16px] leading-relaxed text-[#1F1A15]/70">
             Sabor Criollo nació en 2010 como un puesto en el mercado central de Pucallpa.
             Hoy somos un restaurante con 12 mesas, un equipo de 4 personas y las mismas recetas de siempre.
           </p>
@@ -82,7 +83,7 @@ export default function NosotrosPage() {
       {/* Foto del equipo */}
       <section className="mx-auto max-w-6xl px-6 pb-20">
         <div className="aspect-[16/9] overflow-hidden rounded-3xl bg-[#F0E7D5] shadow-2xl">
-          <img
+          <Image width={1400} height={788} sizes="(min-width: 1152px) 1152px, 100vw"
             src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1400&q=85"
             alt="Equipo de Sabor Criollo"
             className="h-full w-full object-cover"
@@ -177,7 +178,7 @@ export default function NosotrosPage() {
             {equipo.map((p) => (
               <div key={p.nombre} className="group">
                 <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-[#F0E7D5]">
-                  <img
+                  <Image width={600} height={750} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     src={p.foto}
                     alt={p.nombre}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
@@ -192,7 +193,7 @@ export default function NosotrosPage() {
                 <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-[#C1440E]">
                   {p.rol}
                 </p>
-                <p className="mt-3 text-[13px] leading-relaxed text-[#1F1A15]/60">{p.bio}</p>
+                <p className="mt-3 text-[13px] leading-relaxed text-[#1F1A15]/70">{p.bio}</p>
               </div>
             ))}
           </div>

@@ -15,7 +15,7 @@ function Capturas({ p, prioridad }: { p: Proyecto; prioridad: boolean }) {
             <span className="h-2 w-2 rounded-full bg-tinta/20" />
             <span className="h-2 w-2 rounded-full bg-tinta/20" />
           </span>
-          <span className="truncate rounded-md bg-white/70 px-2.5 py-0.5 text-xs text-tinta/60">
+          <span className="truncate rounded-md bg-white/70 px-2.5 py-0.5 text-xs text-tinta/70">
             {dominio}
             {p.ruta}
           </span>
@@ -86,7 +86,7 @@ export function Proyectos() {
                   ))}
                 </ul>
 
-                {p.nota && <p className="mt-5 text-sm text-tinta/60">{p.nota}</p>}
+                {p.nota && <p className="mt-5 text-sm text-tinta/70">{p.nota}</p>}
 
                 <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                   <Link

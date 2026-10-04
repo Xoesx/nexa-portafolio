@@ -15,7 +15,7 @@ export default function NotFound() {
       >
         Esta página no existe.
       </h1>
-      <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-[#1F1A15]/60">
+      <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-[#1F1A15]/70">
         Puede que el enlace esté roto o que la página se haya movido.
         Vuelve al inicio para seguir explorando.
       </p>

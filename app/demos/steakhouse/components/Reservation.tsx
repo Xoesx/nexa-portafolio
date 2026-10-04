@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import { useId, useState } from "react";
-import { z } from "zod";
 import { useIdioma, type Textos } from "../i18n";
 
 type Campo = "nombre" | "telefono" | "fecha" | "hora" | "personas";
@@ -14,7 +14,9 @@ const hoyISO = () => {
   return d.toISOString().slice(0, 10);
 };
 
-function crearEsquema(e: Textos["reserva"]["errores"]) {
+// Zod se descarga recién al enviar el formulario: la página carga más liviana.
+async function crearEsquema(e: Textos["reserva"]["errores"]) {
+  const { z } = await import("zod");
   return z.object({
     nombre: z.string().trim().min(3, e.nombre).max(80, e.nombre),
     telefono: z
@@ -39,10 +41,11 @@ export function Reservation() {
   const [errores, setErrores] = useState<Errores>({});
   const [confirmada, setConfirmada] = useState<Confirmada | null>(null);
 
-  const enviar = (ev: React.FormEvent<HTMLFormElement>) => {
+  const enviar = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const datos = Object.fromEntries(new FormData(ev.currentTarget));
-    const resultado = crearEsquema(r.errores).safeParse(datos);
+    const formulario = ev.currentTarget;
+    const datos = Object.fromEntries(new FormData(formulario));
+    const resultado = (await crearEsquema(r.errores)).safeParse(datos);
 
     if (!resultado.success) {
       const nuevos: Errores = {};
@@ -53,7 +56,7 @@ export function Reservation() {
       setErrores(nuevos);
       // Llevamos el foco al primer campo con error.
       const primero = Object.keys(nuevos)[0];
-      ev.currentTarget.querySelector<HTMLElement>(`[name="${primero}"]`)?.focus();
+      formulario.querySelector<HTMLElement>(`[name="${primero}"]`)?.focus();
       return;
     }
 
@@ -90,7 +93,7 @@ export function Reservation() {
     >
       {/* Fondo con overlay */}
       <div className="absolute inset-0 z-0">
-        <img
+        <Image width={1600} height={1000} sizes="100vw"
           src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=85"
           alt=""
           className="h-full w-full object-cover"

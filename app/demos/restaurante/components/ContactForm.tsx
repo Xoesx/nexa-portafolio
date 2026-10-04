@@ -55,7 +55,7 @@ export function ContactForm() {
         >
           Envíanos un mensaje
         </h2>
-        <p className="mt-1 text-[13px] text-[#1F1A15]/60">
+        <p className="mt-1 text-[13px] text-[#1F1A15]/70">
           Respondemos en menos de 24 horas por correo.
         </p>
       </div>

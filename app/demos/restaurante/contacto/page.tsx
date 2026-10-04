@@ -36,7 +36,7 @@ export default function ContactoPage() {
           >
             Visítanos
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#1F1A15]/60">
+          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#1F1A15]/70">
             Estamos a dos cuadras de la Plaza de Armas. Escríbenos por WhatsApp o por correo.
           </p>
         </div>
@@ -51,7 +51,7 @@ export default function ContactoPage() {
               <div className="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#F0E7D5] text-lg">
                 {info.icon}
               </div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8A7F72]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6E6457]">
                 {info.label}
               </p>
               <p className="mt-2 text-[14px] leading-snug text-[#1F1A15]">{info.valor}</p>
@@ -75,7 +75,7 @@ export default function ContactoPage() {
             </div>
 
             <div className="rounded-2xl border border-[#1F1A15]/8 bg-white p-7">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#8A7F72]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#6E6457]">
                 Horarios
               </p>
               <ul className="mt-4 space-y-3">
@@ -85,7 +85,7 @@ export default function ContactoPage() {
                     className="flex items-baseline justify-between gap-3 border-b border-[#1F1A15]/5 pb-3 last:border-0 last:pb-0"
                   >
                     <span className="text-[14px] text-[#1F1A15]">{h.dia}</span>
-                    <span className="text-[13px] text-[#1F1A15]/50">{h.hora}</span>
+                    <span className="text-[13px] text-[#1F1A15]/70">{h.hora}</span>
                   </li>
                 ))}
               </ul>

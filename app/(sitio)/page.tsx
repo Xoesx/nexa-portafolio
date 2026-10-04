@@ -1,14 +1,14 @@
-import { Contacto } from "./_components/Contacto";
-import { Footer } from "./_components/Footer";
-import { Header } from "./_components/Header";
-import { Hero } from "./_components/Hero";
-import { Precios } from "./_components/Precios";
-import { Preguntas } from "./_components/Preguntas";
-import { Proceso } from "./_components/Proceso";
-import { Proyectos } from "./_components/Proyectos";
-import { Servicios } from "./_components/Servicios";
-import { WhatsAppFlotante } from "./_components/WhatsAppFlotante";
-import { SITIO } from "./_data/sitio";
+import { Contacto } from "../_components/Contacto";
+import { Footer } from "../_components/Footer";
+import { Header } from "../_components/Header";
+import { Hero } from "../_components/Hero";
+import { Precios } from "../_components/Precios";
+import { Preguntas } from "../_components/Preguntas";
+import { Proceso } from "../_components/Proceso";
+import { Proyectos } from "../_components/Proyectos";
+import { Servicios } from "../_components/Servicios";
+import { WhatsAppFlotante } from "../_components/WhatsAppFlotante";
+import { SITIO } from "../_data/sitio";
 
 const datosEstructurados = {
   "@context": "https://schema.org",

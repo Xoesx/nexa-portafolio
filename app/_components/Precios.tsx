@@ -26,10 +26,10 @@ export function Precios() {
                 <h3 className="font-serif text-2xl">{p.nombre}</h3>
                 {p.destacado && <span className="text-sm font-semibold text-mango">Recomendado</span>}
               </div>
-              <p className={`mt-1 text-sm ${p.destacado ? "text-papel/70" : "text-tinta/60"}`}>{p.para}</p>
+              <p className={`mt-1 text-sm ${p.destacado ? "text-papel/70" : "text-tinta/70"}`}>{p.para}</p>
 
               <p className="mt-7 flex items-baseline gap-2">
-                <span className={`text-sm ${p.destacado ? "text-papel/70" : "text-tinta/60"}`}>desde</span>
+                <span className={`text-sm ${p.destacado ? "text-papel/70" : "text-tinta/70"}`}>desde</span>
                 <span className="font-serif text-5xl tracking-tight">S/ {p.precio}</span>
               </p>
 
@@ -57,7 +57,7 @@ export function Precios() {
           ))}
         </div>
 
-        <p className="mt-6 text-sm text-tinta/60">
+        <p className="mt-6 text-sm text-tinta/70">
           ¿Tu caso no encaja en ninguno?{" "}
           <a href={COTIZAR} {...EXTERNO} className="font-semibold text-arcilla underline underline-offset-4">
             Cuéntanos qué necesitas

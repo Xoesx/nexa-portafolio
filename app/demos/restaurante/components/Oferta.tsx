@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Oferta() {
@@ -34,7 +35,7 @@ export function Oferta() {
         {/* Foto del plato a la derecha */}
         <div className="relative hidden md:block">
           <div className="aspect-square overflow-hidden rounded-full border-4 border-[#1F1A15] shadow-2xl">
-            <img
+            <Image width={800} height={800} sizes="(min-width: 768px) 40vw, 1px"
               src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=85"
               alt="Plato especial"
               className="h-full w-full object-cover"

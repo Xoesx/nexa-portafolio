@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -42,12 +43,12 @@ export default async function ArticuloPage({
       <main className="mx-auto max-w-3xl px-6 py-16 md:py-20">
         <Link
           href="/demos/restaurante/blog"
-          className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8A7F72] transition hover:text-[#C1440E]"
+          className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#6E6457] transition hover:text-[#C1440E]"
         >
           ← Volver al blog
         </Link>
 
-        <div className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#8A7F72]">
+        <div className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#6E6457]">
           <span className="text-[#C1440E]">{articulo.categoria}</span>
           <span>·</span>
           <span>{articulo.fecha}</span>
@@ -67,7 +68,7 @@ export default async function ArticuloPage({
         </p>
 
         <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-[#F0E7D5]">
-          <img src={articulo.imagen} alt={articulo.titulo} className="h-full w-full object-cover" />
+          <Image width={1200} height={675} sizes="(min-width: 768px) 768px, 100vw" priority src={articulo.imagen} alt={articulo.titulo} className="h-full w-full object-cover" />
         </div>
 
         <article className="mt-12 space-y-6 text-[16px] leading-[1.8] text-[#1F1A15]/80">
@@ -95,7 +96,7 @@ export default async function ArticuloPage({
             {otros.map((a) => (
               <Link key={a.slug} href={`/demos/restaurante/blog/${a.slug}`} className="group">
                 <div className="aspect-[4/3] overflow-hidden rounded-xl bg-[#F0E7D5]">
-                  <img
+                  <Image width={600} height={450} sizes="(min-width: 768px) 33vw, 100vw"
                     src={a.imagen}
                     alt={a.titulo}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-105"

@@ -173,7 +173,7 @@ export default function ChatDemo() {
           <div className="min-h-[104px] border-t border-tinta/10 bg-white p-3">
             {opciones.length > 0 && (
               <>
-                <p className="mb-2 text-xs text-tinta/60">Toca una opción para responder:</p>
+                <p className="mb-2 text-xs text-tinta/70">Toca una opción para responder:</p>
                 <div className="flex flex-wrap gap-2">
                   {opciones.map((o) => (
                     <button
@@ -195,7 +195,7 @@ export default function ChatDemo() {
         </div>
       </div>
 
-      <p className="mt-7 max-w-sm text-sm text-tinta/60">
+      <p className="mt-7 max-w-sm text-sm text-tinta/70">
         Demo con datos de ejemplo. El tuyo respondería con tus horarios, tus precios y tus turnos.
       </p>
     </div>

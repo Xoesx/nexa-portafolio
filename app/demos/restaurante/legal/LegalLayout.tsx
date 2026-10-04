@@ -23,7 +23,7 @@ export function LegalLayout({
         >
           {titulo}
         </h1>
-        <p className="mt-4 text-[13px] text-[#8A7F72]">
+        <p className="mt-4 text-[13px] text-[#6E6457]">
           Última actualización: {actualizado}
         </p>
 

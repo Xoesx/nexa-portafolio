@@ -23,7 +23,7 @@ export default function ReservarPage() {
           >
             Reserva tu mesa
           </h1>
-          <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-[#1F1A15]/60">
+          <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-[#1F1A15]/70">
             En 30 segundos. Te confirmamos por WhatsApp al instante.
           </p>
         </div>
@@ -32,21 +32,21 @@ export default function ReservarPage() {
           <ReservationForm />
           <aside className="space-y-4">
             <div className="rounded-2xl border border-[#1F1A15]/8 bg-white p-7">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8A7F72]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6E6457]">
                 Horarios
               </p>
               <ul className="mt-4 space-y-2 text-[14px] text-[#1F1A15]/80">
                 <li className="flex justify-between">
                   <span>Lun – Jue</span>
-                  <span className="text-[#1F1A15]/50">12:00 – 22:00</span>
+                  <span className="text-[#1F1A15]/70">12:00 – 22:00</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Vie – Sáb</span>
-                  <span className="text-[#1F1A15]/50">12:00 – 23:30</span>
+                  <span className="text-[#1F1A15]/70">12:00 – 23:30</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Domingo</span>
-                  <span className="text-[#1F1A15]/50">12:00 – 17:00</span>
+                  <span className="text-[#1F1A15]/70">12:00 – 17:00</span>
                 </li>
               </ul>
             </div>

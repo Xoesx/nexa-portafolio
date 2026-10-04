@@ -54,7 +54,7 @@ export function Header() {
               >
                 Sabor Criollo
               </p>
-              <p className="mt-1 text-[9px] uppercase tracking-[0.3em] text-[#8A7F72]">
+              <p className="mt-1 text-[9px] uppercase tracking-[0.3em] text-[#6E6457]">
                 Cocina Peruana
               </p>
             </div>

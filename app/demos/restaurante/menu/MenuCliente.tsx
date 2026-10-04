@@ -24,7 +24,7 @@ export function MenuCliente() {
         >
           Nuestro menú
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#1F1A15]/60">
+        <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#1F1A15]/70">
           Todo se prepara al momento. Los platos con etiqueta son los más pedidos por nuestros clientes.
         </p>
       </div>
@@ -85,7 +85,7 @@ export function MenuCliente() {
                 >
                   {p.nombre}
                 </h3>
-                <p className="mt-1.5 text-[13px] leading-snug text-[#8A7F72]">
+                <p className="mt-1.5 text-[13px] leading-snug text-[#6E6457]">
                   {p.descripcion}
                 </p>
               </div>
