@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { procesarImagen, pesoLegible } from "../lib/utils/imagen";
 
 type Props = {
@@ -20,10 +20,13 @@ export function ImageUploader({ valor, onChange }: Props) {
   const [peso, setPeso] = useState<number | null>(null);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
-  // Sincronizar el modo con el valor entrante (útil al editar un plato ya guardado)
-  useEffect(() => {
+  // Sincronizar el modo con el valor entrante (útil al editar un plato ya guardado).
+  // Se ajusta durante el render, sin efecto, como recomienda React.
+  const [esBase64Previo, setEsBase64Previo] = useState(esBase64);
+  if (esBase64 !== esBase64Previo) {
+    setEsBase64Previo(esBase64);
     if (esBase64) setModo("subir");
-  }, [esBase64]);
+  }
 
   const handleArchivo = async (file: File) => {
     setError(null);

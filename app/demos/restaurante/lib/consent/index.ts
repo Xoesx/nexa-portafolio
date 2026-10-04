@@ -1,5 +1,7 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
+
 const CLAVE = "nexa_sabor_criollo_consent_v1";
 
 export type NivelConsent = "pending" | "essential" | "all";
@@ -21,3 +23,17 @@ export function guardarConsent(nivel: NivelConsent) {
 }
 
 export const EVENTO_CONSENT = "consent-cambiado";
+
+function suscribirConsent(aviso: () => void) {
+  window.addEventListener(EVENTO_CONSENT, aviso);
+  window.addEventListener("storage", aviso);
+  return () => {
+    window.removeEventListener(EVENTO_CONSENT, aviso);
+    window.removeEventListener("storage", aviso);
+  };
+}
+
+/** Nivel de consentimiento actual. En el servidor siempre es "pending". */
+export function useConsent(): NivelConsent {
+  return useSyncExternalStore(suscribirConsent, leerConsent, () => "pending");
+}

@@ -38,12 +38,14 @@ export function PlatosProvider({ children }: { children: React.ReactNode }) {
   const [platos, setPlatos] = useState<Plato[]>(MENU_COMPLETO);
   const [cargado, setCargado] = useState(false);
 
+  // Se carga después de montar para que el HTML del servidor y el del navegador coincidan.
   useEffect(() => {
     try {
       const guardado = localStorage.getItem(STORAGE_KEY);
       if (guardado) {
         const parsed = JSON.parse(guardado);
         if (Array.isArray(parsed)) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect -- sincroniza con localStorage, un sistema externo
           setPlatos(parsed);
         }
       }

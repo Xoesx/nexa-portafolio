@@ -1,8 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
-import { leerConsent, EVENTO_CONSENT, type NivelConsent } from "../lib/consent";
+import { useConsent } from "../lib/consent";
 
 // Tipado explícito como string para evitar que TS lo infiera como literal
 const GA_ID: string = "PENDIENTE";
@@ -14,22 +13,9 @@ const estaConfigurado =
   GA_ID.length > 5;
 
 export function GoogleAnalytics() {
-  const [consent, setConsent] = useState<NivelConsent>("pending");
-  const [montado, setMontado] = useState(false);
+  const consent = useConsent();
 
-  useEffect(() => {
-    setConsent(leerConsent());
-    setMontado(true);
-
-    const handler = (e: Event) => {
-      const detalle = (e as CustomEvent<NivelConsent>).detail;
-      setConsent(detalle);
-    };
-    window.addEventListener(EVENTO_CONSENT, handler);
-    return () => window.removeEventListener(EVENTO_CONSENT, handler);
-  }, []);
-
-  if (!estaConfigurado || !montado || consent !== "all") return null;
+  if (!estaConfigurado || consent !== "all") return null;
 
   return (
     <>
