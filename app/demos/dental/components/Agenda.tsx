@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CLINICA, DOCTORES, doctoresPara, TRATAMIENTOS, type Doctor, type Tratamiento } from "../data";
+import { buscarTratamiento, CLINICA, DOCTORES, doctoresPara, TRATAMIENTOS, type Doctor, type Tratamiento } from "../data";
 import { aISO, crearICS, proximosDias, turnosDel, type Turno } from "../lib/agenda";
 
 const PASOS = ["Tratamiento", "Especialista", "Fecha y hora", "Tus datos"] as const;
@@ -31,8 +32,10 @@ function Opcion({ activa, onClick, children }: { activa: boolean; onClick: () =>
 }
 
 export function Agenda() {
-  const [paso, setPaso] = useState(0);
-  const [tratamientoId, setTratamientoId] = useState<string | null>(null);
+  // Si el paciente llega desde "¿Qué te está pasando?" o desde un tratamiento, ya viene elegido.
+  const preelegido = buscarTratamiento(useSearchParams().get("tratamiento") ?? "");
+  const [paso, setPaso] = useState(preelegido ? 1 : 0);
+  const [tratamientoId, setTratamientoId] = useState<string | null>(preelegido?.id ?? null);
   const [doctorId, setDoctorId] = useState<string>(CUALQUIERA);
   const [fechaISO, setFechaISO] = useState<string | null>(null);
   const [hora, setHora] = useState<string | null>(null);
@@ -185,6 +188,16 @@ export function Agenda() {
         <span className="sr-only">Paso {paso + 1} de 4: </span>
         {["¿Qué necesitas?", "¿Con quién te atiendes?", "Elige día y hora", "Tus datos"][paso]}
       </h2>
+
+      {paso > 0 && paso < 3 && tratamiento && (
+        <p className="mt-2 flex flex-wrap items-center gap-x-2 text-[15px] text-[#3f5f5b]">
+          Tratamiento: <strong className="font-bold text-[#0f2a2a]">{tratamiento.nombre}</strong> · {tratamiento.minutos} min · desde{" "}
+          {soles(tratamiento.desde)}
+          <button type="button" onClick={() => setPaso(0)} className="min-h-11 font-bold text-[#0f766e] underline underline-offset-4">
+            Cambiar
+          </button>
+        </p>
+      )}
 
       {/* Paso 1: tratamiento */}
       {paso === 0 && (

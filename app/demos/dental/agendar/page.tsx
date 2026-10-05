@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Agenda } from "../components/Agenda";
 import { CLINICA } from "../data";
 
@@ -15,7 +16,10 @@ export default function AgendarPage() {
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Agenda tu cita</h1>
           <p className="mt-2 max-w-lg text-[#3f5f5b]">Cuatro pasos, menos de un minuto. Solo ves los horarios que de verdad están libres.</p>
           <div className="mt-8">
-            <Agenda />
+            {/* La agenda lee ?tratamiento= de la URL; Suspense permite generar la página de forma estática. */}
+            <Suspense fallback={<div className="h-96 rounded-3xl border border-[#cfe3df] bg-white" />}>
+              <Agenda />
+            </Suspense>
           </div>
         </div>
         <aside className="space-y-4 text-[15px] lg:pt-24">
