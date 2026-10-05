@@ -36,7 +36,7 @@ export function Hero() {
           </p>
 
           <h1
-            data-entrada
+            data-entrada="sube"
             style={retraso(80)}
             className="mt-6 font-display text-[clamp(2.55rem,6.4vw,4.75rem)] leading-[0.98] text-balance"
           >
@@ -47,7 +47,7 @@ export function Hero() {
             </span>
           </h1>
 
-          <p data-entrada style={retraso(160)} className="mt-7 max-w-[34rem] text-lg leading-relaxed text-tenue sm:text-[1.2rem]">
+          <p data-entrada="sube" style={retraso(160)} className="mt-7 max-w-[34rem] text-lg leading-relaxed text-tenue sm:text-[1.2rem]">
             Hacemos páginas web, agendas de citas, catálogos con buscador y sistemas a medida para negocios de todo el
             Perú. Antes de pagar, recibes el precio y el plazo por escrito.
           </p>
@@ -89,7 +89,6 @@ export function Hero() {
                 alt=""
                 ruta="/demos/dental/agendar"
                 sizes="(min-width: 1024px) 465px, 72vw"
-                prioridad
               />
             </div>
           </div>

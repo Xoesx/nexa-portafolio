@@ -236,6 +236,16 @@
   }
 }
 
+/* Para el texto más grande de la página: solo sube, sin fundido, así se ve desde el primer pintado (LCP). */
+@keyframes subir {
+  from {
+    translate: 0 18px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
 @keyframes surgir {
   from {
     opacity: 0;
@@ -406,6 +416,10 @@
   [data-entrada] {
     animation: aparecer 0.8s var(--ease-suave) both;
     animation-delay: var(--retraso, 0ms);
+  }
+
+  [data-entrada="sube"] {
+    animation-name: subir;
   }
 
   .trazo {
