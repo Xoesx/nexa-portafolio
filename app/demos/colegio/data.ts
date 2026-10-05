@@ -11,7 +11,12 @@ export const COLEGIO = {
 };
 
 export const FOTOS = {
-  hero: u("1509062522246-3755977927d7", 1800),
+  hero: u("1497486751825-1233686d5d80", 1400),
+  heroAula: u("1577896851231-70ef18881754", 900),
+  heroDibujando: u("1588072432836-e10032774350", 900),
+  directora: u("1438761681033-6461ffad8d80", 900),
+  profesora: u("1596495577886-d920f1fb7238", 1200),
+  campus: u("1562774053-701939374585", 1400),
   aula: u("1580582932707-520aed937b7b"),
   biblioteca: u("1427504494785-3a9ca7044f45"),
   libros: u("1497633762265-9d179a990aa6"),
@@ -45,7 +50,7 @@ export const NIVELES: Nivel[] = [
     edades: "1.° a 6.° grado",
     horario: "7:45 a 14:30",
     pension: 450,
-    foto: u("1503676260728-1c00da094a0b", 1000),
+    foto: u("1529390079861-591de354faf5", 1000),
     resumen: "Lectura, matemática y ciencia con proyectos reales. Cada alumno tiene un tutor que conoce su ritmo.",
     destacados: ["Plan lector mensual", "Robótica desde 3.° grado", "Tutoría personalizada", "Talleres de arte y deporte"],
   },
@@ -97,6 +102,58 @@ export const PREGUNTAS = [
   { q: "¿Ofrecen becas o descuentos?", a: "Descuento de 10% en la pensión para el segundo hermano y becas por rendimiento académico desde 3.° de primaria." },
   { q: "¿Tienen movilidad escolar?", a: "Trabajamos con movilidades autorizadas que cubren Callería, Yarinacocha y Manantay. Se contratan aparte." },
   { q: "¿Cómo es la evaluación de ingreso?", a: "En inicial es una observación de juego. Desde primaria, una evaluación breve de comunicación y matemática, sin presión." },
+];
+
+export const MENSAJE_DIRECTORA = {
+  nombre: "Mg. Patricia Saldaña",
+  cargo: "Directora general",
+  parrafos: [
+    "Hace 25 años, mis padres y un grupo de maestros de Pucallpa soñaron con un colegio donde los chicos aprendieran a pensar, no a memorizar. Yo estudié aquí; hoy me toca cuidar ese sueño, que ya tiene 640 alumnos y sus familias.",
+    "Conozco a cada estudiante por su nombre. Sé quién necesita un empujón en matemática y quién está pasando un momento difícil en casa. Eso, para nosotros, es educar.",
+  ],
+};
+
+export const DIA = [
+  { hora: "7:45", titulo: "Buenos días", texto: "Los tutores reciben a cada alumno en la puerta. Cinco minutos para saludar, conversar y empezar con calma.", foto: u("1503676382389-4809596d5290", 800) },
+  { hora: "8:00", titulo: "Aprender haciendo", texto: "Matemática con material concreto, ciencia con experimentos y lectura en voz alta en grupos pequeños.", foto: u("1577896851231-70ef18881754", 800) },
+  { hora: "10:15", titulo: "Recreo con fruta", texto: "Quioscos saludables y patios con sombra. Los más grandes cuidan a los pequeños en el patio de inicial.", foto: u("1588075592446-265fd1e6e76f", 800) },
+  { hora: "11:00", titulo: "Inglés todos los días", texto: "Canciones en inicial, proyectos en primaria y debates en secundaria, siempre en inglés.", foto: u("1529390079861-591de354faf5", 800) },
+  { hora: "13:30", titulo: "Talleres", texto: "Robótica, danza, fútbol, vóley o música, según lo que cada alumno elige en el bimestre.", foto: u("1531482615713-2afd69097998", 800) },
+];
+
+export const TESTIMONIOS = [
+  {
+    nombre: "Andrea Vela",
+    rol: "Mamá de Sofía, 3.° de primaria",
+    foto: u("1531123897727-8f129e1688ce", 400),
+    texto: "Sofía llegó tímida de otro colegio. En un año la vimos exponer en la feria de ciencias frente a todos. Su tutora nos llama cuando algo pasa, bueno o malo.",
+  },
+  {
+    nombre: "Martín Arévalo",
+    rol: "Papá de Diego, 5.° de secundaria",
+    foto: u("1500648767791-00dcc994a43e", 400),
+    texto: "La orientación vocacional fue clave. Diego tenía claro qué quería estudiar antes de terminar el colegio y entró a la universidad en su primer intento.",
+  },
+  {
+    nombre: "Don Julio Panduro",
+    rol: "Abuelo de dos exalumnas",
+    foto: u("1472099645785-5658abf4ff4e", 400),
+    texto: "Mis dos nietas estudiaron aquí desde inicial. Lo que más valoro es que, además de buenas alumnas, salieron buenas personas.",
+  },
+];
+
+export const VIDA_ESCOLAR = [
+  { src: u("1541339907198-e08756dedf3f", 1200), alt: "Promoción lanzando sus birretes al aire en la ceremonia de graduación", pie: "Promoción 2026" },
+  { src: u("1588075592446-265fd1e6e76f", 900), alt: "Niños de primaria sentados en el piso del aula durante una actividad", pie: "Lectura en grupo" },
+  { src: u("1531482615713-2afd69097998", 900), alt: "Estudiantes de secundaria trabajando juntos en computadoras", pie: "Taller de programación" },
+  { src: u("1562774053-701939374585", 900), alt: "Edificio principal del colegio con jardines", pie: "Nuestro campus" },
+  { src: u("1503676382389-4809596d5290", 900), alt: "Estudiante sonriente con sus cuadernos", pie: "Primer día de clases" },
+];
+
+export const NOTICIAS = [
+  { fecha: "2026-09-26", titulo: "Ganamos la feria regional de ciencias", texto: "El proyecto de purificación de agua con semillas de 4.° de secundaria representará a Ucayali en la etapa nacional.", foto: u("1531482615713-2afd69097998", 800) },
+  { fecha: "2026-09-12", titulo: "Campeonas de vóley sub-14", texto: "Nuestras chicas ganaron el torneo interescolar de Yarinacocha sin perder un solo set.", foto: u("1497486751825-1233686d5d80", 800) },
+  { fecha: "2026-08-30", titulo: "96% de la promoción ingresó a la universidad", texto: "La promoción 2025 ingresó a universidades de Pucallpa, Lima y el extranjero.", foto: u("1541339907198-e08756dedf3f", 800) },
 ];
 
 export const fechaLegible = (iso: string, opciones: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" }) =>

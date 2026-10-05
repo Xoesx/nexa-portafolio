@@ -30,7 +30,7 @@ export function Header() {
         <nav aria-label="Principal" className="hidden items-center gap-7 text-[15px] font-semibold text-[#5a4f47] lg:flex">
           <Link href={`${BASE}#niveles`} className="hover:text-[#7a1f2b]">Niveles</Link>
           <Link href={`${BASE}#propuesta`} className="hover:text-[#7a1f2b]">Propuesta</Link>
-          <Link href={`${BASE}#fechas`} className="hover:text-[#7a1f2b]">Calendario</Link>
+          <Link href={`${BASE}#dia`} className="hover:text-[#7a1f2b]">Un día en Horizonte</Link>
           <Link href={`${BASE}/admision`} className="hover:text-[#7a1f2b]">Admisión</Link>
         </nav>
         <Link
