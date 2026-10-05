@@ -8,10 +8,10 @@ Sitio y portafolio de NEXA, un estudio de desarrollo web en Pucallpa (Perú). Ha
 
 | Demo | Ruta | Qué muestra |
 |------|------|-------------|
-| Clínica Dental Alba | [`/demos/dental`](https://nexa-portafolio.vercel.app/demos/dental) | Clínica dental con agenda de citas en 4 pasos: tratamiento, especialista, horarios libres según la duración y datos del paciente. La cita se descarga como archivo `.ics`. |
-| Raíces Inmobiliaria | [`/demos/inmobiliaria`](https://nexa-portafolio.vercel.app/demos/inmobiliaria) | Portal de propiedades con filtros guardados en la URL, fichas estáticas con galería, calculadora hipotecaria (sistema francés) y formularios de contacto y tasación. |
-| Colegio Horizonte | [`/demos/colegio`](https://nexa-portafolio.vercel.app/demos/colegio) | Colegio con pestañas por nivel, calendario de admisión y preinscripción en 3 pasos que calcula el grado según la edad al 31 de marzo. |
-| Sabor Criollo | [`/demos/restaurante`](https://nexa-portafolio.vercel.app/demos/restaurante) | Restaurante con carta filtrable, reservas validadas con Zod en el servidor, blog, páginas legales, aviso de cookies y panel de administración. |
+| Clínica Dental Alba | [`/demos/dental`](https://nexa-portafolio.vercel.app/demos/dental) | Clínica dental humanizada: “¿Qué te está pasando?” lleva del síntoma a la cita correcta, historia de la doctora, reseñas y agenda en 4 pasos con horarios libres según la duración. La cita se descarga como archivo `.ics`. |
+| Raíces Inmobiliaria | [`/demos/inmobiliaria`](https://nexa-portafolio.vercel.app/demos/inmobiliaria) | Portal de terrenos, casas, departamentos y locales: mapa interactivo propio (OpenStreetMap, sin librerías), filtros con precio en soles o dólares guardados en la URL, favoritos con comparativo por m², fichas con asesor, visita agendada y calculadora hipotecaria. |
+| Colegio Horizonte | [`/demos/colegio`](https://nexa-portafolio.vercel.app/demos/colegio) | Colegio con mensaje de la directora, “Un día en Horizonte”, testimonios de familias, vida escolar y noticias, más preinscripción en 3 pasos que calcula el grado según la edad al 31 de marzo. |
+| Sabor Criollo | [`/demos/restaurante`](https://nexa-portafolio.vercel.app/demos/restaurante) | Restaurante criollo y amazónico con reserva rápida desde la portada (horarios disponibles por día), eventos, historia de la familia, reseñas, reservas validadas con Zod en el servidor y panel de administración. |
 
 Cada demo tiene su caso de estudio en `/proyectos/<slug>` (reto, recorrido por pantallas, métricas de Lighthouse y detalles técnicos).
 
