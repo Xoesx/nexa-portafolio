@@ -17,7 +17,7 @@ export function TarjetaPropiedad({ p, prioridad = false }: { p: Propiedad; prior
           sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
           className="object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
         />
-        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+        <div className="absolute left-3 right-16 top-3 flex flex-wrap gap-1.5">
           <span className={`rounded-md px-2 py-1 text-[11px] font-bold uppercase tracking-wide ${estado.clase}`}>{estado.etiqueta}</span>
           <span className="rounded-md bg-white/95 px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-[#1c1917]">{p.operacion}</span>
           {p.nueva && <span className="rounded-md bg-[#b4532a] px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-white">Nuevo</span>}
