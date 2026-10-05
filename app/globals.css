@@ -2,71 +2,404 @@
 
 /*
  * Marca NEXA
- * tinta      — texto principal (azul marino casi negro)
- * marino     — superficies oscuras de la marca
- * papel      — fondo general (blanco)
- * niebla     — fondo alterno y superficies suaves
- * azul       — acciones principales y acentos
- * cielo      — acento sobre fondos oscuros
+ * Colores calmados. Todos son variables: el modo oscuro y las secciones `.invertido`
+ * solo cambian sus valores, así los componentes usan siempre los mismos nombres.
+ *
+ * fondo       — fondo de la página
+ * superficie  — tarjetas, ventanas y campos
+ * alterno     — fondo de secciones alternas
+ * tinta       — texto principal
+ * tenue       — texto secundario (contraste AA sobre fondo y alterno)
+ * linea       — bordes y divisores
+ * acento      — enlaces, botones y detalles (azul sereno)
  */
 @theme {
-  --color-tinta: #0b1f3a;
-  --color-marino: #0a1a33;
-  --color-papel: #ffffff;
-  --color-niebla: #f2f5fa;
-  --color-linea: #dde3ec;
-  --color-azul: #2457f5;
-  --color-azul-hondo: #1a41c9;
-  --color-cielo: #9dbbff;
+  --color-fondo: #f7f8fa;
+  --color-superficie: #ffffff;
+  --color-alterno: #eef1f5;
+  --color-tinta: #131c2e;
+  --color-tenue: #4b566c;
+  --color-linea: #dbe1e9;
+  --color-acento: #2f4fbf;
+  --color-acento-hondo: #263f9f;
+  --color-acento-suave: #e4eaf8;
+  --color-sobre-acento: #ffffff;
   --color-whatsapp: #1f9d55;
 
   --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Las variables de fuente se definen en el layout de (sitio), por eso van "inline". */
-@theme inline {
-  --font-sans: var(--font-instrument), system-ui, sans-serif;
-  --font-display: var(--font-schibsted), system-ui, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--color-papel);
-  color: var(--color-tinta);
-}
-
-:where(a, button, summary):focus-visible {
-  outline: 2px solid var(--color-azul);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-.sobre-oscuro :where(a, button, summary):focus-visible {
-  outline-color: var(--color-cielo);
-}
-
-::selection {
-  background: var(--color-azul);
-  color: #fff;
-}
-
 /*
- * Movimiento: entrada del hero al cargar y revelado al hacer scroll.
- * Solo CSS. Si el navegador no soporta scroll-driven animations,
- * el contenido se muestra sin animación (nunca queda oculto).
+ * Las fuentes se cargan en el layout de (sitio), por eso van "inline" y con respaldo:
+ * los demos no las descargan y tampoco heredan estos valores.
  */
+@theme inline {
+  --font-sans: var(--font-source, ui-sans-serif), system-ui, sans-serif;
+  --font-display: var(--font-archivo, ui-sans-serif), system-ui, sans-serif;
+  --font-mono: var(--font-plex, ui-monospace), ui-monospace, monospace;
+  --font-mano: var(--font-caveat, cursive), cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Valores de siempre para los demos, que traen su propia identidad. */
+  body {
+    background-color: #ffffff;
+    color: #0b1f3a;
+  }
+
+  :where(a, button, summary):focus-visible {
+    outline: 2px solid #2457f5;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: #2457f5;
+    color: #fff;
+  }
+
+  /* Páginas de NEXA: el lienzo toma el color del tema (también al estirar la página en el celular). */
+  :root:has(.nexa),
+  :root:has(.nexa) body {
+    background-color: var(--color-fondo);
+  }
+
+  /* Modo oscuro: solo en las páginas de NEXA. El atributo lo pone el script del layout raíz. */
+  :root[data-tema="oscuro"]:has(.nexa) {
+    color-scheme: dark;
+    --color-fondo: #0c1119;
+    --color-superficie: #131a25;
+    --color-alterno: #10161f;
+    --color-tinta: #e4e8ef;
+    --color-tenue: #a0aabd;
+    --color-linea: #232c3b;
+    --color-acento: #91a8f4;
+    --color-acento-hondo: #b0c1f8;
+    --color-acento-suave: #18223a;
+    --color-sobre-acento: #0c1119;
+  }
+
+  .nexa {
+    --logo-fondo: #131c2e;
+    --logo-diagonal: #7d97ea;
+    interpolate-size: allow-keywords;
+  }
+
+  :root[data-tema="oscuro"] .nexa {
+    --logo-fondo: #3653c4;
+    --logo-diagonal: #0c1119;
+  }
+
+  .nexa :where(a, button, summary, [tabindex]):focus-visible {
+    outline-color: var(--color-acento);
+  }
+
+  .nexa ::selection {
+    background: var(--color-acento);
+    color: var(--color-sobre-acento);
+  }
+
+  /* Títulos: Archivo ancha. En pantallas chicas se angosta un poco para que las palabras largas quepan. */
+  .font-display {
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    font-stretch: 104%;
+  }
+
+  @media (min-width: 48rem) {
+    .font-display {
+      font-stretch: 112%;
+    }
+  }
+}
+
+@layer components {
+  /* Secciones invertidas: azul noche en modo claro, un tono más alto en modo oscuro. */
+  .invertido {
+    color-scheme: dark;
+    --color-fondo: #121a2b;
+    --color-superficie: #19233a;
+    --color-alterno: #162036;
+    --color-tinta: #edf0f5;
+    --color-tenue: #a8b2c6;
+    --color-linea: #2a3550;
+    --color-acento: #a3b6f6;
+    --color-acento-hondo: #bccbf9;
+    --color-acento-suave: #1e2944;
+    --color-sobre-acento: #0c1119;
+    --logo-fondo: #3653c4;
+    --logo-diagonal: #0c1119;
+    background-color: var(--color-fondo);
+    color: var(--color-tinta);
+  }
+
+  :root[data-tema="oscuro"] .nexa .invertido {
+    --color-fondo: #161e2c;
+    --color-superficie: #1c2534;
+    --color-alterno: #19212f;
+    --color-linea: #2b3547;
+  }
+
+  /* Tarjetas de proyecto: cada una con un tono suave de la marca de su demo. */
+  .tarjeta {
+    --tono: var(--tono-claro);
+    background-color: var(--tono);
+  }
+
+  :root[data-tema="oscuro"] .nexa .tarjeta {
+    --tono: var(--tono-oscuro);
+  }
+
+  /* Asistente de WhatsApp del hero: claro u oscuro como la app. */
+  .chat {
+    --chat-fondo: #efeae2;
+    --chat-cabecera: #0f6b5f;
+    --chat-entra: #ffffff;
+    --chat-sale: #d9fdd3;
+    --chat-texto: #111b21;
+    --chat-pie: #f7f5f2;
+    --chat-opcion: #0f6b5f;
+  }
+
+  :root[data-tema="oscuro"] .nexa .chat {
+    --chat-fondo: #0b141a;
+    --chat-cabecera: #1f2c34;
+    --chat-entra: #1f2c34;
+    --chat-sale: #005c4b;
+    --chat-texto: #e9edef;
+    --chat-pie: #111b21;
+    --chat-opcion: #7fd6c4;
+  }
+
+  /* Botón de tema: luna en modo claro, sol en modo oscuro. */
+  .tema-boton .icono-sol,
+  :root[data-tema="oscuro"] .tema-boton .icono-luna {
+    display: none;
+  }
+
+  :root[data-tema="oscuro"] .tema-boton .icono-sol {
+    display: block;
+  }
+
+  /* Preguntas: el contenido se despliega con altura animada donde el navegador lo permite. */
+  .faq::details-content {
+    block-size: 0;
+    overflow: clip;
+  }
+
+  .faq[open]::details-content {
+    block-size: auto;
+  }
+
+  /* Línea que une los pasos del proceso. */
+  .proceso::before {
+    content: "";
+    position: absolute;
+    inset-inline: 1.125rem;
+    top: 1.125rem;
+    height: 1px;
+    background: var(--color-linea);
+    transform-origin: 0 50%;
+  }
+
+  @media (max-width: 63.99rem) {
+    .proceso::before {
+      inset-inline: auto;
+      left: 1.125rem;
+      top: 1.125rem;
+      bottom: 1.125rem;
+      width: 1px;
+      height: auto;
+      transform-origin: 50% 0;
+    }
+  }
+}
+
+/* ===================================================================
+ * Movimiento
+ * Todo es CSS salvo la inclinación con el mouse (Movimiento.tsx).
+ * Si el navegador no soporta animaciones ligadas al scroll, el contenido
+ * se muestra quieto; con "reducir movimiento" no se anima nada.
+ * =================================================================== */
+
 @keyframes aparecer {
   from {
     opacity: 0;
-    translate: 0 16px;
+    translate: 0 18px;
   }
   to {
     opacity: 1;
     translate: 0 0;
   }
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: perspective(1100px) translateY(48px) rotateX(18deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes trazar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes enderezar {
+  to {
+    transform: rotateX(0deg) rotateY(-5deg) translateY(-28px);
+  }
+}
+
+@keyframes girar-cifra {
+  from {
+    transform: rotateY(-46deg) rotateX(18deg);
+  }
+  to {
+    transform: rotateY(24deg) rotateX(-8deg);
+  }
+}
+
+@keyframes crecer-x {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes crecer-y {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes progreso {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes cabecera {
+  to {
+    border-bottom-color: var(--color-linea);
+    background-color: color-mix(in oklab, var(--color-fondo) 86%, transparent);
+  }
+}
+
+@keyframes flotante {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+  }
+}
+
+/* --- Escena 3D del hero: ventana del navegador detrás, teléfono con el chat delante --- */
+.escena {
+  perspective: 1500px;
+  perspective-origin: 70% 30%;
+}
+
+.escena-giro {
+  transform-style: preserve-3d;
+  transform: rotateX(10deg) rotateY(-20deg);
+  transform-origin: 30% 50%;
+}
+
+.escena-puntero {
+  transform: rotateY(calc(var(--px, 0) * 9deg)) rotateX(calc(var(--py, 0) * -7deg));
+  transition: transform 0.9s var(--ease-suave);
+}
+
+.escena-frente {
+  translate: calc(var(--px, 0) * -16px) calc(var(--py, 0) * -10px);
+  transition: translate 0.9s var(--ease-suave);
+}
+
+/* --- Dispositivos de las tarjetas: suben al aparecer y se inclinan con el mouse --- */
+.dispositivo {
+  transform: perspective(1200px) rotateX(calc(var(--py, 0) * -8deg)) rotateY(calc(var(--px, 0) * 10deg));
+  transition: transform 0.7s var(--ease-suave);
+}
+
+[data-inclinar][data-activo] .dispositivo {
+  transition-duration: 0.2s;
+}
+
+.brillo {
+  position: relative;
+}
+
+.brillo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    520px circle at calc((var(--px, 0) + 0.5) * 100%) calc((var(--py, 0) + 0.5) * 100%),
+    rgb(255 255 255 / 0.2),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+[data-inclinar][data-activo] .brillo::after {
+  opacity: 1;
+}
+
+/* --- Cifra 3D: un "4" con volumen hecho de capas --- */
+.cifra {
+  perspective: 1000px;
+}
+
+.cifra-giro {
+  display: grid;
+  transform-style: preserve-3d;
+  transform: rotateY(-26deg) rotateX(10deg);
+}
+
+.cifra-giro > span {
+  grid-area: 1 / 1;
+  transform: translateZ(calc(var(--i) * -2.4px));
+}
+
+.cifra-giro > .cifra-mas {
+  transform: translateZ(70px);
+}
+
+/* --- Trazos a mano (subrayados y flechas) --- */
+.trazo {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+/* --- Barra de progreso de lectura y cabecera --- */
+.barra-progreso {
+  transform-origin: 0 50%;
+  scale: 0 1;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -75,12 +408,104 @@ body {
     animation-delay: var(--retraso, 0ms);
   }
 
+  .trazo {
+    stroke-dashoffset: 1;
+    animation: trazar 1.1s var(--ease-suave) forwards;
+    animation-delay: var(--retraso, 600ms);
+  }
+
+  .faq::details-content {
+    transition:
+      block-size 0.4s var(--ease-suave),
+      content-visibility 0.4s allow-discrete;
+  }
+
   @supports (animation-timeline: view()) {
     [data-revelar] {
       animation: aparecer linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 35%;
+      animation-range: entry 0% entry 45%;
     }
+
+    [data-revelar="3d"] {
+      animation-name: surgir;
+      transform-origin: 50% 100%;
+      animation-range: entry 0% entry 75%;
+    }
+
+    /* Elementos en fila: cada uno entra un poco después que el anterior. */
+    [data-revelar][style*="--i"] {
+      animation-range: entry calc(var(--i) * 10%) entry calc(45% + var(--i) * 10%);
+    }
+
+    .dispositivo-sube {
+      animation: surgir linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+      transform-origin: 50% 100%;
+    }
+
+    .escena-giro {
+      animation: enderezar linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 80vh;
+    }
+
+    /* La cifra queda fija (sticky) mientras se lee la sección: gira según el avance de toda la sección. */
+    .cifra-seccion {
+      view-timeline: --cifra block;
+    }
+
+    .cifra-giro {
+      animation: girar-cifra linear both;
+      animation-timeline: --cifra;
+      animation-range: cover 0% cover 100%;
+    }
+
+    .proceso::before {
+      animation: crecer-x linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+
+    .trazo-al-ver {
+      view-timeline: --trazo block;
+    }
+
+    .trazo-al-ver .trazo {
+      animation: trazar linear both;
+      animation-timeline: --trazo;
+      animation-range: entry 40% cover 55%;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (max-width: 63.99rem) {
+      .proceso::before {
+        animation-name: crecer-y;
+      }
+    }
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .barra-progreso {
+    animation: progreso linear both;
+    animation-timeline: scroll(root);
+  }
+
+  .cabecera {
+    border-bottom-color: transparent;
+    background-color: transparent;
+    animation: cabecera linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120px;
+  }
+
+  .flotante {
+    animation: flotante linear both;
+    animation-timeline: scroll(root);
+    animation-range: 280px 420px;
   }
 }
 
@@ -88,12 +513,29 @@ body {
   html {
     scroll-behavior: auto;
   }
+
+  .escena-puntero,
+  .escena-frente,
+  .dispositivo {
+    transform: none;
+    translate: none;
+    transition: none;
+  }
 }
 
-/* Títulos de la marca: peso y espaciado por defecto (las utilidades de Tailwind lo pueden cambiar). */
-@layer base {
-  .font-display {
-    font-weight: 700;
-    letter-spacing: -0.025em;
+/* Cambio de tema con un círculo que se abre desde el botón (Vista de transiciones). */
+html.cambio-tema::view-transition-old(root),
+html.cambio-tema::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media print {
+  [data-entrada],
+  [data-revelar],
+  .dispositivo-sube,
+  .flotante {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }

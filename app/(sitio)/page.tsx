@@ -1,15 +1,13 @@
-import { Calidad } from "../_components/Calidad";
-import { Contacto } from "../_components/Contacto";
+import type { Metadata } from "next";
+import { Experiencia } from "../_components/Experiencia";
 import { Footer } from "../_components/Footer";
 import { Header } from "../_components/Header";
 import { Hero } from "../_components/Hero";
 import { Precios } from "../_components/Precios";
 import { Preguntas } from "../_components/Preguntas";
-import { Proceso } from "../_components/Proceso";
 import { Proyectos } from "../_components/Proyectos";
-import { Servicios } from "../_components/Servicios";
 import { WhatsAppFlotante } from "../_components/WhatsAppFlotante";
-import type { Metadata } from "next";
+import { HABILIDADES } from "../_data/contenido";
 import { SITIO } from "../_data/sitio";
 
 // La canónica va aquí y no en el layout raíz: si no, todas las páginas la heredarían y apuntarían a la home.
@@ -29,6 +27,7 @@ const datosEstructurados = {
     addressRegion: SITIO.region,
     addressCountry: "PE",
   },
+  knowsAbout: ["Desarrollo web", ...HABILIDADES.flatMap((h) => h.items)],
   sameAs: [SITIO.github],
 };
 
@@ -43,12 +42,9 @@ export default function Home() {
       <main id="inicio">
         <Hero />
         <Proyectos />
-        <Servicios />
-        <Calidad />
-        <Proceso />
+        <Experiencia />
         <Precios />
         <Preguntas />
-        <Contacto />
       </main>
       <Footer />
       <WhatsAppFlotante />

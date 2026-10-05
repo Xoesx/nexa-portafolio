@@ -11,6 +11,12 @@ export type Proyecto = {
   nombre: string;
   rubro: string;
   resumen: string;
+  /** Una línea para la tarjeta de la home. */
+  bajada: string;
+  /** Tres etiquetas cortas para la tarjeta. */
+  etiquetas: string[];
+  /** Color de la marca del demo y sus tonos suaves para el fondo de la tarjeta. */
+  tono: { marca: string; claro: string; oscuro: string };
   incluye: string[];
   ruta: string;
   codigo: string;
@@ -32,6 +38,9 @@ export const PROYECTOS: Proyecto[] = [
     rubro: "Salud · Clínica dental",
     resumen:
       "Sitio para una clínica dental que empieza por lo que siente el paciente: elige su problema, ve quién lo va a atender y reserva un horario libre en menos de un minuto, a cualquier hora.",
+    bajada: "El paciente cuenta qué le pasa y reserva un horario libre en menos de un minuto.",
+    etiquetas: ["Citas en línea", "Horarios reales", "Recordatorio en el celular"],
+    tono: { marca: "#136f63", claro: "#e2efeb", oscuro: "#11211e" },
     incluye: [
       "Agenda en línea con horarios reales por especialista",
       "“¿Qué te está pasando?”: del síntoma a la cita correcta",
@@ -100,6 +109,9 @@ export const PROYECTOS: Proyecto[] = [
     rubro: "Inmobiliaria · Venta y alquiler",
     resumen:
       "Portal inmobiliario con terrenos, casas, departamentos y locales: buscador con mapa interactivo, precios en soles o dólares, favoritos, fichas con asesor y calculadora de crédito.",
+    bajada: "Terrenos y casas con buscador, mapa interactivo y calculadora de crédito.",
+    etiquetas: ["Mapa propio", "Soles y dólares", "Favoritos"],
+    tono: { marca: "#b5532a", claro: "#f2e7df", oscuro: "#231a15" },
     incluye: [
       "Mapa interactivo con los precios de cada propiedad",
       "Filtros por tipo, distrito, dormitorios y precio en S/ o US$",
@@ -168,6 +180,9 @@ export const PROYECTOS: Proyecto[] = [
     rubro: "Educación · Colegio privado",
     resumen:
       "Sitio institucional que muestra el colegio por dentro: un día de clases hora por hora, la directora, las familias y la vida escolar, con una preinscripción en línea que calcula sola el grado del alumno.",
+    bajada: "El colegio por dentro y una preinscripción que calcula sola el grado del alumno.",
+    etiquetas: ["Preinscripción", "Grado automático", "Constancia"],
+    tono: { marca: "#7a1f2b", claro: "#f0e5e6", oscuro: "#22181a" },
     incluye: [
       "Preinscripción en línea en tres pasos",
       "Grado calculado según la fecha de nacimiento",
@@ -236,6 +251,9 @@ export const PROYECTOS: Proyecto[] = [
     rubro: "Gastronomía · Restaurante",
     resumen:
       "Restaurante de cocina criolla y amazónica con reserva rápida desde la portada, eventos, la historia de la familia y un panel para que el dueño actualice platos y precios sin depender de nadie.",
+    bajada: "Reserva de mesa desde la portada y un panel para que el dueño edite su carta.",
+    etiquetas: ["Reservas", "Panel del dueño", "API validada"],
+    tono: { marca: "#c2410c", claro: "#f1e9dc", oscuro: "#221c14" },
     incluye: [
       "Reserva rápida con horarios disponibles",
       "Eventos, sabores de la selva y reseñas",
@@ -300,55 +318,38 @@ export const PROYECTOS: Proyecto[] = [
   },
 ];
 
-export type Servicio = {
-  titulo: string;
-  texto: string;
-  ejemplo: { label: string; href: string };
-};
-
-export const SERVICIOS: Servicio[] = [
+/** Con lo que trabajamos, agrupado. Sin versiones: lo importante es el oficio. */
+export const HABILIDADES: { area: string; items: string[] }[] = [
   {
-    titulo: "Páginas web que venden",
-    texto:
-      "Tu negocio en Google y en el celular de tus clientes: rápida, clara y con un botón directo a tu WhatsApp. Sin plantillas genéricas.",
-    ejemplo: { label: "Mira Sabor Criollo", href: "/proyectos/sabor-criollo" },
+    area: "Frontend",
+    items: ["HTML5", "CSS3 (Flexbox y Grid)", "JavaScript", "jQuery", "Bootstrap", "Diseño responsive", "Estándares W3C"],
   },
-  {
-    titulo: "Citas y reservas en línea",
-    texto:
-      "Tus clientes eligen el día y la hora que están libres, a cualquier hora. Tú recibes la agenda ordenada, sin llamadas ni cuadernos.",
-    ejemplo: { label: "Prueba la agenda dental", href: "/proyectos/clinica-dental" },
-  },
-  {
-    titulo: "Catálogos con buscador",
-    texto:
-      "Propiedades, productos o servicios con filtros, fichas detalladas y formularios que te llegan listos para responder.",
-    ejemplo: { label: "Busca en la inmobiliaria", href: "/proyectos/inmobiliaria" },
-  },
-  {
-    titulo: "Formularios y sistemas a medida",
-    texto:
-      "Admisiones, inscripciones, paneles de administración y asistentes de WhatsApp: lo que hoy haces a mano en papel o en hojas de cálculo.",
-    ejemplo: { label: "Preinscríbete en el colegio", href: "/proyectos/colegio" },
-  },
+  { area: "Backend", items: ["PHP (POO y MVC)", "Laravel", "API RESTful", "MySQL"] },
+  { area: "CMS", items: ["WordPress", "CMS propio, hecho desde cero"] },
+  { area: "UX/UI", items: ["Experiencia de usuario", "Interfaz de usuario", "Accesibilidad y usabilidad"] },
+  { area: "Diseño", items: ["Photoshop", "Illustrator", "Inkscape"] },
+  { area: "Herramientas", items: ["Git y GitHub", "VS Code", "Sublime Text", "Dreamweaver", "XAMPP y WAMP"] },
 ];
+
+/** Con qué está hecho este sitio y sus demos (se puede comprobar en el código). */
+export const STACK_SITIO = ["Next.js", "React", "TypeScript", "Tailwind CSS"];
 
 export const PASOS = [
   {
     titulo: "Conversamos",
-    texto: "Por WhatsApp o videollamada nos cuentas cómo funciona tu negocio y qué quieres resolver. Es gratis.",
+    texto: "Nos cuentas qué necesitas, por WhatsApp o videollamada. No cuesta nada.",
   },
   {
     titulo: "Propuesta por escrito",
-    texto: "Te enviamos qué incluye, cuánto cuesta y en cuántos días lo entregamos. Si no te convence, no pagas nada.",
+    texto: "Qué incluye, cuánto cuesta y cuándo lo entregamos. Si no te convence, no pagas.",
   },
   {
     titulo: "Construimos contigo",
-    texto: "Ves avances en un enlace privado y pides cambios mientras lo hacemos, no al final.",
+    texto: "Ves los avances en un enlace privado y pides cambios en el camino.",
   },
   {
-    titulo: "Entregamos y te enseñamos",
-    texto: "Lo publicamos, te capacitamos para manejarlo y te acompañamos durante tu periodo de soporte.",
+    titulo: "Entregamos",
+    texto: "Lo publicamos, te enseñamos a usarlo y seguimos contigo en el soporte.",
   },
 ];
 

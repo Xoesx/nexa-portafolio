@@ -28,9 +28,19 @@ export const viewport: Viewport = {
   themeColor: "#0b1f3a",
 };
 
+/*
+ * Pone el tema (claro u oscuro) en <html> antes del primer pintado, así no hay destello.
+ * Usa la elección guardada y, si no hay, la del sistema. Solo las páginas de NEXA lo usan:
+ * el CSS del modo oscuro está limitado a ellas y los demos se ven siempre igual.
+ */
+const TEMA = `(function(){try{var t=localStorage.getItem("nexa-tema");if(t!=="oscuro"&&t!=="claro")t=matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro";document.documentElement.dataset.tema=t}catch(e){}})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className="h-full antialiased">
+    <html lang="es" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: TEMA }} />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

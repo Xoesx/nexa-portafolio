@@ -49,6 +49,16 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["zod"],
   },
 
+  // Un solo dominio para Google y para compartir: www y el subdominio de Vercel llevan al dominio propio.
+  async redirects() {
+    return ["www.nexaportafolio.site", "nexa-portafolio.vercel.app"].map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host }],
+      destination: "https://nexaportafolio.site/:path*",
+      permanent: true,
+    }));
+  },
+
   async headers() {
     return [
       {
