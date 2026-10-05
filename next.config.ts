@@ -19,7 +19,7 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://embed.tawk.to",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
-      "img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com https://*.tile.openstreetmap.org https://www.google-analytics.com https://www.googletagmanager.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://www.google-analytics.com https://www.googletagmanager.com",
       "frame-src 'self' https://www.openstreetmap.org https://www.google.com https://maps.google.com https://www.googletagmanager.com",
       "connect-src 'self' https://wa.me https://*.tile.openstreetmap.org https://www.google-analytics.com https://*.tawk.to wss://*.tawk.to",
       "media-src 'self'",

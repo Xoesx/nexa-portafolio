@@ -4,7 +4,7 @@ import { Listado } from "./Listado";
 
 export const metadata: Metadata = {
   title: "Propiedades en venta y alquiler",
-  description: "Casas y departamentos en Callería, Yarinacocha y Manantay, con filtros por operación, tipo, distrito y dormitorios.",
+  description: "Terrenos, casas, departamentos y locales en Callería, Yarinacocha y Manantay, con filtros, mapa y precios en soles o dólares.",
 };
 
 export default function PropiedadesPage() {
