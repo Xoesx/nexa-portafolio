@@ -80,8 +80,8 @@ function Tarjeta({ p, i }: { p: Proyecto; i: number }) {
           {texto}
           <div className={`relative h-[230px] sm:h-[300px] lg:h-auto ${espejo ? "lg:order-first" : ""}`}>
             <div
-              className={`dispositivo-sube absolute left-7 right-[-14%] top-0 sm:left-9 lg:top-auto lg:bottom-[-16%] ${
-                espejo ? "lg:left-[-24%] lg:right-3" : "lg:left-3 lg:right-[-24%]"
+              className={`dispositivo-sube absolute left-7 right-[-14%] top-0 sm:left-9 lg:top-auto lg:bottom-[-14%] ${
+                espejo ? "lg:left-[-62%] lg:right-2" : "lg:left-2 lg:right-[-62%]"
               }`}
             >
               <div className="dispositivo brillo rounded-xl">
@@ -89,7 +89,7 @@ function Tarjeta({ p, i }: { p: Proyecto; i: number }) {
                   src={p.captura.escritorio}
                   alt={`Página de inicio del demo ${p.nombre}`}
                   ruta={p.ruta}
-                  sizes="(min-width: 1152px) 560px, (min-width: 1024px) 52vw, 96vw"
+                  sizes="(min-width: 1152px) 640px, (min-width: 1024px) 56vw, 96vw"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ function Tarjeta({ p, i }: { p: Proyecto; i: number }) {
 export function Proyectos() {
   return (
     <section id="proyectos" className="scroll-mt-24 border-t border-linea">
-      <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-[1.25fr_1fr] md:items-end" data-revelar>
           <div>
             <p className="font-mono text-[13px] text-tenue">Proyectos</p>

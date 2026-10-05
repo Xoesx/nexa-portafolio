@@ -8,15 +8,15 @@ import { FlechaMano, Subrayado } from "./Trazos";
 const retraso = (ms: number) => ({ "--retraso": `${ms}ms` }) as React.CSSProperties;
 
 const DATOS = [
-  { valor: `+${SITIO.anios}`, texto: "años de experiencia" },
-  { valor: `${PROYECTOS.length}`, texto: "demos que puedes usar" },
-  { valor: "24 h", texto: "como máximo para responderte" },
+  { valor: `+${SITIO.anios}`, texto: "años haciendo webs" },
+  { valor: `${PROYECTOS.length}`, texto: "demos para probar" },
+  { valor: "24 h", texto: "máximo para responder" },
 ];
 
 /** Teléfono con el asistente de WhatsApp: el bisel es oscuro en ambos temas, como uno real. */
 function Telefono({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-[2.6rem] bg-[#0b0f17] p-[9px] shadow-[0_50px_90px_-40px_rgb(10_18_36/0.75)] ring-1 ring-white/5">
+    <div className="rounded-[2.6rem] bg-[#0b0f17] p-[9px] shadow-[0_50px_90px_-40px_rgb(10_18_36/0.75)] ring-1 ring-white/10">
       <div className="relative overflow-hidden rounded-[2.05rem]">
         <div aria-hidden="true" className="absolute left-1/2 top-2.5 z-10 h-[22px] w-[84px] -translate-x-1/2 rounded-full bg-[#0b0f17]" />
         {children}
@@ -28,7 +28,7 @@ function Telefono({ children }: { children: React.ReactNode }) {
 export function Hero() {
   return (
     <section data-inclinar className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-5 pb-20 pt-10 sm:pt-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-8 lg:pb-28 lg:pt-16">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-5 pb-16 pt-10 sm:pt-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-8 lg:pb-24 lg:pt-14">
         <div>
           <p data-entrada className="flex items-center gap-3 font-mono text-[13px] text-tenue">
             <span aria-hidden="true" className="h-px w-8 bg-tinta/35" />
@@ -72,9 +72,9 @@ export function Hero() {
 
           <dl data-entrada style={retraso(320)} className="mt-12 grid max-w-xl grid-cols-3 border-t border-linea pt-6">
             {DATOS.map((d) => (
-              <div key={d.texto} className="flex flex-col-reverse border-l border-linea px-3 first:border-l-0 first:pl-0 sm:px-5">
-                <dt className="mt-1.5 font-mono text-[11.5px] leading-snug text-tenue sm:text-xs">{d.texto}</dt>
-                <dd className="font-display text-[1.75rem] leading-none sm:text-[2.1rem]">{d.valor}</dd>
+              <div key={d.texto} className="flex flex-col border-l border-linea px-3 first:border-l-0 first:pl-0 sm:px-5">
+                <dt className="order-2 mt-2 font-mono text-[11.5px] leading-snug text-tenue sm:text-xs">{d.texto}</dt>
+                <dd className="order-1 font-display text-[1.75rem] leading-none sm:text-[2.1rem]">{d.valor}</dd>
               </div>
             ))}
           </dl>
@@ -106,11 +106,11 @@ export function Hero() {
               <br />
               una opción
             </p>
-            <FlechaMano demora={1500} className="ml-6 mt-1 h-14 w-16" />
+            <FlechaMano demora={1500} className="ml-3 mt-1 h-14 w-16 rotate-[38deg]" />
           </div>
 
           <p className="mt-6 max-w-[300px] text-sm leading-relaxed text-tenue max-sm:mx-auto max-sm:text-center">
-            Un asistente de WhatsApp hecho por nosotros. El tuyo respondería con tus horarios, precios y turnos.
+            Un asistente de WhatsApp que hicimos para una clínica. El tuyo respondería con tus propios horarios y precios.
           </p>
         </div>
       </div>

@@ -40,7 +40,7 @@ function Cifra3D() {
 export function Experiencia() {
   return (
     <section id="experiencia" className="cifra-seccion scroll-mt-24 overflow-x-clip border-t border-linea bg-alterno">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-20 md:py-28 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-20 md:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div>
           <div className="lg:sticky lg:top-32">
             <Cifra3D />

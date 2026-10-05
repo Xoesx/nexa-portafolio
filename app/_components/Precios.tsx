@@ -45,7 +45,7 @@ function Contenido({ p }: { p: Plan }) {
 export function Precios() {
   return (
     <section id="precios" className="scroll-mt-24 border-t border-linea">
-      <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
         {/* Cómo trabajamos */}
         <div className="max-w-2xl" data-revelar>
           <p className="font-mono text-[13px] text-tenue">Cómo trabajamos</p>
@@ -67,14 +67,14 @@ export function Precios() {
         </ol>
 
         {/* Planes: dos columnas sueltas y el destacado elevado, sin tres cajas iguales. */}
-        <div className="mt-24 grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:items-end" data-revelar>
+        <div className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:items-end" data-revelar>
           <h3 className="font-display text-[1.6rem] leading-tight sm:text-[2rem]">Precios de partida, en soles</h3>
           <p className="max-w-sm text-[15px] leading-relaxed text-tenue">
             El monto final depende de lo que necesites y lo confirmas por escrito antes de pagar.
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 md:mt-14 md:grid-cols-3 md:items-stretch">
+        <div className="mt-10 grid grid-cols-1 md:mt-24 md:grid-cols-3 md:items-stretch">
           {PLANES.map((p) =>
             p.destacado ? (
               <div key={p.nombre} data-revelar className="relative mb-6 mt-16 md:-my-6">

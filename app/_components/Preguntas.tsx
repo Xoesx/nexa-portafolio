@@ -4,7 +4,7 @@ import { COTIZAR, EXTERNO } from "../_data/sitio";
 export function Preguntas() {
   return (
     <section id="faq" className="scroll-mt-24 border-t border-linea bg-alterno">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 pb-32 pt-20 md:grid-cols-[0.8fr_1.2fr] md:pb-40 md:pt-28">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 pb-32 pt-20 md:grid-cols-[0.8fr_1.2fr] md:pb-36 md:pt-24">
         <div data-revelar className="md:sticky md:top-28 md:self-start">
           <h2 className="font-display text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.03] text-balance">Preguntas frecuentes</h2>
           <p className="mt-4 max-w-xs leading-relaxed text-tenue">

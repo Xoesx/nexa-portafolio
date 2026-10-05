@@ -229,10 +229,9 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         <section>
           <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_1.4fr] md:items-end" data-revelar>
-              <h2 className="font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-[1.05]">Lo que no se ve, pero cuenta</h2>
+              <h2 className="font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-[1.05]">Detalles técnicos</h2>
               <p className="leading-relaxed text-tenue">
-                Detalles técnicos que hacen que el sitio sea seguro, rápido y fácil de mantener. Todos se pueden revisar
-                en el código.
+                Lo que hace que el sitio sea seguro, rápido y fácil de mantener. Todo se puede revisar en el código.
               </p>
             </div>
             <ul className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">

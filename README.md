@@ -1,17 +1,17 @@
 # NEXA — Soluciones Digitales
 
-Sitio y portafolio de NEXA, un estudio de desarrollo web en Pucallpa (Perú). Hacemos páginas web, agendas de citas, catálogos con buscador y sistemas a medida para negocios.
+Sitio y portafolio de NEXA, un estudio de desarrollo web en Pucallpa (Perú) con más de 4 años de experiencia. Hacemos páginas web, agendas de citas, catálogos con buscador y sistemas a medida para negocios.
 
-**En vivo:** https://nexa-portafolio.vercel.app
+**En vivo:** https://nexaportafolio.site
 
 ## Proyectos incluidos
 
 | Demo | Ruta | Qué muestra |
 |------|------|-------------|
-| Clínica Dental Alba | [`/demos/dental`](https://nexa-portafolio.vercel.app/demos/dental) | Clínica dental humanizada: “¿Qué te está pasando?” lleva del síntoma a la cita correcta, historia de la doctora, reseñas y agenda en 4 pasos con horarios libres según la duración. La cita se descarga como archivo `.ics`. |
-| Raíces Inmobiliaria | [`/demos/inmobiliaria`](https://nexa-portafolio.vercel.app/demos/inmobiliaria) | Portal de terrenos, casas, departamentos y locales: mapa interactivo propio (OpenStreetMap, sin librerías), filtros con precio en soles o dólares guardados en la URL, favoritos con comparativo por m², fichas con asesor, visita agendada y calculadora hipotecaria. |
-| Colegio Horizonte | [`/demos/colegio`](https://nexa-portafolio.vercel.app/demos/colegio) | Colegio con mensaje de la directora, “Un día en Horizonte”, testimonios de familias, vida escolar y noticias, más preinscripción en 3 pasos que calcula el grado según la edad al 31 de marzo. |
-| Sabor Criollo | [`/demos/restaurante`](https://nexa-portafolio.vercel.app/demos/restaurante) | Restaurante criollo y amazónico con reserva rápida desde la portada (horarios disponibles por día), eventos, historia de la familia, reseñas, reservas validadas con Zod en el servidor y panel de administración. |
+| Clínica Dental Alba | [`/demos/dental`](https://nexaportafolio.site/demos/dental) | Clínica dental humanizada: “¿Qué te está pasando?” lleva del síntoma a la cita correcta, historia de la doctora, reseñas y agenda en 4 pasos con horarios libres según la duración. La cita se descarga como archivo `.ics`. |
+| Raíces Inmobiliaria | [`/demos/inmobiliaria`](https://nexaportafolio.site/demos/inmobiliaria) | Portal de terrenos, casas, departamentos y locales: mapa interactivo propio (OpenStreetMap, sin librerías), filtros con precio en soles o dólares guardados en la URL, favoritos con comparativo por m², fichas con asesor, visita agendada y calculadora hipotecaria. |
+| Colegio Horizonte | [`/demos/colegio`](https://nexaportafolio.site/demos/colegio) | Colegio con mensaje de la directora, “Un día en Horizonte”, testimonios de familias, vida escolar y noticias, más preinscripción en 3 pasos que calcula el grado según la edad al 31 de marzo. |
+| Sabor Criollo | [`/demos/restaurante`](https://nexaportafolio.site/demos/restaurante) | Restaurante criollo y amazónico con reserva rápida desde la portada (horarios disponibles por día), eventos, historia de la familia, reseñas, reservas validadas con Zod en el servidor y panel de administración. |
 
 Cada demo tiene su caso de estudio en `/proyectos/<slug>` (reto, recorrido por pantallas, métricas de Lighthouse y detalles técnicos).
 
@@ -36,7 +36,7 @@ app/
 │   ├── page.tsx            # Home: solo compone las secciones
 │   └── proyectos/[slug]/   # Casos de estudio, generados en build
 ├── globals.css             # Tokens de marca (colores, tipografía) y animaciones
-├── _components/            # Secciones de la home (Header, Hero, Proyectos, Precios…)
+├── _components/            # Secciones de la home (Hero, Proyectos, Experiencia, Precios…), tema y movimiento
 ├── _data/                  # Textos, proyectos, métricas de Lighthouse y datos del sitio
 ├── icon.svg, apple-icon.png, opengraph-image.png
 ├── robots.ts, sitemap.ts
@@ -51,16 +51,26 @@ public/proyectos/           # Capturas de los demos (WebP) para la home y los ca
 
 ## Marca
 
-| Token | Color | Uso |
-|-------|-------|-----|
-| `tinta` | `#0B1F3A` | Texto principal |
-| `marino` | `#0A1A33` | Secciones oscuras y footer |
-| `papel` | `#FFFFFF` | Fondo |
-| `niebla` | `#F2F5FA` | Fondo alterno |
-| `azul` | `#2457F5` | Acciones principales y acentos |
-| `cielo` | `#9DBBFF` | Acento sobre fondos oscuros |
+Los colores son variables CSS en `app/globals.css`. El modo oscuro y las secciones `.invertido` solo cambian sus valores, así los componentes usan siempre los mismos nombres.
 
-Tipografías: Schibsted Grotesk para títulos e Instrument Sans para el texto. Cada demo tiene su propia identidad (colores y fuentes) para mostrar rango.
+| Token | Claro | Oscuro | Uso |
+|-------|-------|--------|-----|
+| `fondo` | `#F7F8FA` | `#0C1119` | Fondo de la página |
+| `superficie` | `#FFFFFF` | `#131A25` | Tarjetas, ventanas y campos |
+| `alterno` | `#EEF1F5` | `#10161F` | Secciones alternas |
+| `tinta` | `#131C2E` | `#E4E8EF` | Texto principal |
+| `tenue` | `#4B566C` | `#A0AABD` | Texto secundario |
+| `linea` | `#DBE1E9` | `#232C3B` | Bordes y divisores |
+| `acento` | `#2F4FBF` | `#91A8F4` | Enlaces, botones y detalles |
+
+Cada tarjeta de proyecto usa un tono suave de la marca de su demo (`tono` en `app/_data/contenido.ts`).
+
+Tipografías, cada una con un papel: Archivo ancha para títulos, Source Sans 3 para el texto, IBM Plex Mono para etiquetas y datos, y Caveat solo para las notas escritas a mano. Cada demo tiene su propia identidad (colores y fuentes) para mostrar rango.
+
+### Modo oscuro y movimiento
+
+- El tema se guarda en `localStorage` (`nexa-tema`); si no hay elección, sigue al sistema. Un script en el layout raíz lo aplica antes del primer pintado y el CSS del modo oscuro solo afecta a las páginas de NEXA, nunca a los demos.
+- Las animaciones al hacer scroll son CSS (`animation-timeline`); en navegadores sin soporte el contenido se muestra quieto. La inclinación 3D con el mouse está en `app/_components/Movimiento.tsx`. Con "reducir movimiento" no se anima nada.
 
 ## Desarrollo
 
@@ -71,7 +81,7 @@ npm run build
 npm run lint
 ```
 
-Si cambias el contenido de la home o de los casos de estudio, edita `app/_data/contenido.ts`. Los puntajes de Lighthouse están en `app/_data/metricas.ts` y solo se muestran los que fueron medidos de verdad sobre el sitio publicado (PageSpeed Insights, modo celular). Para cambiar el dominio, el número de WhatsApp o el enlace de GitHub, edita `app/_data/sitio.ts`.
+Si cambias el contenido de la home o de los casos de estudio, edita `app/_data/contenido.ts`. Los puntajes de Lighthouse están en `app/_data/metricas.ts` y solo se muestran los que fueron medidos de verdad sobre el sitio publicado (PageSpeed Insights, modo celular). Las habilidades de la sección Experiencia están en `HABILIDADES`, en el mismo archivo. Para cambiar el dominio, los años de experiencia, el número de WhatsApp o el enlace de GitHub, edita `app/_data/sitio.ts`.
 
 ## Contacto
 
