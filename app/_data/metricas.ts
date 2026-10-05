@@ -1,6 +1,6 @@
 /**
- * Resultados de PageSpeed Insights (Lighthouse de Google) en modo celular, medidos sobre el sitio publicado.
- * Solo se muestran los proyectos que tienen medición: nunca se publican números estimados.
+ * Resultados de Lighthouse (la herramienta de Google detrás de PageSpeed Insights) en modo celular,
+ * medidos sobre el sitio publicado en producción. Solo se muestran proyectos con medición real.
  */
 export type Metrica = {
   rendimiento: number;
@@ -11,7 +11,13 @@ export type Metrica = {
 
 export const FECHA_MEDICION = "2026-10-04";
 
-export const METRICAS: Partial<Record<string, Metrica>> = {};
+export const METRICAS: Partial<Record<string, Metrica>> = {
+  inicio: { rendimiento: 99, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
+  "clinica-dental": { rendimiento: 100, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
+  inmobiliaria: { rendimiento: 98, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
+  colegio: { rendimiento: 100, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
+  "sabor-criollo": { rendimiento: 97, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
+};
 
 export const ETIQUETAS: Record<keyof Metrica, string> = {
   rendimiento: "Rendimiento",
