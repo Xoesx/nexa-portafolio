@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { wa } from "../lib/whatsapp";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ReservationForm } from "../components/ReservationForm";
@@ -29,7 +31,10 @@ export default function ReservarPage() {
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-          <ReservationForm />
+          {/* El formulario lee fecha, hora y personas de la URL; Suspense permite generar la página de forma estática. */}
+          <Suspense fallback={<div className="min-h-[32rem] rounded-2xl border border-[#2A1F14]/10 bg-white" />}>
+            <ReservationForm />
+          </Suspense>
           <aside className="space-y-4">
             <div className="rounded-2xl border border-[#1F1A15]/8 bg-white p-7">
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6E6457]">
@@ -58,7 +63,7 @@ export default function ReservarPage() {
                 Para grupos de más de 8 personas, escríbenos por WhatsApp y coordinamos un menú especial.
               </p>
               <a
-                href="https://wa.me/51999888777?text=Hola,%20quiero%20reservar%20para%20un%20grupo%20grande."
+                href={wa("Hola, quiero reservar para un grupo grande en Sabor Criollo.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-5 inline-block text-[12px] font-semibold uppercase tracking-[0.15em] underline underline-offset-4"

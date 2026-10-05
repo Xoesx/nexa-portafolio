@@ -41,7 +41,7 @@ export default function AdminConfiguracion() {
             </label>
             <input
               type="text"
-              defaultValue="+51 999 888 777"
+              defaultValue="+51 918 641 720"
               className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-[#C1440E]"
             />
           </div>
@@ -112,7 +112,7 @@ export default function AdminConfiguracion() {
           </label>
           <label className="flex items-center gap-3 text-sm">
             <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#C1440E]" />
-            Enviar mensaje de WhatsApp al +51 999 888 777
+            Enviar mensaje de WhatsApp al +51 918 641 720
           </label>
           <label className="flex items-center gap-3 text-sm">
             <input type="checkbox" className="h-4 w-4 accent-[#C1440E]" />

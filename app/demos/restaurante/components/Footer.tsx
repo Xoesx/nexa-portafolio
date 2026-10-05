@@ -1,3 +1,4 @@
+import { wa } from "../lib/whatsapp";
 import Link from "next/link";
 
 export function Footer() {
@@ -60,8 +61,8 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
               <li>Jr. Comercio 245<br />Pucallpa, Ucayali</li>
               <li>
-                <a href="https://wa.me/51999888777" className="hover:text-[#C1440E]">
-                  +51 999 888 777
+                <a href={wa("Hola, quiero hacer una consulta a Sabor Criollo.")} target="_blank" rel="noopener noreferrer" className="hover:text-[#C1440E]">
+                  WhatsApp
                 </a>
               </li>
               <li>

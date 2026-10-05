@@ -3,14 +3,17 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { Categorias } from "./components/Categorias";
 import { Recomendados } from "./components/Recomendados";
-import { Nosotros } from "./components/Nosotros";
+import { Cocinera } from "./components/Cocinera";
+import { Experiencias } from "./components/Experiencias";
 import { Oferta } from "./components/Oferta";
+import { Resenas } from "./components/Resenas";
+import { SaboresSelva } from "./components/SaboresSelva";
 import { Footer } from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Sabor Criollo | Cocina peruana en Pucallpa",
   description:
-    "Recetas familiares preparadas al momento. Reserva tu mesa por WhatsApp. Jr. Comercio 245, Pucallpa.",
+    "Cocina criolla y amazónica en Pucallpa: lomo saltado, ceviche, juane y tacacho. Reserva tu mesa en línea con horarios disponibles.",
   openGraph: {
     title: "Sabor Criollo | Demo de NEXA",
     description: "Sitio completo para un restaurante, con carta, reservas y panel de administración. Hecho por NEXA.",
@@ -26,7 +29,10 @@ export default function RestauranteHome() {
         <Hero />
         <Categorias />
         <Recomendados />
-        <Nosotros />
+        <Experiencias />
+        <Cocinera />
+        <SaboresSelva />
+        <Resenas />
         <Oferta />
       </main>
       <Footer />

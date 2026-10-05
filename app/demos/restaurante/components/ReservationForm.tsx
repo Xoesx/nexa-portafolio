@@ -1,9 +1,19 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { reservaSchema } from "../lib/validation/schemas";
 
+const OCASIONES = ["Cumpleaños", "Aniversario", "Reunión de trabajo", "Almuerzo familiar"];
+
 export function ReservationForm() {
+  // Si viene desde la reserva rápida de la portada, el formulario llega con fecha, hora y personas.
+  const params = useSearchParams();
+  const pre = {
+    fecha: /^\d{4}-\d{2}-\d{2}$/.test(params.get("fecha") ?? "") ? params.get("fecha")! : "",
+    hora: /^\d{2}:\d{2}$/.test(params.get("hora") ?? "") ? params.get("hora")! : "",
+    personas: Math.min(20, Math.max(1, Number(params.get("personas")) || 2)),
+  };
   const [enviando, setEnviando] = useState(false);
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [exito, setExito] = useState<string | null>(null);
@@ -20,7 +30,7 @@ export function ReservationForm() {
       personas: Number(formData.get("personas") ?? 0),
       fecha: String(formData.get("fecha") ?? ""),
       hora: String(formData.get("hora") ?? ""),
-      notas: String(formData.get("notas") ?? "") || undefined,
+      notas: [formData.get("ocasion") ? `[${formData.get("ocasion")}]` : "", String(formData.get("notas") ?? "")].filter(Boolean).join(" ") || undefined,
     };
 
     const resultado = reservaSchema.safeParse(datos);
@@ -69,21 +79,28 @@ export function ReservationForm() {
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="text-sm font-semibold">Personas</label>
-          <select name="personas" defaultValue="2" className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20].map((n) => (<option key={n} value={n}>{n}</option>))}
+          <select name="personas" defaultValue={String(pre.personas)} className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]">
+            {[...new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20, pre.personas])].sort((a, b) => a - b).map((n) => (<option key={n} value={n}>{n}</option>))}
           </select>
           {errores.personas && <p className="mt-1 text-xs text-red-600">{errores.personas}</p>}
         </div>
         <div>
           <label className="text-sm font-semibold">Fecha</label>
-          <input name="fecha" type="date" className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]" />
+          <input name="fecha" type="date" defaultValue={pre.fecha} className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]" />
           {errores.fecha && <p className="mt-1 text-xs text-red-600">{errores.fecha}</p>}
         </div>
         <div>
           <label className="text-sm font-semibold">Hora</label>
-          <input name="hora" type="time" className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]" />
+          <input name="hora" type="time" defaultValue={pre.hora} className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]" />
           {errores.hora && <p className="mt-1 text-xs text-red-600">{errores.hora}</p>}
         </div>
+      </div>
+      <div>
+        <label htmlFor="rs-ocasion" className="text-sm font-semibold">Ocasión (opcional)</label>
+        <select id="rs-ocasion" name="ocasion" defaultValue="" className="mt-1 w-full rounded-lg border border-[#2A1F14]/20 bg-[#FDF8F0] px-4 py-3 outline-none focus:border-[#B14A28]">
+          <option value="">Sin ocasión especial</option>
+          {OCASIONES.map((o) => (<option key={o}>{o}</option>))}
+        </select>
       </div>
       <div>
         <label className="text-sm font-semibold">Notas (opcional)</label>

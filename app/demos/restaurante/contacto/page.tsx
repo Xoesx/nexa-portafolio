@@ -1,3 +1,4 @@
+import { wa } from "../lib/whatsapp";
 import type { Metadata } from "next";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 const infoContacto = [
   { icon: "📍", label: "Dirección", valor: "Jr. Comercio 245, Pucallpa, Ucayali" },
-  { icon: "📞", label: "Teléfono", valor: "+51 999 888 777" },
+  { icon: "📞", label: "Teléfono", valor: "(061) 000 000" },
   { icon: "✉️", label: "Correo", valor: "hola@saborcriollo.pe" },
   { icon: "🕐", label: "Horario", valor: "Lun – Dom · 12:00 a 22:00" },
 ];
@@ -99,7 +100,7 @@ export default function ContactoPage() {
                 Escríbenos y te respondemos en menos de 5 minutos.
               </p>
               <a
-                href="https://wa.me/51999888777?text=Hola,%20quiero%20hacer%20una%20consulta."
+                href={wa("Hola, quiero hacer una consulta a Sabor Criollo.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-[#1DA851]"

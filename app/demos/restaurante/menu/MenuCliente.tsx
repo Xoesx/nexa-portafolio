@@ -1,5 +1,6 @@
 "use client";
 
+import { wa } from "../lib/whatsapp";
 import { useState } from "react";
 import { usePlatos } from "../lib/context/PlatosContext";
 import { CATEGORIAS } from "../data/menu";
@@ -116,7 +117,7 @@ export function MenuCliente() {
             Reservar mesa
           </a>
           <a
-            href="https://wa.me/51999888777"
+            href={wa("Hola, quiero hacer un pedido en Sabor Criollo.")}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-white/30 px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.15em] transition hover:bg-white/10"
