@@ -9,7 +9,11 @@ import { Proceso } from "../_components/Proceso";
 import { Proyectos } from "../_components/Proyectos";
 import { Servicios } from "../_components/Servicios";
 import { WhatsAppFlotante } from "../_components/WhatsAppFlotante";
+import type { Metadata } from "next";
 import { SITIO } from "../_data/sitio";
+
+// La canónica va aquí y no en el layout raíz: si no, todas las páginas la heredarían y apuntarían a la home.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 const datosEstructurados = {
   "@context": "https://schema.org",

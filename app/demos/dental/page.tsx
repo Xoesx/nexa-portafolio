@@ -16,7 +16,7 @@ const ICONOS: Record<string, React.ReactNode> = {
 
 function Estrellas({ n, tam = 16 }: { n: number; tam?: number }) {
   return (
-    <span className="inline-flex text-[#f59e0b]" aria-label={`${n} de 5 estrellas`}>
+    <span role="img" className="inline-flex text-[#f59e0b]" aria-label={`${n} de 5 estrellas`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <svg key={i} width={tam} height={tam} viewBox="0 0 24 24" fill={i <= n ? "currentColor" : "#e2e8e7"} aria-hidden="true">
           <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9Z" />

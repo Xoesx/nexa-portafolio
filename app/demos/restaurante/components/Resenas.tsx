@@ -21,7 +21,7 @@ export function Resenas() {
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
           {RESENAS.map((r) => (
             <figure key={r.nombre} className="flex flex-col rounded-3xl bg-white p-7 shadow-[0_10px_30px_-15px_rgba(31,26,21,0.2)]">
-              <p className="text-[#E89B1C]" aria-label="5 de 5 estrellas">★★★★★</p>
+              <p role="img" className="text-[#E89B1C]" aria-label="5 de 5 estrellas">★★★★★</p>
               <blockquote className="mt-3 flex-1 text-[17px] leading-relaxed text-[#1F1A15]">“{r.texto}”</blockquote>
               <figcaption className="mt-6 flex items-center gap-3">
                 <span className="grid h-11 w-11 place-items-center rounded-full text-sm font-semibold text-white" style={{ background: r.color }} aria-hidden="true">

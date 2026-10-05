@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: SITIO.descripcion,
   applicationName: SITIO.nombre,
   authors: [{ name: SITIO.nombreLegal }],
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "es_PE",

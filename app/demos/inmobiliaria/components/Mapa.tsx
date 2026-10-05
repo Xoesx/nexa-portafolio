@@ -93,6 +93,41 @@ export function Mapa({ puntos, alto = 460, zoomMax = 15, className = "" }: { pun
 
   const elegido = puntos.find((p) => p.id === abierto);
 
+  // Agrupamos los marcadores que se tapan entre sí: al tocar un grupo, el mapa se acerca a esa zona.
+  // Se fusiona repetidamente hasta que ningún marcador ni grupo se superpone con otro.
+  type Grupo = { puntos: PuntoMapa[]; x0: number; y0: number; x1: number; y1: number };
+  const caja = (miembros: PuntoMapa[]) => {
+    if (miembros.length === 1) {
+      const { x, y } = posicion(miembros[0]);
+      const anchoPastilla = miembros[0].etiqueta.length * 7 + 22;
+      return { x0: x - anchoPastilla / 2 - 4, y0: y - 34, x1: x + anchoPastilla / 2 + 4, y1: y + 4 };
+    }
+    const x = miembros.reduce((t, p) => t + posicion(p).x, 0) / miembros.length;
+    const y = miembros.reduce((t, p) => t + posicion(p).y, 0) / miembros.length;
+    return { x0: x - 28, y0: y - 28, x1: x + 28, y1: y + 28 };
+  };
+  let grupos: Grupo[] = actual ? puntos.map((p) => ({ puntos: [p], ...caja([p]) })) : [];
+  for (let fusionado = true; fusionado; ) {
+    fusionado = false;
+    buscar: for (let i = 0; i < grupos.length; i++) {
+      for (let j = i + 1; j < grupos.length; j++) {
+        const [g, h] = [grupos[i], grupos[j]];
+        if (g.x0 < h.x1 && g.x1 > h.x0 && g.y0 < h.y1 && g.y1 > h.y0) {
+          const miembros = [...g.puntos, ...h.puntos];
+          grupos = [...grupos.filter((_, k) => k !== i && k !== j), { puntos: miembros, ...caja(miembros) }];
+          fusionado = true;
+          break buscar;
+        }
+      }
+    }
+  }
+  const acercarA = (miembros: PuntoMapa[]) => {
+    const v = encuadrar(miembros, ancho, alto, clave, ZOOM_MAX);
+    setAbierto(null);
+    // Si los puntos casi coinciden, al menos acercamos dos niveles.
+    setVista(actual && v.z <= actual.z ? { ...v, z: Math.min(ZOOM_MAX, actual.z + 2), cx: v.cx * 2 ** (Math.min(ZOOM_MAX, actual.z + 2) - v.z), cy: v.cy * 2 ** (Math.min(ZOOM_MAX, actual.z + 2) - v.z) } : v);
+  };
+
   return (
     <div
       ref={contenedor}
@@ -148,9 +183,35 @@ export function Mapa({ puntos, alto = 460, zoomMax = 15, className = "" }: { pun
         ))}
       </div>
 
-      {/* Marcadores */}
+      {/* Grupos de marcadores cercanos */}
       {actual &&
-        puntos.map((p) => {
+        grupos
+          .filter((g) => g.puntos.length > 1)
+          .map((g) => {
+            const x = g.puntos.reduce((s, p) => s + posicion(p).x, 0) / g.puntos.length;
+            const y = g.puntos.reduce((s, p) => s + posicion(p).y, 0) / g.puntos.length;
+            if (x < -60 || y < -40 || x > ancho + 60 || y > alto + 40) return null;
+            return (
+              <button
+                key={g.puntos.map((p) => p.id).join("|")}
+                type="button"
+                data-no-arrastrar
+                onClick={() => acercarA(g.puntos)}
+                aria-label={`${g.puntos.length} propiedades en esta zona. Acercar el mapa.`}
+                style={{ left: x, top: y }}
+                className="absolute z-10 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[3px] border-white bg-[#1c1917] text-sm font-bold text-white shadow-lg ring-4 ring-[#b4532a]/35 transition-transform hover:scale-110"
+              >
+                {g.puntos.length}
+              </button>
+            );
+          })}
+
+      {/* Marcadores sueltos */}
+      {actual &&
+        grupos
+          .filter((g) => g.puntos.length === 1)
+          .map((g) => g.puntos[0])
+          .map((p) => {
           const { x, y } = posicion(p);
           if (x < -60 || y < -40 || x > ancho + 60 || y > alto + 40) return null;
           const activo = p.id === abierto;
