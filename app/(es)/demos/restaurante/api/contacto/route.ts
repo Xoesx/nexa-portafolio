@@ -1,28 +1,13 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
-
-const contactoSchema = z.object({
-  nombre: z.string().min(2, "El nombre es obligatorio").max(100),
-  email: z.string().email("Correo inválido").max(120),
-  asunto: z.string().min(2, "El asunto es obligatorio").max(120),
-  mensaje: z.string().min(10, "El mensaje debe tener al menos 10 caracteres").max(2000),
-  acepto: z.literal(true, {
-    message: "Debes aceptar la política de privacidad",
-  }),
-});
+import { erroresPorCampo } from "../../lib/validation/errores";
+import { contactoSchema } from "../../lib/validation/schemas";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const resultado = contactoSchema.safeParse(body);
 
-    if (!resultado.success) {
-      const errores: Record<string, string> = {};
-      resultado.error.issues.forEach((issue) => {
-        errores[String(issue.path[0])] = issue.message;
-      });
-      return NextResponse.json({ errores }, { status: 400 });
-    }
+    if (!resultado.success) return NextResponse.json({ errores: erroresPorCampo(resultado.error.issues) }, { status: 400 });
 
     // Aquí, en producción, enviarías el correo con Resend, SendGrid o Nodemailer.
     //   import { Resend } from "resend";
@@ -34,9 +19,7 @@ export async function POST(request: Request) {
     //     text: `De: ${resultado.data.nombre} <${resultado.data.email}>\n\n${resultado.data.mensaje}`,
     //   });
 
-    // Para la demo solo registramos en consola y devolvemos éxito.
-    console.log("[Contacto]", resultado.data);
-
+    // En la demo el mensaje no se envía ni se guarda en ningún lado, tampoco en los logs del servidor.
     return NextResponse.json(
       { ok: true, mensaje: "Tu mensaje fue enviado. Te responderemos pronto." },
       { status: 200 },
