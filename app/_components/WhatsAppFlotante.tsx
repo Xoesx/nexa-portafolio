@@ -10,7 +10,7 @@ export function WhatsAppFlotante({ idioma }: { idioma: Idioma }) {
       href={cotizar(idioma)}
       {...EXTERNO}
       aria-label={TEXTOS[idioma].flotante}
-      className="flotante fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-white shadow-[0_14px_30px_-12px_rgb(31_157_85/0.75)] transition-transform duration-300 hover:[transform:translateY(-3px)] motion-reduce:transition-none sm:right-6 sm:bottom-6"
+      className="flotante fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-white shadow-[0_14px_30px_-12px_rgb(31_157_85/0.75),inset_0_1px_0_rgb(255_255_255/0.25)] transition-[translate,scale] duration-500 ease-resorte hover:-translate-y-1 active:scale-95 active:duration-100 motion-reduce:transition-none sm:right-6 sm:bottom-6"
     >
       <IconoWhatsApp tam={27} />
     </a>

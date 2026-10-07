@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Skills y agentes del editor (no son parte del sitio).
+    ".agents/**",
+    ".claude/**",
+    ".github/agents/**",
+    ".github/hooks/**",
+    ".github/skills/**",
   ]),
 ]);
 

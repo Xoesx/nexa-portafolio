@@ -1,8 +1,10 @@
 import { baseInicio, RUTA, type Idioma } from "../_data/idioma";
 import { cotizar, EXTERNO, NAVEGACION } from "../_data/sitio";
 import { TEXTOS } from "../_data/textos";
+import { Boton } from "./Boton";
 import { IconoWhatsApp } from "./Iconos";
 import { Logo } from "./Logo";
+import { MenuMovil } from "./MenuMovil";
 import { TemaBoton } from "./TemaBoton";
 
 type Props = {
@@ -13,62 +15,79 @@ type Props = {
   alterna: string;
 };
 
+/**
+ * Navegación en forma de isla: una píldora de vidrio que flota sobre la página, separada del borde.
+ * El contenido pasa por debajo y se ve desenfocado a través de ella. En el celular, la isla lleva
+ * el logo, WhatsApp y el botón del menú.
+ */
 export function Header({ idioma, enInicio = true, alterna }: Props) {
   const t = TEXTOS[idioma].header;
   const tema = TEXTOS[idioma].tema;
   const base = baseInicio(idioma, enInicio);
-  const navegacion = NAVEGACION[idioma];
+  const enlaces = NAVEGACION[idioma].map((e) => ({ href: base + e.href, label: e.label }));
 
   return (
-    <header className="cabecera sticky top-0 z-40 border-b border-linea bg-fondo/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center gap-2 px-5 py-3 sm:gap-3">
-        <a href={enInicio ? "#inicio" : RUTA.inicio[idioma]} aria-label={t.irInicio} className="mr-auto rounded-md">
-          <Logo />
-        </a>
+    <>
+      <a href="#contenido" className="saltar rounded-full bg-tinta px-5 py-3 text-sm font-semibold text-fondo">
+        {t.saltar}
+      </a>
 
-        <nav aria-label={t.navPrincipal} className="mr-3 hidden items-center gap-7 text-[15px] md:flex">
-          {navegacion.map((e) => (
-            <a key={e.href} href={base + e.href} className="text-tenue transition-colors hover:text-tinta">
-              {e.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Cambiar de idioma recarga la página: cada idioma tiene su propio layout raíz. */}
-        <a
-          href={alterna}
-          hrefLang={t.otroIdioma.hreflang}
-          lang={t.otroIdioma.hreflang}
-          aria-label={t.otroIdioma.nombre}
-          title={t.otroIdioma.nombre}
-          className="grid h-11 min-w-11 place-items-center rounded-md px-2 font-mono text-[13px] font-medium tracking-wide text-tenue transition-colors hover:bg-superficie hover:text-tinta"
-        >
-          {t.otroIdioma.corto}
-        </a>
-        <TemaBoton etiqueta={tema.etiqueta} titulo={tema.titulo} />
-        <a
-          href={cotizar(idioma)}
-          {...EXTERNO}
-          className="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full bg-tinta text-sm font-semibold text-fondo transition-colors hover:bg-acento hover:text-sobre-acento sm:px-5"
-        >
-          <IconoWhatsApp tam={17} />
-          <span className="sr-only sm:not-sr-only">{t.whatsappLargo}</span>
-        </a>
-      </div>
-
-      <nav
-        aria-label={t.navSecciones}
-        className="flex justify-between gap-1 overflow-x-auto border-t border-linea px-3 text-sm text-tenue [scrollbar-width:none] sm:justify-start sm:gap-4 md:hidden"
-      >
-        {navegacion.map((e) => (
-          <a key={e.href} href={base + e.href} className="flex min-h-11 items-center whitespace-nowrap px-2">
-            {e.label}
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+        <div className="isla pointer-events-auto mx-auto flex w-full max-w-6xl items-center gap-1 rounded-full py-1.5 pl-4 pr-1.5 lg:w-max lg:max-w-none lg:gap-1.5 lg:pl-5">
+          <a href={enInicio ? "#contenido" : RUTA.inicio[idioma]} aria-label={t.irInicio} className="mr-auto rounded-full lg:mr-5">
+            <Logo />
           </a>
-        ))}
-      </nav>
 
-      {/* Avance de lectura: crece con el scroll (solo donde el navegador lo soporta). */}
-      <div aria-hidden="true" className="barra-progreso absolute inset-x-0 -bottom-px h-[2px] bg-acento" />
-    </header>
+          <nav aria-label={t.navPrincipal} className="hidden items-center lg:flex">
+            {enlaces.map((e) => (
+              <a
+                key={e.href}
+                href={e.href}
+                className="rounded-full px-4 py-2 text-[15px] text-tenue transition-colors duration-300 ease-resorte hover:bg-tinta/[0.05] hover:text-tinta"
+              >
+                {e.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Cambiar de idioma recarga la página: cada idioma tiene su propio layout raíz. */}
+          <a
+            href={alterna}
+            hrefLang={t.otroIdioma.hreflang}
+            lang={t.otroIdioma.hreflang}
+            aria-label={t.otroIdioma.nombre}
+            title={t.otroIdioma.nombre}
+            className="hidden h-11 min-w-11 place-items-center rounded-full px-2 font-mono text-[13px] font-medium tracking-wide text-tenue transition-colors duration-300 hover:bg-tinta/[0.05] hover:text-tinta lg:grid"
+          >
+            {t.otroIdioma.corto}
+          </a>
+          <div className="hidden lg:block">
+            <TemaBoton etiqueta={tema.etiqueta} titulo={tema.titulo} />
+          </div>
+          <div className="ml-1.5 hidden lg:block">
+            <Boton href={cotizar(idioma)} externo variante="tinta" tam="sm" icono={<IconoWhatsApp tam={16} />}>
+              {t.whatsappLargo}
+            </Boton>
+          </div>
+
+          {/* Celular: WhatsApp a un toque y el menú. */}
+          <a
+            href={cotizar(idioma)}
+            {...EXTERNO}
+            aria-label={t.whatsappLargo}
+            className="grid h-11 w-11 place-items-center rounded-full bg-tinta text-fondo transition-transform duration-300 ease-resorte active:scale-95 lg:hidden"
+          >
+            <IconoWhatsApp tam={18} />
+          </a>
+          <MenuMovil
+            enlaces={enlaces}
+            etiquetas={{ abrir: t.abrirMenu, cerrar: t.cerrarMenu, nav: t.navSecciones }}
+            idiomaAlterno={{ href: alterna, nombre: t.otroIdioma.nombre, hreflang: t.otroIdioma.hreflang }}
+            tema={tema}
+            cta={{ href: cotizar(idioma), label: t.whatsappLargo }}
+          />
+        </div>
+      </header>
+    </>
   );
 }

@@ -40,7 +40,7 @@ export function Inicio({ idioma }: { idioma: Idioma }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(datosEstructurados).replace(/</g, "\\u003c") }}
       />
       <Header idioma={idioma} alterna={RUTA.inicio[otro]} />
-      <main id="inicio">
+      <main id="contenido">
         <Hero idioma={idioma} />
         <Proyectos idioma={idioma} />
         <Experiencia idioma={idioma} />

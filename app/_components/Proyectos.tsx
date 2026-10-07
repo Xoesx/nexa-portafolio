@@ -33,7 +33,12 @@ function Tarjeta({ p, i, total, idioma }: { p: Proyecto; i: number; total: numbe
   const t = TEXTOS[idioma].proyectos;
   // Primera y última, anchas con la captura de escritorio; las del medio, angostas con el celular.
   const ancha = i === 0 || i === total - 1;
-  const tonos = { "--tono-claro": p.tono.claro, "--tono-oscuro": p.tono.oscuro } as React.CSSProperties;
+  const tonos = {
+    "--tono-claro": p.tono.claro,
+    "--tono-oscuro": p.tono.oscuro,
+    "--radio": "2.25rem",
+    "--aire": "0.5rem",
+  } as React.CSSProperties;
 
   const texto = (
     <div className="relative z-10 flex flex-col p-7 sm:p-9">
@@ -41,7 +46,7 @@ function Tarjeta({ p, i, total, idioma }: { p: Proyecto; i: number; total: numbe
         <span aria-hidden="true" className="h-2 w-2 rounded-full" style={{ background: p.tono.marca }} />
         {p.rubro}
       </p>
-      <h3 className="mt-4 font-display text-[1.65rem] leading-[1.1] sm:text-[1.85rem]">
+      <h3 className="mt-4 font-display text-[1.7rem] leading-[1.08] tracking-[-0.03em] sm:text-[1.95rem]">
         <Link href={RUTA.caso(p.slug)[idioma]} className="after:absolute after:inset-0 after:z-10 after:content-['']">
           {p.nombre}
         </Link>
@@ -55,9 +60,14 @@ function Tarjeta({ p, i, total, idioma }: { p: Proyecto; i: number; total: numbe
         ))}
       </ul>
       <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-semibold">
-        <span className="inline-flex items-center gap-1.5 text-acento">
+        <span className="inline-flex items-center gap-2.5 rounded-full bg-tinta py-1 pl-4 pr-1 text-fondo transition-colors duration-500 ease-resorte group-hover:bg-acento group-hover:text-sobre-acento">
           {t.verCaso}
-          <Flecha className="transition-transform duration-300 group-hover:translate-x-1" />
+          <span
+            aria-hidden="true"
+            className="grid h-8 w-8 place-items-center rounded-full bg-fondo/[0.14] transition-transform duration-500 ease-resorte group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105"
+          >
+            <Flecha />
+          </span>
         </span>
         <Link
           href={p.ruta}
@@ -74,13 +84,10 @@ function Tarjeta({ p, i, total, idioma }: { p: Proyecto; i: number; total: numbe
     // La última va en espejo (captura a la izquierda) para que la grilla no se sienta repetida.
     const espejo = i === total - 1;
     return (
-      <article
-        data-inclinar
-        data-revelar
-        style={tonos}
-        className="tarjeta group relative isolate overflow-hidden rounded-[1.75rem] md:col-span-2 lg:col-span-4"
-      >
-        <div className={`grid h-full ${espejo ? "lg:grid-cols-[1.08fr_0.92fr]" : "lg:grid-cols-[0.92fr_1.08fr]"}`}>
+      <article data-inclinar data-revelar style={tonos} className="bisel group md:col-span-2 lg:col-span-4">
+        <div
+          className={`tarjeta bisel-nucleo relative isolate grid h-full overflow-hidden ${espejo ? "lg:grid-cols-[1.08fr_0.92fr]" : "lg:grid-cols-[0.92fr_1.08fr]"}`}
+        >
           {texto}
           <div className={`relative h-[230px] sm:h-[300px] lg:h-auto ${espejo ? "lg:order-first" : ""}`}>
             <div
@@ -104,17 +111,14 @@ function Tarjeta({ p, i, total, idioma }: { p: Proyecto; i: number; total: numbe
   }
 
   return (
-    <article
-      data-inclinar
-      data-revelar
-      style={tonos}
-      className="tarjeta group relative isolate flex flex-col overflow-hidden rounded-[1.75rem] lg:col-span-2"
-    >
-      {texto}
-      <div className="relative mt-auto h-[270px] sm:h-[290px] lg:h-[250px]">
-        <div className="dispositivo-sube absolute left-1/2 top-0 w-[210px] -translate-x-1/2">
-          <div className="dispositivo brillo rounded-[1.6rem]">
-            <MarcoCelular src={p.captura.movil} alt={t.altMovil(p.nombre)} sizes="210px" />
+    <article data-inclinar data-revelar style={tonos} className="bisel group lg:col-span-2">
+      <div className="tarjeta bisel-nucleo relative isolate flex h-full flex-col overflow-hidden">
+        {texto}
+        <div className="relative mt-auto h-[270px] sm:h-[290px] lg:h-[250px]">
+          <div className="dispositivo-sube absolute left-1/2 top-0 w-[210px] -translate-x-1/2">
+            <div className="dispositivo brillo rounded-[1.6rem]">
+              <MarcoCelular src={p.captura.movil} alt={t.altMovil(p.nombre)} sizes="210px" />
+            </div>
           </div>
         </div>
       </div>
@@ -127,12 +131,12 @@ export function Proyectos({ idioma }: { idioma: Idioma }) {
   const lista = proyectos(idioma);
 
   return (
-    <section id={ANCLA[idioma].proyectos} className="scroll-mt-24 border-t border-linea">
-      <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-[1.25fr_1fr] md:items-end" data-revelar>
+    <section id={ANCLA[idioma].proyectos} className="scroll-mt-24">
+      <div className="mx-auto max-w-6xl px-5 py-24 md:pb-36 md:pt-28">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-[1.25fr_1fr] md:items-end" data-revelar="texto">
           <div>
             <p className="font-mono text-[13px] text-tenue">{t.etiqueta}</p>
-            <h2 className="mt-3 font-display text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.03] text-balance">{t.titulo}</h2>
+            <h2 className="mt-3 font-display text-[clamp(2.2rem,5vw,3.75rem)] leading-[1] tracking-[-0.034em] text-balance">{t.titulo}</h2>
           </div>
           <div className="max-w-md md:justify-self-end">
             <p className="leading-relaxed text-tenue">{t.texto}</p>
@@ -140,7 +144,7 @@ export function Proyectos({ idioma }: { idioma: Idioma }) {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">
+        <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mt-16 lg:grid-cols-6">
           {lista.map((p, i) => (
             <Tarjeta key={p.slug} p={p} i={i} total={lista.length} idioma={idioma} />
           ))}

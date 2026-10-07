@@ -13,6 +13,9 @@ const es = {
     navSecciones: "Secciones",
     whatsappLargo: "Escribir por WhatsApp",
     otroIdioma: { corto: "EN", nombre: "View this page in English", hreflang: "en" },
+    saltar: "Saltar al contenido",
+    abrirMenu: "Abrir el menú",
+    cerrarMenu: "Cerrar el menú",
   },
   tema: { etiqueta: "Modo oscuro", titulo: "Cambiar entre modo claro y oscuro" },
   hero: {
@@ -130,6 +133,9 @@ const en: Textos = {
     navSecciones: "Sections",
     whatsappLargo: "Message us on WhatsApp",
     otroIdioma: { corto: "ES", nombre: "Ver esta página en español", hreflang: "es" },
+    saltar: "Skip to content",
+    abrirMenu: "Open the menu",
+    cerrarMenu: "Close the menu",
   },
   tema: { etiqueta: "Dark mode", titulo: "Switch between light and dark mode" },
   hero: {

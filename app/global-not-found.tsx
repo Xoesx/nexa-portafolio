@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Boton } from "./_components/Boton";
+import { Flecha } from "./_components/Iconos";
 import { Logo } from "./_components/Logo";
 import { ScriptTema } from "./_components/ScriptTema";
 import { SITIO } from "./_data/sitio";
@@ -32,18 +34,24 @@ export default function GlobalNotFound() {
               <Logo />
             </Link>
             <p className="mt-14 font-mono text-[13px] text-tenue">Error 404</p>
-            <h1 className="mt-3 font-display text-[clamp(2.4rem,7vw,4.2rem)] leading-[1] text-balance">Esta página no existe.</h1>
+            <h1 className="mt-3 font-display text-[clamp(2.4rem,7vw,4.4rem)] leading-[0.98] tracking-[-0.036em] text-balance">
+              Esta página no existe.
+            </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-tenue">
               Puede que el enlace esté mal escrito o que la página haya cambiado de lugar.
             </p>
             <p lang="en" className="mt-3 max-w-lg leading-relaxed text-tenue">
               This page doesn&apos;t exist. The link may be mistyped, or the page may have moved.
             </p>
-            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 font-semibold">
-              <Link href="/" className="inline-flex min-h-12 items-center rounded-full bg-acento px-7 text-sobre-acento transition-colors hover:bg-acento-hondo">
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 font-semibold">
+              <Boton href="/" icono={<Flecha />}>
                 Ir al inicio
-              </Link>
-              <Link href="/en" lang="en" className="inline-flex min-h-12 items-center underline decoration-tinta/25 underline-offset-[6px] hover:decoration-acento">
+              </Boton>
+              <Link
+                href="/en"
+                lang="en"
+                className="inline-flex min-h-12 items-center underline decoration-tinta/25 underline-offset-[6px] hover:decoration-acento"
+              >
                 Go to the English site
               </Link>
             </div>

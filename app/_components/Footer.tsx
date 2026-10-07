@@ -1,6 +1,7 @@
 import { ANCLA, baseInicio, type Idioma } from "../_data/idioma";
 import { cotizar, EXTERNO, NAVEGACION, SITIO } from "../_data/sitio";
 import { TEXTOS } from "../_data/textos";
+import { Boton } from "./Boton";
 import { IconoWhatsApp } from "./Iconos";
 import { Logo } from "./Logo";
 
@@ -22,20 +23,15 @@ export function Footer({ idioma, enInicio = true, contacto = true }: Props) {
   return (
     <footer id={ANCLA[idioma].contacto} className="invertido relative z-10 -mt-12 rounded-t-[2.5rem] pb-24 sm:rounded-t-[3.5rem] md:pb-0">
       {contacto && (
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 pb-16 pt-20 md:grid-cols-[1.35fr_1fr] md:items-end md:pt-24">
-          <div data-revelar>
-            <h2 className="font-display text-[clamp(2.3rem,5.4vw,4rem)] leading-[1] text-balance">{t.titulo}</h2>
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 pb-20 pt-24 md:grid-cols-[1.35fr_1fr] md:items-end md:pt-32">
+          <div data-revelar="texto">
+            <h2 className="font-display text-[clamp(2.4rem,5.6vw,4.4rem)] leading-[0.98] tracking-[-0.036em] text-balance">{t.titulo}</h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-tenue">{t.texto}</p>
           </div>
           <div data-revelar className="md:justify-self-end">
-            <a
-              href={cotizar(idioma)}
-              {...EXTERNO}
-              className="inline-flex min-h-14 items-center gap-3 rounded-full bg-tinta px-7 text-lg font-semibold text-fondo transition-colors hover:bg-acento"
-            >
-              <IconoWhatsApp tam={22} />
+            <Boton href={cotizar(idioma)} externo variante="tinta" tam="lg" icono={<IconoWhatsApp tam={21} />}>
               {t.telefono}
-            </a>
+            </Boton>
             <p className="mt-3 -rotate-2 pl-4 font-mano text-[1.35rem] text-acento">{t.horario}</p>
           </div>
         </div>

@@ -20,6 +20,8 @@ export function MarcoNexa({ children }: { children: React.ReactNode }) {
       className={`nexa ${archivo.variable} ${sourceSans.variable} ${plexMono.variable} ${caveat.variable} flex min-h-full flex-1 flex-col bg-fondo font-sans text-tinta`}
     >
       {children}
+      {/* Grano fijo encima de todo (sin capturar clics): da textura de papel a lo que es plano. */}
+      <div aria-hidden="true" className="grano" />
       <Movimiento />
     </div>
   );
