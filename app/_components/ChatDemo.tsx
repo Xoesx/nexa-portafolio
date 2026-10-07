@@ -1,80 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { GUION } from "../_data/chat";
+import type { Idioma } from "../_data/idioma";
+import type { Textos } from "../_data/textos";
 
 type Mensaje = { id: number; de: "bot" | "cliente"; texto: string };
-type Respuesta = { texto: string; opciones: string[] };
-
-const INICIO = [
-  "¿Qué horario tienen?",
-  "¿Cuánto cuesta una limpieza?",
-  "Quiero una cita",
-  "¿Dónde están?",
-];
-
-// Todo lo que dice el demo son datos de ejemplo, no de un cliente real.
-function responder(pregunta: string): Respuesta {
-  const otras = INICIO.filter((o) => o !== pregunta);
-
-  switch (pregunta) {
-    case "¿Qué horario tienen?":
-      return {
-        texto:
-          "Atendemos de lunes a viernes de 9:00 a. m. a 8:00 p. m., y los sábados de 9:00 a. m. a 2:00 p. m.",
-        opciones: otras,
-      };
-    case "¿Cuánto cuesta una limpieza?":
-      return {
-        texto:
-          "La evaluación con limpieza cuesta S/ 80 e incluye radiografía digital. Dura 45 minutos y puedes pagar con Yape, Plin o tarjeta.",
-        opciones: otras,
-      };
-    case "¿Dónde están?":
-      return {
-        texto:
-          "Estamos en Jr. Raimondi 355, Pucallpa. Te envío la ubicación en el mapa para que llegues fácil.",
-        opciones: otras,
-      };
-    case "Quiero una cita":
-      return {
-        texto: "¡Claro! ¿Para qué día quieres tu cita de evaluación?",
-        opciones: ["Hoy", "Mañana"],
-      };
-    case "Hoy":
-      return {
-        texto: "Hoy quedan dos espacios: 4:00 p. m. y 6:30 p. m. ¿Cuál prefieres?",
-        opciones: ["Hoy 4:00 p. m.", "Hoy 6:30 p. m."],
-      };
-    case "Mañana":
-      return {
-        texto: "Mañana hay turnos desde las 9:00 a. m. ¿Qué hora te queda mejor?",
-        opciones: ["Mañana 10:00 a. m.", "Mañana 5:00 p. m."],
-      };
-    case "Volver al inicio":
-      return { texto: "¡Claro! ¿En qué más te ayudo?", opciones: INICIO };
-  }
-
-  if (pregunta.startsWith("Hoy ") || pregunta.startsWith("Mañana ")) {
-    const [dia, ...hora] = pregunta.split(" ");
-    return {
-      texto: `Listo, tu cita quedó para ${dia.toLowerCase()} a las ${hora.join(" ")} con la Dra. Ríos. Te escribiré por aquí un rato antes para recordártelo.`,
-      opciones: ["Volver al inicio"],
-    };
-  }
-
-  return { texto: "Déjame pasarte con una persona de la clínica.", opciones: INICIO };
-}
 
 const sinMovimiento = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+type Props = { idioma: Idioma; textos: Textos["chat"] };
+
 /** Conversación de ejemplo con un asistente de WhatsApp. Se muestra dentro del teléfono del hero. */
-export default function ChatDemo() {
-  const [mensajes, setMensajes] = useState<Mensaje[]>([
-    { id: 0, de: "bot", texto: "¡Hola! Soy el asistente de Clínica Dental Alba. ¿En qué te ayudo?" },
-  ]);
-  const [opciones, setOpciones] = useState<string[]>(INICIO);
+export default function ChatDemo({ idioma, textos }: Props) {
+  const guion = GUION[idioma];
+  const [mensajes, setMensajes] = useState<Mensaje[]>([{ id: 0, de: "bot", texto: guion.saludo }]);
+  const [opciones, setOpciones] = useState<string[]>(guion.inicio);
   const [escribiendo, setEscribiendo] = useState(false);
 
   const siguienteId = useRef(1);
@@ -93,7 +36,7 @@ export default function ChatDemo() {
 
     temporizadores.current.push(
       window.setTimeout(() => {
-        const r = responder(pregunta);
+        const r = guion.responder(pregunta);
         setEscribiendo(false);
         setMensajes((m) => [...m, { id: idBot, de: "bot", texto: r.texto }]);
         setOpciones(r.opciones);
@@ -102,17 +45,14 @@ export default function ChatDemo() {
   };
 
   // Un solo momento animado: al cargar, el demo hace la primera pregunta solo.
+  const preguntarSolo = useEffectEvent(() => enviar(guion.automatica));
   useEffect(() => {
-    autoplay.current = window.setTimeout(
-      () => enviar("¿Qué horario tienen?"),
-      sinMovimiento() ? 0 : 1600,
-    );
+    autoplay.current = window.setTimeout(preguntarSolo, sinMovimiento() ? 0 : 1600);
     return () => {
       window.clearTimeout(autoplay.current);
       temporizadores.current.forEach((t) => window.clearTimeout(t));
       temporizadores.current = [];
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Se mueve solo la lista del chat, nunca la página.
@@ -127,7 +67,7 @@ export default function ChatDemo() {
         <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-sm font-bold text-[#0f6b5f]">A</div>
         <div className="min-w-0 leading-tight">
           <p className="truncate text-sm font-semibold">Clínica Dental Alba</p>
-          <p className="text-xs text-white/75">{escribiendo ? "escribiendo…" : "en línea"}</p>
+          <p className="text-xs text-white/75">{escribiendo ? textos.estadoEscribiendo : textos.estadoEnLinea}</p>
         </div>
       </div>
 
@@ -135,7 +75,7 @@ export default function ChatDemo() {
         ref={lista}
         role="log"
         aria-live="polite"
-        aria-label="Conversación de ejemplo con el asistente"
+        aria-label={textos.registro}
         className="h-[290px] space-y-2 overflow-y-auto px-3 py-4 [scrollbar-width:thin]"
       >
         {mensajes.map((m) => (
@@ -166,7 +106,7 @@ export default function ChatDemo() {
       <div className="min-h-[124px] border-t border-black/5 bg-[var(--chat-pie)] px-3 pb-5 pt-3">
         {opciones.length > 0 && (
           <>
-            <p className="mb-2 text-[11.5px] opacity-70">Toca una opción para responder:</p>
+            <p className="mb-2 text-[11.5px] opacity-70">{textos.instruccion}</p>
             <div className="flex flex-wrap gap-1.5">
               {opciones.map((o) => (
                 <button

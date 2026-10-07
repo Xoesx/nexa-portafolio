@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description:
     "Cocina criolla y amazónica en Pucallpa: lomo saltado, ceviche, juane y tacacho. Reserva tu mesa en línea con horarios disponibles.",
   openGraph: {
+    images: [{ url: "/og/sabor-criollo-es.png", width: 1200, height: 630 }],
     title: "Sabor Criollo | Demo de NEXA",
     description: "Sitio completo para un restaurante, con carta, reservas y panel de administración. Hecho por NEXA.",
     url: "/demos/restaurante",

@@ -1,64 +1,66 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Footer } from "../../../_components/Footer";
-import { Header } from "../../../_components/Header";
-import { Check, Flecha, FlechaDiagonal, IconoWhatsApp } from "../../../_components/Iconos";
-import { MarcoCelular, MarcoNavegador } from "../../../_components/Marcos";
-import { Capturas } from "../../../_components/Proyectos";
-import { Puntaje } from "../../../_components/Puntaje";
-import { WhatsAppFlotante } from "../../../_components/WhatsAppFlotante";
-import { PLANES, PROYECTOS } from "../../../_data/contenido";
-import { ETIQUETAS, FECHA_MEDICION, METRICAS, medirEnPageSpeed, type Metrica } from "../../../_data/metricas";
-import { EXTERNO, SITIO, wa } from "../../../_data/sitio";
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return PROYECTOS.map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({ params }: PageProps<"/proyectos/[slug]">): Promise<Metadata> {
-  const { slug } = await params;
-  const p = PROYECTOS.find((x) => x.slug === slug);
-  if (!p) return {};
-  const titulo = `${p.nombre}: caso de estudio | NEXA`;
-  return {
-    title: titulo,
-    description: p.resumen,
-    alternates: { canonical: `/proyectos/${p.slug}` },
-    openGraph: { title: titulo, description: p.resumen, url: `/proyectos/${p.slug}` },
-    twitter: { title: titulo, description: p.resumen },
-  };
-}
-
-const fechaMedicion = new Date(`${FECHA_MEDICION}T12:00:00`).toLocaleDateString("es-PE", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
+import { formatoPrecio, planes, proyectos } from "../_data/contenido";
+import { alternas, ANCLA, LOCALE, RUTA, type Idioma } from "../_data/idioma";
+import { FECHA_MEDICION, METRICAS, medirEnPageSpeed, type Metrica } from "../_data/metricas";
+import { EXTERNO, SITIO, wa } from "../_data/sitio";
+import { TEXTOS } from "../_data/textos";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Check, Flecha, FlechaDiagonal, IconoWhatsApp } from "./Iconos";
+import { MarcoCelular, MarcoNavegador } from "./Marcos";
+import { Capturas } from "./Proyectos";
+import { Puntaje } from "./Puntaje";
+import { WhatsAppFlotante } from "./WhatsAppFlotante";
 
 const retraso = (ms: number) => ({ "--retraso": `${ms}ms` }) as React.CSSProperties;
 
-export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[slug]">) {
-  const { slug } = await params;
-  const indice = PROYECTOS.findIndex((x) => x.slug === slug);
+/** Metadata de un caso de estudio, con su versión en el otro idioma. */
+export function metadataCaso(slug: string, idioma: Idioma): Metadata {
+  const p = proyectos(idioma).find((x) => x.slug === slug);
+  if (!p) return {};
+  const titulo = TEXTOS[idioma].caso.tituloMeta(p.nombre);
+  const ruta = RUTA.caso(slug)[idioma];
+  // Imagen para compartir propia de cada caso (public/og), con la captura del demo.
+  const imagen = { url: `/og/${slug}-${idioma}.png`, width: 1200, height: 630, alt: `${p.nombre} · ${p.bajada}` };
+  return {
+    title: titulo,
+    description: p.resumen,
+    alternates: alternas(RUTA.caso(slug), idioma),
+    openGraph: { title: titulo, description: p.resumen, url: ruta, images: [imagen] },
+    twitter: { title: titulo, description: p.resumen, images: [imagen] },
+  };
+}
+
+/** Caso de estudio de un proyecto. Lo usan /proyectos/[slug] (español) y /en/projects/[slug] (inglés). */
+export function CasoDeEstudio({ slug, idioma }: { slug: string; idioma: Idioma }) {
+  const t = TEXTOS[idioma].caso;
+  const lista = proyectos(idioma);
+  const indice = lista.findIndex((x) => x.slug === slug);
   if (indice === -1) notFound();
 
-  const p = PROYECTOS[indice];
-  const siguiente = PROYECTOS[(indice + 1) % PROYECTOS.length];
-  const plan = PLANES.find((x) => x.nombre === p.plan);
+  const p = lista[indice];
+  const siguiente = lista[(indice + 1) % lista.length];
+  const plan = planes(idioma).find((x) => x.id === p.plan);
   const metricas = METRICAS[p.slug];
   const urlDemo = `${SITIO.url}${p.ruta}`;
+  const inicio = RUTA.inicio[idioma];
   const tonos = { "--tono-claro": p.tono.claro, "--tono-oscuro": p.tono.oscuro } as React.CSSProperties;
+  const fechaMedicion = new Date(`${FECHA_MEDICION}T12:00:00`).toLocaleDateString(LOCALE[idioma], {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const otro: Idioma = idioma === "es" ? "en" : "es";
 
   const migas = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Inicio", item: SITIO.url },
-      { "@type": "ListItem", position: 2, name: "Proyectos", item: `${SITIO.url}/#proyectos` },
-      { "@type": "ListItem", position: 3, name: p.nombre, item: `${SITIO.url}/proyectos/${p.slug}` },
+      { "@type": "ListItem", position: 1, name: t.inicio, item: `${SITIO.url}${inicio === "/" ? "" : inicio}` },
+      { "@type": "ListItem", position: 2, name: t.proyectos, item: `${SITIO.url}${inicio === "/" ? "/" : inicio}#${ANCLA[idioma].proyectos}` },
+      { "@type": "ListItem", position: 3, name: p.nombre, item: `${SITIO.url}${RUTA.caso(p.slug)[idioma]}` },
     ],
   };
 
@@ -68,22 +70,22 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(migas).replace(/</g, "\\u003c") }}
       />
-      <Header enInicio={false} />
+      <Header idioma={idioma} enInicio={false} alterna={RUTA.caso(p.slug)[otro]} />
 
       <main>
         {/* ============ Encabezado ============ */}
         <section className="mx-auto max-w-6xl px-5 pb-16 pt-10 md:pt-14">
-          <nav aria-label="Ruta de navegación" className="font-mono text-[13px] text-tenue" data-entrada>
+          <nav aria-label={t.rutaNavegacion} className="font-mono text-[13px] text-tenue" data-entrada>
             <ol className="flex flex-wrap items-center gap-2">
               <li>
-                <Link href="/" className="hover:text-tinta">
-                  Inicio
+                <Link href={inicio} className="hover:text-tinta">
+                  {t.inicio}
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
               <li>
-                <Link href="/#proyectos" className="hover:text-tinta">
-                  Proyectos
+                <Link href={`${inicio === "/" ? "/" : inicio}#${ANCLA[idioma].proyectos}`} className="hover:text-tinta">
+                  {t.proyectos}
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
@@ -97,7 +99,7 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
             <div data-entrada style={retraso(80)}>
               <p className="flex items-center gap-2.5 font-mono text-[13px] text-tenue">
                 <span aria-hidden="true" className="h-2 w-2 rounded-full" style={{ background: p.tono.marca }} />
-                Caso de estudio · {p.rubro}
+                {t.casoDe} · {p.rubro}
               </p>
               <h1 className="mt-4 font-display text-[clamp(2.7rem,7vw,5rem)] leading-[0.98]">{p.nombre}</h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-tenue">{p.resumen}</p>
@@ -106,7 +108,7 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
                   href={p.ruta}
                   className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-acento px-7 font-semibold text-sobre-acento transition-colors hover:bg-acento-hondo"
                 >
-                  Abrir el demo
+                  {t.abrirDemo}
                   <Flecha className="transition-transform duration-300 group-hover:translate-x-0.5" />
                 </Link>
                 <a
@@ -114,10 +116,11 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
                   {...EXTERNO}
                   className="inline-flex min-h-11 items-center gap-1.5 font-semibold underline decoration-tinta/25 underline-offset-[6px] transition-colors hover:decoration-acento"
                 >
-                  Ver el código en GitHub
+                  {t.verCodigo}
                   <FlechaDiagonal />
                 </a>
               </div>
+              {t.notaDemo && <p className="mt-4 font-mono text-xs text-tenue">{t.notaDemo}</p>}
             </div>
 
             <dl data-entrada style={retraso(160)} className="grid grid-cols-2 gap-x-6">
@@ -135,7 +138,7 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
             style={{ ...retraso(240), ...tonos }}
             className="tarjeta mt-14 rounded-[2rem] px-5 pt-8 sm:px-12 sm:pt-12 lg:px-16 lg:pt-16"
           >
-            <Capturas p={p} prioridad />
+            <Capturas p={p} prioridad idioma={idioma} />
           </div>
         </section>
 
@@ -143,11 +146,11 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         <section className="border-t border-linea bg-alterno">
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-20 md:grid-cols-[1fr_1.5fr] md:py-24">
             <div data-revelar>
-              <p className="font-mono text-[13px] text-tenue">El reto</p>
+              <p className="font-mono text-[13px] text-tenue">{t.reto}</p>
               <p className="mt-4 font-display text-[1.45rem] font-semibold leading-snug">{p.reto}</p>
             </div>
             <div data-revelar>
-              <h2 className="font-display text-3xl">Lo que construimos</h2>
+              <h2 className="font-display text-3xl">{t.construimos}</h2>
               <div className="mt-4 space-y-4 leading-relaxed text-tenue">
                 {p.solucion.map((parrafo) => (
                   <p key={parrafo}>{parrafo}</p>
@@ -161,7 +164,7 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         <section className="border-t border-linea">
           <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <h2 className="font-display text-[clamp(1.9rem,4vw,2.75rem)]" data-revelar>
-              Recorrido por el sitio
+              {t.recorrido}
             </h2>
 
             <div className="mt-14 space-y-20 md:space-y-28">
@@ -192,30 +195,22 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         <section className="invertido">
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr] lg:items-center">
             <div data-revelar>
-              <h2 className="font-display text-3xl sm:text-4xl">Medido en Google Lighthouse</h2>
-              <p className="mt-4 max-w-md leading-relaxed text-tenue">
-                {metricas
-                  ? `Resultados en modo celular (${fechaMedicion}). Haz tu propia medición: debería darte números muy parecidos.`
-                  : "PageSpeed Insights es la herramienta de Google que califica la velocidad, accesibilidad, buenas prácticas y SEO de un sitio. Mide este demo tú mismo, en modo celular."}
-              </p>
-              <a
-                href={medirEnPageSpeed(urlDemo)}
-                {...EXTERNO}
-                className="group mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-acento"
-              >
-                Medirlo en PageSpeed Insights
+              <h2 className="font-display text-3xl sm:text-4xl">{t.medidoTitulo}</h2>
+              <p className="mt-4 max-w-md leading-relaxed text-tenue">{metricas ? t.medidoTexto(fechaMedicion) : t.sinMedicion}</p>
+              <a href={medirEnPageSpeed(urlDemo)} {...EXTERNO} className="group mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-acento">
+                {t.medir}
                 <FlechaDiagonal />
               </a>
             </div>
             {metricas ? (
               <div className="grid grid-cols-2 gap-8 sm:grid-cols-4" data-revelar>
-                {(Object.keys(ETIQUETAS) as (keyof Metrica)[]).map((k) => (
-                  <Puntaje key={k} valor={metricas[k]} etiqueta={ETIQUETAS[k]} tam={96} oscuro />
+                {(Object.keys(TEXTOS[idioma].metricas) as (keyof Metrica)[]).map((k) => (
+                  <Puntaje key={k} valor={metricas[k]} etiqueta={TEXTOS[idioma].metricas[k]} tam={96} oscuro idioma={idioma} />
                 ))}
               </div>
             ) : (
               <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4" data-revelar>
-                {Object.values(ETIQUETAS).map((e) => (
+                {Object.values(TEXTOS[idioma].metricas).map((e) => (
                   <li key={e} className="rounded-2xl border border-linea p-4 text-center text-sm font-semibold">
                     {e}
                   </li>
@@ -229,16 +224,14 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         <section>
           <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_1.4fr] md:items-end" data-revelar>
-              <h2 className="font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-[1.05]">Detalles técnicos</h2>
-              <p className="leading-relaxed text-tenue">
-                Lo que hace que el sitio sea seguro, rápido y fácil de mantener. Todo se puede revisar en el código.
-              </p>
+              <h2 className="font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-[1.05]">{t.tecnicoTitulo}</h2>
+              <p className="leading-relaxed text-tenue">{t.tecnicoTexto}</p>
             </div>
             <ul className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {p.tecnico.map((t, i) => (
-                <li key={t.titulo} className="border-t border-tinta/15 pt-5" data-revelar style={{ "--i": i % 3 } as React.CSSProperties}>
-                  <h3 className="font-semibold">{t.titulo}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-tenue">{t.texto}</p>
+              {p.tecnico.map((d, i) => (
+                <li key={d.titulo} className="border-t border-tinta/15 pt-5" data-revelar style={{ "--i": i % 3 } as React.CSSProperties}>
+                  <h3 className="font-semibold">{d.titulo}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-tenue">{d.texto}</p>
                 </li>
               ))}
             </ul>
@@ -249,30 +242,26 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         <section className="border-t border-linea">
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 py-20 md:py-24 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <div data-revelar>
-              <h2 className="font-display text-[clamp(2.2rem,5vw,3.25rem)] leading-[1.05] text-balance">
-                ¿Quieres algo así para tu negocio?
-              </h2>
-              <p className="mt-5 max-w-lg text-lg leading-relaxed text-tenue">
-                Cuéntanos qué vendes y cómo atiendes hoy. Te enviamos una propuesta por escrito, con precio y plazo,
-                antes de que pagues nada.
-              </p>
+              <h2 className="font-display text-[clamp(2.2rem,5vw,3.25rem)] leading-[1.05] text-balance">{t.quieres}</h2>
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-tenue">{t.quieresTexto}</p>
               <a
-                href={wa(`Hola NEXA, vi el caso ${p.nombre} y quiero algo parecido para mi negocio.`)}
+                href={wa(t.mensaje(p.nombre))}
                 {...EXTERNO}
                 className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-acento px-7 font-semibold text-sobre-acento transition-colors hover:bg-acento-hondo"
               >
                 <IconoWhatsApp tam={20} />
-                Conversemos por WhatsApp
+                {t.conversemos}
               </a>
             </div>
 
             {plan && (
               <div className="invertido rounded-[1.75rem_0.6rem_1.75rem_0.6rem] p-8" data-revelar>
-                <p className="font-mono text-xs text-tenue">El plan más parecido a este proyecto</p>
-                <div className="mt-3 flex items-baseline justify-between gap-4">
+                <p className="font-mono text-xs text-tenue">{t.planParecido}</p>
+                <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                   <h3 className="font-display text-3xl">{plan.nombre}</h3>
                   <p className="font-display text-3xl">
-                    <span className="mr-1 font-sans text-sm font-normal text-tenue">desde</span>S/ {plan.precio}
+                    <span className="mr-1 font-sans text-sm font-normal text-tenue">{TEXTOS[idioma].precios.desde}</span>
+                    {formatoPrecio(plan.precio, idioma).principal}
                   </p>
                 </div>
                 <ul className="mt-6 space-y-2.5 text-[15px]">
@@ -283,8 +272,11 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
                     </li>
                   ))}
                 </ul>
-                <Link href="/#precios" className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-acento underline underline-offset-4">
-                  Comparar todos los planes
+                <Link
+                  href={`${inicio === "/" ? "/" : inicio}#${ANCLA[idioma].precios}`}
+                  className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-acento underline underline-offset-4"
+                >
+                  {t.compararPlanes}
                 </Link>
               </div>
             )}
@@ -295,11 +287,11 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         {siguiente.slug !== p.slug && (
           <section className="border-t border-linea bg-alterno pb-12">
             <Link
-              href={`/proyectos/${siguiente.slug}`}
+              href={RUTA.caso(siguiente.slug)[idioma]}
               className="group mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-5 pb-14 pt-14 md:grid-cols-[1fr_auto]"
             >
               <div>
-                <p className="font-mono text-[13px] text-tenue">Siguiente proyecto</p>
+                <p className="font-mono text-[13px] text-tenue">{t.siguiente}</p>
                 <p className="mt-2 font-display text-[clamp(2.2rem,5vw,3.25rem)] leading-[1.05] transition-colors group-hover:text-acento">
                   {siguiente.nombre}
                 </p>
@@ -313,8 +305,8 @@ export default async function CasoDeEstudio({ params }: PageProps<"/proyectos/[s
         )}
       </main>
 
-      <Footer enInicio={false} contacto={false} />
-      <WhatsAppFlotante />
+      <Footer idioma={idioma} enInicio={false} contacto={false} />
+      <WhatsAppFlotante idioma={idioma} />
     </>
   );
 }

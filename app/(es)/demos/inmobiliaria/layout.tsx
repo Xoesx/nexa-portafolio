@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description:
     "Demo de NEXA: buscador de casas y departamentos en venta y alquiler en Pucallpa, con filtros, fichas detalladas y calculadora de crédito hipotecario.",
   openGraph: {
+    images: [{ url: "/og/inmobiliaria-es.png", width: 1200, height: 630 }],
     title: "Raíces Inmobiliaria | Demo de NEXA",
     description: "Buscador de propiedades con filtros, fichas y calculadora hipotecaria. Hecho por NEXA.",
     url: "/demos/inmobiliaria",

@@ -1,6 +1,8 @@
-import { HABILIDADES, STACK_SITIO } from "../_data/contenido";
+import { habilidades, STACK_SITIO } from "../_data/contenido";
+import { ANCLA, type Idioma } from "../_data/idioma";
 import { medirEnPageSpeed } from "../_data/metricas";
 import { EXTERNO, SITIO } from "../_data/sitio";
+import { TEXTOS } from "../_data/textos";
 import { FlechaDiagonal } from "./Iconos";
 
 const host = new URL(SITIO.url).host;
@@ -37,31 +39,31 @@ function Cifra3D() {
   );
 }
 
-export function Experiencia() {
+export function Experiencia({ idioma }: { idioma: Idioma }) {
+  const t = TEXTOS[idioma].experiencia;
   return (
-    <section id="experiencia" className="cifra-seccion scroll-mt-24 overflow-x-clip border-t border-linea bg-alterno">
+    <section id={ANCLA[idioma].experiencia} className="cifra-seccion scroll-mt-24 overflow-x-clip border-t border-linea bg-alterno">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-20 md:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div>
           <div className="lg:sticky lg:top-32">
             <Cifra3D />
             <p className="mt-5 max-w-[16rem] font-mono text-sm leading-snug text-tenue">
-              <span className="sr-only">Más de {SITIO.anios} </span>
-              años haciendo sitios y sistemas web
+              <span className="sr-only">{t.pieCifraLector}</span>
+              {t.pieCifra}
             </p>
           </div>
         </div>
 
         <div>
           <h2 data-revelar className="font-display text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.03] text-balance">
-            Llevamos más de cuatro años en esto
+            {t.titulo}
           </h2>
           <p data-revelar className="mt-5 max-w-xl text-lg leading-relaxed text-tenue">
-            Usamos la herramienta que mejor le sirve a cada proyecto: WordPress si quieres actualizar tu web tú mismo,
-            Laravel y MySQL para sistemas con base de datos, o Next.js cuando la velocidad es lo primero.
+            {t.texto}
           </p>
 
           <dl className="mt-10 grid grid-cols-1 gap-x-10 sm:grid-cols-2">
-            {HABILIDADES.map((h, i) => (
+            {habilidades(idioma).map((h, i) => (
               <div key={h.area} data-revelar style={{ "--i": i % 2 } as React.CSSProperties} className="border-t border-linea py-4">
                 <dt className="font-mono text-[11.5px] uppercase tracking-[0.1em] text-tenue">{h.area}</dt>
                 <dd className="mt-2">
@@ -84,19 +86,22 @@ export function Experiencia() {
 
           <div data-revelar className="mt-8 rounded-[1.25rem_0.5rem_1.25rem_0.5rem] border border-dashed border-tinta/20 p-5 sm:p-6">
             <p className="leading-relaxed">
-              Este sitio y sus cuatro demos están hechos con{" "}
-              <strong className="font-semibold">{STACK_SITIO.slice(0, -1).join(", ")} y {STACK_SITIO.at(-1)}</strong>.
+              {t.stackAntes}{" "}
+              <strong className="font-semibold">
+                {STACK_SITIO.slice(0, -1).join(", ")} {t.y} {STACK_SITIO.at(-1)}
+              </strong>
+              .
             </p>
             <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm font-semibold">
               <li>
                 <a href={SITIO.github} {...EXTERNO} className="inline-flex min-h-11 items-center gap-1.5 text-acento hover:underline hover:underline-offset-4">
-                  Leer el código en GitHub
+                  {t.codigo}
                   <FlechaDiagonal />
                 </a>
               </li>
               <li>
                 <a href={medirEnPageSpeed(SITIO.url)} {...EXTERNO} className="inline-flex min-h-11 items-center gap-1.5 text-acento hover:underline hover:underline-offset-4">
-                  Medir la velocidad
+                  {t.velocidad}
                   <FlechaDiagonal />
                 </a>
               </li>
@@ -106,7 +111,7 @@ export function Experiencia() {
                   {...EXTERNO}
                   className="inline-flex min-h-11 items-center gap-1.5 text-acento hover:underline hover:underline-offset-4"
                 >
-                  Revisar la seguridad
+                  {t.seguridad}
                   <FlechaDiagonal />
                 </a>
               </li>

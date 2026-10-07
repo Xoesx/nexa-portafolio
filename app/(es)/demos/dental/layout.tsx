@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description:
     "Demo de NEXA: sitio para una clínica dental con tratamientos, equipo, preguntas frecuentes y agenda de citas en línea con horarios disponibles.",
   openGraph: {
+    images: [{ url: "/og/clinica-dental-es.png", width: 1200, height: 630 }],
     title: "Clínica Dental Alba | Demo de NEXA",
     description: "Agenda de citas en línea por pasos, con horarios disponibles por especialista. Hecho por NEXA.",
     url: "/demos/dental",

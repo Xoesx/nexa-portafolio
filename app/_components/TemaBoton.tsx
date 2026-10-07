@@ -31,7 +31,10 @@ const suscribir = (avisar: () => void) => {
 };
 const leer = (): Tema => (document.documentElement.dataset.tema === "oscuro" ? "oscuro" : "claro");
 
-export function TemaBoton() {
+/** Etiqueta accesible y título del botón, en el idioma de la página. */
+type Props = { etiqueta: string; titulo: string };
+
+export function TemaBoton({ etiqueta, titulo }: Props) {
   // En el servidor no se sabe el tema: el ícono lo decide el CSS y aria-pressed llega al hidratar.
   const tema = useSyncExternalStore(suscribir, leer, () => null);
 
@@ -93,9 +96,9 @@ export function TemaBoton() {
     <button
       type="button"
       onClick={alternar}
-      aria-label="Modo oscuro"
+      aria-label={etiqueta}
       aria-pressed={tema === null ? undefined : tema === "oscuro"}
-      title="Cambiar entre modo claro y oscuro"
+      title={titulo}
       className="tema-boton grid h-11 w-11 shrink-0 place-items-center rounded-full border border-linea text-tinta transition-colors hover:border-tinta/40 hover:bg-superficie"
     >
       <svg className="icono-luna" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

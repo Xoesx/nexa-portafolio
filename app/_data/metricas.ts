@@ -19,13 +19,6 @@ export const METRICAS: Partial<Record<string, Metrica>> = {
   "sabor-criollo": { rendimiento: 97, accesibilidad: 100, buenasPracticas: 100, seo: 100 },
 };
 
-export const ETIQUETAS: Record<keyof Metrica, string> = {
-  rendimiento: "Rendimiento",
-  accesibilidad: "Accesibilidad",
-  buenasPracticas: "Buenas prácticas",
-  seo: "SEO",
-};
-
 /** Enlace para que cualquiera repita la medición en PageSpeed Insights. */
 export const medirEnPageSpeed = (url: string) =>
   `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(url)}&form_factor=mobile`;

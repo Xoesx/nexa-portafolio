@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description:
     "Demo de NEXA: sitio para un colegio con niveles, propuesta educativa, calendario de admisión y preinscripción en línea que calcula el grado según la edad.",
   openGraph: {
+    images: [{ url: "/og/colegio-es.png", width: 1200, height: 630 }],
     title: "Colegio Horizonte | Demo de NEXA",
     description: "Admisión en línea por pasos, con cálculo automático del grado. Hecho por NEXA.",
     url: "/demos/colegio",

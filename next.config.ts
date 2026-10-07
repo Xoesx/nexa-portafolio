@@ -47,6 +47,8 @@ const nextConfig: NextConfig = {
   // Optimización de fuentes
   experimental: {
     optimizePackageImports: ["zod"],
+    // 404 propia para direcciones que no existen: el sitio tiene dos layouts raíz (español e inglés).
+    globalNotFound: true,
   },
 
   // Un solo dominio para Google y para compartir: www y el subdominio de Vercel llevan al dominio propio.

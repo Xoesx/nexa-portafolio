@@ -1,3 +1,5 @@
+import type { Idioma } from "../_data/idioma";
+
 type Props = {
   valor: number;
   etiqueta: string;
@@ -5,13 +7,15 @@ type Props = {
   tam?: number;
   /** Sobre fondo oscuro se usan tonos más claros para mantener el contraste. */
   oscuro?: boolean;
+  /** Idioma de la etiqueta, para que el navegador corte bien las palabras largas. */
+  idioma?: Idioma;
 };
 
 // Mismos umbrales que usa Lighthouse: 90+ bueno, 50–89 mejorable, <50 malo.
 const colorDe = (v: number, oscuro: boolean) =>
   v >= 90 ? (oscuro ? "#4fd08f" : "#0f8a4f") : v >= 50 ? (oscuro ? "#f2b84b" : "#c77700") : oscuro ? "#ff8a65" : "#c2410c";
 
-export function Puntaje({ valor, etiqueta, tam = 76, oscuro = false }: Props) {
+export function Puntaje({ valor, etiqueta, tam = 76, oscuro = false, idioma = "es" }: Props) {
   const r = 15.9155; // radio para que la circunferencia mida 100
   const color = colorDe(valor, oscuro);
   return (
@@ -25,7 +29,7 @@ export function Puntaje({ valor, etiqueta, tam = 76, oscuro = false }: Props) {
           {valor}
         </span>
       </div>
-      <figcaption lang="es" className="font-mono text-[11px] leading-tight text-tenue hyphens-auto sm:text-xs">
+      <figcaption lang={idioma} className="font-mono text-[11px] leading-tight text-tenue hyphens-auto sm:text-xs">
         {etiqueta}
       </figcaption>
     </figure>

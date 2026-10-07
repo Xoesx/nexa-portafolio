@@ -1,0 +1,241 @@
+import type { Idioma } from "./idioma";
+import { SITIO } from "./sitio";
+
+/*
+ * Textos de la interfaz del sitio de NEXA. El inglés tiene que tener la misma forma que el español:
+ * si falta una clave, TypeScript no compila.
+ */
+
+const es = {
+  header: {
+    irInicio: "NEXA, ir al inicio",
+    navPrincipal: "Principal",
+    navSecciones: "Secciones",
+    whatsappLargo: "Escribir por WhatsApp",
+    otroIdioma: { corto: "EN", nombre: "View this page in English", hreflang: "en" },
+  },
+  tema: { etiqueta: "Modo oscuro", titulo: "Cambiar entre modo claro y oscuro" },
+  hero: {
+    lugar: `Desarrollo web · ${SITIO.ciudad}, Perú`,
+    tituloAntes: "Tu negocio, atendido aunque",
+    tituloSubrayado: "no estés.",
+    texto:
+      "Hacemos páginas web, agendas de citas, catálogos con buscador y sistemas a medida para negocios del Perú y de otros países. Antes de pagar, recibes el precio y el plazo por escrito.",
+    cta: "Cotizar por WhatsApp",
+    verProyectos: "Ver los proyectos",
+    datos: [
+      { valor: `+${SITIO.anios}`, texto: "años haciendo webs" },
+      { valor: "4", texto: "demos para probar" },
+      { valor: "24 h", texto: "máximo para responder" },
+    ],
+    nota: ["pruébalo, toca", "una opción"],
+    pie: "Un asistente de WhatsApp que hicimos para una clínica. El tuyo respondería con tus propios horarios y precios.",
+  },
+  proyectos: {
+    etiqueta: "Proyectos",
+    titulo: "Cuatro proyectos que puedes usar",
+    texto:
+      "Agenda una cita, busca una casa, preinscribe a un alumno o reserva una mesa. Cada demo tiene su caso de estudio y su código en GitHub.",
+    nota: null as string | null,
+    verCaso: "Ver el caso",
+    abrirDemo: "Abrir el demo",
+    incluye: "Incluye",
+    altEscritorio: (nombre: string) => `Página de inicio del demo ${nombre}`,
+    altMovil: (nombre: string) => `El demo ${nombre} en un celular`,
+    altEscritorioCaso: (nombre: string) => `Página de inicio del demo ${nombre} en computadora`,
+  },
+  experiencia: {
+    pieCifra: "años haciendo sitios y sistemas web",
+    pieCifraLector: `Más de ${SITIO.anios} `,
+    titulo: "Llevamos más de cuatro años en esto",
+    texto:
+      "Usamos la herramienta que mejor le sirve a cada proyecto: WordPress si quieres actualizar tu web tú mismo, Laravel y MySQL para sistemas con base de datos, o Next.js cuando la velocidad es lo primero.",
+    stackAntes: "Este sitio y sus cuatro demos están hechos con",
+    y: "y",
+    codigo: "Leer el código en GitHub",
+    velocidad: "Medir la velocidad",
+    seguridad: "Revisar la seguridad",
+  },
+  precios: {
+    etiqueta: "Cómo trabajamos",
+    titulo: "Sabes cuánto pagas antes de empezar",
+    planesTitulo: "Precios de partida",
+    planesNota: "En soles y en dólares. El monto final depende de lo que necesites y lo confirmas por escrito antes de pagar.",
+    desde: "desde",
+    elegido: "el más elegido",
+    consultar: "Consultar este plan",
+    mensaje: (plan: string) => `Hola NEXA, me interesa el plan ${plan}. ¿Podemos conversar?`,
+    noEncaja: "¿Tu caso no encaja en ninguno?",
+    cuentanos: "Cuéntanos qué necesitas",
+    armamos: "y armamos una propuesta.",
+  },
+  preguntas: {
+    titulo: "Preguntas frecuentes",
+    otraDuda: "¿Tienes otra duda?",
+    pregunta: "Pregúntanos por WhatsApp",
+  },
+  footer: {
+    titulo: "Cuéntanos qué necesita tu negocio.",
+    texto: "Escríbenos por WhatsApp. Te respondemos en menos de 24 horas y la primera conversación no te cuesta nada.",
+    telefono: SITIO.telefonoVisible as string,
+    horario: "de lunes a sábado",
+    descripcion: `Páginas web y sistemas a medida desde ${SITIO.ciudad} para el Perú y otros países.`,
+    navPie: "Pie de página",
+    lugar: `${SITIO.ciudad}, ${SITIO.region}, Perú`,
+  },
+  flotante: "Escribir por WhatsApp",
+  caso: {
+    rutaNavegacion: "Ruta de navegación",
+    inicio: "Inicio",
+    proyectos: "Proyectos",
+    casoDe: "Caso de estudio",
+    abrirDemo: "Abrir el demo",
+    notaDemo: null as string | null,
+    verCodigo: "Ver el código en GitHub",
+    reto: "El reto",
+    construimos: "Lo que construimos",
+    recorrido: "Recorrido por el sitio",
+    medidoTitulo: "Medido en Google Lighthouse",
+    medidoTexto: (fecha: string) => `Resultados en modo celular (${fecha}). Haz tu propia medición: debería darte números muy parecidos.`,
+    sinMedicion:
+      "PageSpeed Insights es la herramienta de Google que califica la velocidad, accesibilidad, buenas prácticas y SEO de un sitio. Mide este demo tú mismo, en modo celular.",
+    medir: "Medirlo en PageSpeed Insights",
+    tecnicoTitulo: "Detalles técnicos",
+    tecnicoTexto: "Lo que hace que el sitio sea seguro, rápido y fácil de mantener. Todo se puede revisar en el código.",
+    quieres: "¿Quieres algo así para tu negocio?",
+    quieresTexto:
+      "Cuéntanos qué vendes y cómo atiendes hoy. Te enviamos una propuesta por escrito, con precio y plazo, antes de que pagues nada.",
+    mensaje: (nombre: string) => `Hola NEXA, vi el caso ${nombre} y quiero algo parecido para mi negocio.`,
+    conversemos: "Conversemos por WhatsApp",
+    planParecido: "El plan más parecido a este proyecto",
+    compararPlanes: "Comparar todos los planes",
+    siguiente: "Siguiente proyecto",
+    tituloMeta: (nombre: string) => `${nombre}: caso de estudio | NEXA`,
+  },
+  metricas: { rendimiento: "Rendimiento", accesibilidad: "Accesibilidad", buenasPracticas: "Buenas prácticas", seo: "SEO" },
+  chat: {
+    estadoEnLinea: "en línea",
+    estadoEscribiendo: "escribiendo…",
+    registro: "Conversación de ejemplo con el asistente",
+    instruccion: "Toca una opción para responder:",
+  },
+};
+
+export type Textos = typeof es;
+
+const en: Textos = {
+  header: {
+    irInicio: "NEXA, go to the homepage",
+    navPrincipal: "Main",
+    navSecciones: "Sections",
+    whatsappLargo: "Message us on WhatsApp",
+    otroIdioma: { corto: "ES", nombre: "Ver esta página en español", hreflang: "es" },
+  },
+  tema: { etiqueta: "Dark mode", titulo: "Switch between light and dark mode" },
+  hero: {
+    lugar: `Web development · ${SITIO.ciudad}, Peru`,
+    tituloAntes: "Your business, open when",
+    tituloSubrayado: "you're not.",
+    texto:
+      "We build websites, online booking, searchable catalogs and custom systems for small businesses in Peru and abroad. You get the price and the timeline in writing before you pay anything.",
+    cta: "Get a quote on WhatsApp",
+    verProyectos: "See the projects",
+    datos: [
+      { valor: `+${SITIO.anios}`, texto: "years building websites" },
+      { valor: "4", texto: "demos you can try" },
+      { valor: "24 h", texto: "max. time to reply" },
+    ],
+    nota: ["try it, tap", "an option"],
+    pie: "A WhatsApp assistant we built for a clinic. Yours would answer with your own hours and prices.",
+  },
+  proyectos: {
+    etiqueta: "Projects",
+    titulo: "Four projects you can try",
+    texto:
+      "Book a dental appointment, search for a house, pre-register a student or reserve a table. Each demo has its own case study and its code on GitHub.",
+    nota: "The demos are in Spanish because they were built for businesses in Peru.",
+    verCaso: "See the case study",
+    abrirDemo: "Open the demo",
+    incluye: "Includes",
+    altEscritorio: (nombre: string) => `Homepage of the ${nombre} demo`,
+    altMovil: (nombre: string) => `The ${nombre} demo on a phone`,
+    altEscritorioCaso: (nombre: string) => `Homepage of the ${nombre} demo on a computer`,
+  },
+  experiencia: {
+    pieCifra: "years building websites and web systems",
+    pieCifraLector: `More than ${SITIO.anios} `,
+    titulo: "We've been doing this for more than four years",
+    texto:
+      "We use the tool that fits each project best: WordPress if you want to update your site yourself, Laravel and MySQL for systems with a database, or Next.js when speed comes first.",
+    stackAntes: "This site and its four demos are built with",
+    y: "and",
+    codigo: "Read the code on GitHub",
+    velocidad: "Measure the speed",
+    seguridad: "Check the security",
+  },
+  precios: {
+    etiqueta: "How we work",
+    titulo: "You know the price before we start",
+    planesTitulo: "Starting prices",
+    planesNota: "In US dollars. The final amount depends on what you need, and you confirm it in writing before paying.",
+    desde: "from",
+    elegido: "most popular",
+    consultar: "Ask about this plan",
+    mensaje: (plan: string) => `Hi NEXA, I'm interested in the ${plan} plan. Can we talk?`,
+    noEncaja: "Doesn't fit any of these?",
+    cuentanos: "Tell us what you need",
+    armamos: "and we'll put together a proposal.",
+  },
+  preguntas: {
+    titulo: "Frequently asked questions",
+    otraDuda: "Have another question?",
+    pregunta: "Ask us on WhatsApp",
+  },
+  footer: {
+    titulo: "Tell us what your business needs.",
+    texto: "Write to us on WhatsApp. We reply within 24 hours and the first conversation is free.",
+    telefono: SITIO.telefonoInternacional,
+    horario: "monday to saturday",
+    descripcion: `Websites and custom systems built in ${SITIO.ciudad}, Peru, for businesses anywhere.`,
+    navPie: "Footer",
+    lugar: `${SITIO.ciudad}, ${SITIO.region}, Peru`,
+  },
+  flotante: "Message us on WhatsApp",
+  caso: {
+    rutaNavegacion: "Breadcrumb",
+    inicio: "Home",
+    proyectos: "Projects",
+    casoDe: "Case study",
+    abrirDemo: "Open the demo",
+    notaDemo: "The demo is in Spanish because it was built for a business in Peru.",
+    verCodigo: "View the code on GitHub",
+    reto: "The challenge",
+    construimos: "What we built",
+    recorrido: "A tour of the site",
+    medidoTitulo: "Measured with Google Lighthouse",
+    medidoTexto: (fecha: string) => `Mobile results (${fecha}). Run your own test: you should get very similar numbers.`,
+    sinMedicion:
+      "PageSpeed Insights is Google's tool that scores a site's speed, accessibility, best practices and SEO. Measure this demo yourself in mobile mode.",
+    medir: "Run it on PageSpeed Insights",
+    tecnicoTitulo: "Technical details",
+    tecnicoTexto: "What makes the site secure, fast and easy to maintain. All of it can be checked in the code.",
+    quieres: "Want something like this for your business?",
+    quieresTexto:
+      "Tell us what you sell and how you serve your customers today. We'll send you a written proposal with the price and timeline before you pay anything.",
+    mensaje: (nombre: string) => `Hi NEXA, I saw the ${nombre} case study and I'd like something similar for my business.`,
+    conversemos: "Let's talk on WhatsApp",
+    planParecido: "The plan closest to this project",
+    compararPlanes: "Compare all plans",
+    siguiente: "Next project",
+    tituloMeta: (nombre: string) => `${nombre}: case study | NEXA`,
+  },
+  metricas: { rendimiento: "Performance", accesibilidad: "Accessibility", buenasPracticas: "Best practices", seo: "SEO" },
+  chat: {
+    estadoEnLinea: "online",
+    estadoEscribiendo: "typing…",
+    registro: "Sample conversation with the assistant",
+    instruccion: "Tap an option to reply:",
+  },
+};
+
+export const TEXTOS: Record<Idioma, Textos> = { es, en };

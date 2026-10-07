@@ -1,23 +1,26 @@
-import { PREGUNTAS } from "../_data/contenido";
-import { COTIZAR, EXTERNO } from "../_data/sitio";
+import { preguntas } from "../_data/contenido";
+import { ANCLA, type Idioma } from "../_data/idioma";
+import { cotizar, EXTERNO } from "../_data/sitio";
+import { TEXTOS } from "../_data/textos";
 
-export function Preguntas() {
+export function Preguntas({ idioma }: { idioma: Idioma }) {
+  const t = TEXTOS[idioma].preguntas;
   return (
-    <section id="faq" className="scroll-mt-24 border-t border-linea bg-alterno">
+    <section id={ANCLA[idioma].faq} className="scroll-mt-24 border-t border-linea bg-alterno">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 pb-32 pt-20 md:grid-cols-[0.8fr_1.2fr] md:pb-36 md:pt-24">
         <div data-revelar className="md:sticky md:top-28 md:self-start">
-          <h2 className="font-display text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.03] text-balance">Preguntas frecuentes</h2>
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.03] text-balance">{t.titulo}</h2>
           <p className="mt-4 max-w-xs leading-relaxed text-tenue">
-            ¿Tienes otra duda?{" "}
-            <a href={COTIZAR} {...EXTERNO} className="font-semibold text-acento underline underline-offset-4">
-              Pregúntanos por WhatsApp
+            {t.otraDuda}{" "}
+            <a href={cotizar(idioma)} {...EXTERNO} className="font-semibold text-acento underline underline-offset-4">
+              {t.pregunta}
             </a>
             .
           </p>
         </div>
 
         <div className="border-t border-tinta/15">
-          {PREGUNTAS.map((f) => (
+          {preguntas(idioma).map((f) => (
             <details key={f.q} name="preguntas" className="faq group border-b border-tinta/15">
               <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-[1.06rem] font-semibold leading-snug [&::-webkit-details-marker]:hidden">
                 {f.q}
