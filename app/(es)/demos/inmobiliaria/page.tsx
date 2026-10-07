@@ -43,13 +43,12 @@ export default function InmobiliariaInicio() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#1c1917]/90 via-[#1c1917]/60 to-[#1c1917]/10" />
 
         <div className="mx-auto max-w-7xl px-5 pb-14 pt-16 md:pb-20 md:pt-24">
-          <p className="text-[15px] font-semibold text-[#f3c7a8]">Inmobiliaria en Pucallpa, Yarinacocha y Manantay</p>
-          <h1 className="mt-4 max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-6xl" style={titulo}>
+          <p className="text-[15px] font-semibold text-[#f3c7a8]">Pucallpa, Yarinacocha y Manantay</p>
+          <h1 className="mt-4 min-h-[3lh] max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-6xl" style={titulo}>
             Encuentra el lugar donde quieres echar raíces.
           </h1>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/85">
-            Revisamos cada título en SUNARP antes de publicar y te acompañamos hasta la notaría. Busca por distrito y precio, o mira
-            todo en el mapa.
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/85 max-sm:min-h-[3lh]">
+            Revisamos cada título en SUNARP antes de publicar y te acompañamos hasta la notaría.
           </p>
 
           <form action={`${BASE}/propiedades`} method="get" className="mt-10 max-w-5xl rounded-2xl bg-[#faf8f5] p-4 shadow-2xl sm:p-5">
