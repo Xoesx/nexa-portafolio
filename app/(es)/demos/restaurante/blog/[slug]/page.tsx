@@ -43,12 +43,12 @@ export default async function ArticuloPage({
       <main className="mx-auto max-w-3xl px-6 py-16 md:py-20">
         <Link
           href="/demos/restaurante/blog"
-          className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#6E6457] transition hover:text-[#C1440E]"
+          className="text-[14px] font-semibold text-[#6E6457] transition hover:text-[#C1440E]"
         >
           ← Volver al blog
         </Link>
 
-        <div className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#6E6457]">
+        <div className="mt-8 flex items-center gap-3 text-[13px] text-[#6E6457]">
           <span className="text-[#C1440E]">{articulo.categoria}</span>
           <span>·</span>
           <span>{articulo.fecha}</span>
@@ -63,7 +63,7 @@ export default async function ArticuloPage({
           {articulo.titulo}
         </h1>
 
-        <p className="mt-6 text-[18px] leading-relaxed text-[#1F1A15]/70 italic">
+        <p className="mt-6 text-[19px] leading-relaxed text-[#1F1A15]/75">
           {articulo.extracto}
         </p>
 
@@ -89,9 +89,9 @@ export default async function ArticuloPage({
 
         {/* Otros artículos */}
         <div className="mt-20 border-t border-[#1F1A15]/10 pt-12">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#C1440E]">
+          <h2 className="text-[22px]" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 500 }}>
             Seguir leyendo
-          </p>
+          </h2>
           <div className="mt-6 grid gap-8 sm:grid-cols-2">
             {otros.map((a) => (
               <Link key={a.slug} href={`/demos/restaurante/blog/${a.slug}`} className="group">

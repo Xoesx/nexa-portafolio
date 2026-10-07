@@ -1,5 +1,7 @@
-import { wa } from "../lib/whatsapp";
 import Link from "next/link";
+import { CATEGORIAS, idCategoria } from "../data/menu";
+import { horarioPorTramos } from "../lib/horario";
+import { wa } from "../lib/whatsapp";
 
 export function Footer() {
   return (
@@ -8,7 +10,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C1440E" strokeWidth="1.5">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C1440E" strokeWidth="1.5" aria-hidden="true">
                 <path d="M5 3v7a3 3 0 0 0 6 0V3M8 3v18M19 3c-2 3-3 6-3 10 0 3 1 5 3 6v2M16 3h6" />
               </svg>
               <p
@@ -19,26 +21,23 @@ export function Footer() {
               </p>
             </div>
             <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-[#1F1A15]/70">
-              Cocina peruana preparada al momento. Ingredientes frescos, recetas familiares y atención de barrio.
+              Cocina criolla y amazónica en el Jr. Comercio desde 2014.
             </p>
-            <div className="mt-6 flex gap-3">
-              {["IG", "FB", "TK"].map((r) => (
-                <a
-                  key={r}
-                  href="#"
-                  className="grid h-9 w-9 place-items-center rounded-full border border-[#1F1A15]/15 text-[11px] font-semibold text-[#1F1A15]/70 transition hover:border-[#C1440E] hover:text-[#C1440E]"
-                >
-                  {r}
-                </a>
+            <dl className="mt-6 max-w-xs space-y-1.5 text-[14px]">
+              {horarioPorTramos().map((t) => (
+                <div key={t.dias} className="flex justify-between gap-4">
+                  <dt className="text-[#1F1A15]/70">{t.dias}</dt>
+                  <dd className="tabular-nums text-[#1F1A15]">{t.horas}</dd>
+                </div>
               ))}
-            </div>
+            </dl>
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/70">Visitar</p>
+            <p className="text-[14px] font-semibold text-[#1F1A15]/70">Visitar</p>
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
               <li><Link href="/demos/restaurante" className="hover:text-[#C1440E]">Inicio</Link></li>
-              <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Menú</Link></li>
+              <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Carta</Link></li>
               <li><Link href="/demos/restaurante/nosotros" className="hover:text-[#C1440E]">Nosotros</Link></li>
               <li><Link href="/demos/restaurante/blog" className="hover:text-[#C1440E]">Blog</Link></li>
               <li><Link href="/demos/restaurante/reservar" className="hover:text-[#C1440E]">Reservar</Link></li>
@@ -47,17 +46,20 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/70">Carta</p>
+            <p className="text-[14px] font-semibold text-[#1F1A15]/70">Carta</p>
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
-              <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Entradas</Link></li>
-              <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Principales</Link></li>
-              <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Postres</Link></li>
-              <li><Link href="/demos/restaurante/menu" className="hover:text-[#C1440E]">Bebidas</Link></li>
+              {CATEGORIAS.map((c) => (
+                <li key={c}>
+                  <Link href={`/demos/restaurante/menu#${idCategoria(c)}`} className="hover:text-[#C1440E]">
+                    {c}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1F1A15]/70">Contacto</p>
+            <p className="text-[14px] font-semibold text-[#1F1A15]/70">Contacto</p>
             <ul className="mt-5 space-y-3 text-[14px] text-[#1F1A15]/75">
               <li>Jr. Comercio 245<br />Pucallpa, Ucayali</li>
               <li>

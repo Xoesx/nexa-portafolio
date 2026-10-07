@@ -53,7 +53,7 @@ export const ARTICULOS: Articulo[] = [
     contenido: [
       {
         parrafo:
-          "El ceviche es uno de los platos más engañosos de la cocina peruana. Se ve simple —pescado, limón, cebolla, ají— pero cada componente tiene que estar impecable. El más importante, sin duda, es el pescado.",
+          "El ceviche es uno de los platos más engañosos de la cocina peruana. Se ve simple (pescado, limón, cebolla y ají), pero cada componente tiene que estar impecable. El más importante, sin duda, es el pescado.",
       },
       {
         subtitulo: "Criterio 1: Ojo brillante, agalla roja",

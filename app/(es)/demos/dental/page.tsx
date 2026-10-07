@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ProximoTurno } from "./components/ProximoTurno";
 import { CALIFICACION, CLINICA, DOCTORES, FOTOS, GALERIA, HISTORIA, PREGUNTAS, PRIMERA_VISITA, PROBLEMAS, RESENAS, TRATAMIENTOS } from "./data";
 
 const AGENDAR = "/demos/dental/agendar";
@@ -35,19 +36,13 @@ export default function DentalInicio() {
       <section className="relative overflow-hidden bg-[#f0fdfa]">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pb-20 pt-12 md:pt-16 lg:grid-cols-[1fr_1.05fr]">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-[#0f766e] shadow-sm">
-              <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#14b8a6] opacity-60 motion-reduce:hidden" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#14b8a6]" />
-              </span>
-              Citas disponibles esta semana
-            </p>
-            <h1 className="mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-[3.6rem]">
-              Volver a sonreír en las fotos empieza con una buena conversación.
+            <p className="text-sm font-semibold text-[#0f766e]">Clínica familiar · Callería, Pucallpa</p>
+            <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-[3.4rem]">
+              Una clínica dental donde te explican todo antes de empezar.
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-[#3f5f5b]">
-              Somos una clínica familiar en Pucallpa. Te explicamos todo antes de empezar, te damos el presupuesto por escrito y no te
-              atendemos a la carrera.
+              Te damos el presupuesto por escrito, no te atendemos a la carrera y puedes reservar tu cita a cualquier hora, incluso de
+              noche.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
@@ -60,21 +55,15 @@ export default function DentalInicio() {
                 ¿Qué te está pasando?
               </Link>
             </div>
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex -space-x-3" aria-hidden="true">
-                {RESENAS.slice(0, 4).map((r) => (
-                  <span key={r.nombre} className="grid h-10 w-10 place-items-center rounded-full border-2 border-[#f0fdfa] text-xs font-bold text-white" style={{ background: r.color }}>
-                    {r.iniciales}
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm leading-snug text-[#3f5f5b]">
-                <span className="flex items-center gap-1.5 font-bold text-[#0f2a2a]">
-                  <Estrellas n={5} tam={14} /> {CALIFICACION.promedio}
-                </span>
-                {CALIFICACION.total} pacientes nos recomiendan
-              </p>
+            <div className="mt-8 max-w-md">
+              <ProximoTurno />
             </div>
+            <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[#3f5f5b]">
+              <Estrellas n={5} tam={14} />
+              <span>
+                <strong className="font-bold text-[#0f2a2a]">{CALIFICACION.promedio}</strong> en {CALIFICACION.total} opiniones de pacientes
+              </span>
+            </p>
           </div>
 
           <div className="relative">
@@ -97,25 +86,36 @@ export default function DentalInicio() {
       {/* ============ ¿Qué te está pasando? ============ */}
       <section id="problemas" className="scroll-mt-20">
         <div className="mx-auto max-w-6xl px-5 py-20">
-          <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#0f766e]">Empecemos por ti</p>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">¿Qué te está pasando?</h2>
-          <p className="mt-3 max-w-xl text-[#3f5f5b]">Elige lo que más se parece a lo que sientes y te llevamos directo a la cita que necesitas.</p>
-          <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr] md:items-end">
+            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">¿Qué te está pasando?</h2>
+            <p className="max-w-md text-[#3f5f5b] md:justify-self-end">
+              Elige lo que más se parece a lo que sientes. Te llevamos a la agenda con el tratamiento correcto ya elegido.
+            </p>
+          </div>
+          <ul className="mt-10 grid grid-cols-1 border-t border-[#d5e6e2] md:grid-cols-2 md:gap-x-12">
             {PROBLEMAS.map((p) => (
-              <li key={p.titulo}>
-                <Link
-                  href={`${AGENDAR}?tratamiento=${p.tratamiento}`}
-                  className="group flex h-full items-start gap-4 rounded-2xl border border-[#e2efed] bg-white p-5 transition-colors hover:border-[#0f766e] hover:bg-[#f0fdfa]"
-                >
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#ccfbef] text-[#0f766e]">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      {ICONOS[p.icono]}
-                    </svg>
-                  </span>
-                  <span>
-                    <span className="block text-lg font-extrabold">{p.titulo}</span>
+              <li key={p.titulo} className="border-b border-[#d5e6e2]">
+                <Link href={`${AGENDAR}?tratamiento=${p.tratamiento}`} className="group flex items-start gap-4 py-5">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mt-0.5 shrink-0 text-[#0f766e]"
+                    aria-hidden="true"
+                  >
+                    {ICONOS[p.icono]}
+                  </svg>
+                  <span className="flex-1">
+                    <span className="block text-lg font-extrabold group-hover:text-[#0f766e]">{p.titulo}</span>
                     <span className="mt-1 block text-[15px] leading-relaxed text-[#3f5f5b]">{p.texto}</span>
-                    <span className="mt-2 inline-block text-sm font-bold text-[#0f766e] group-hover:underline">Agendar para esto →</span>
+                  </span>
+                  <span aria-hidden="true" className="mt-1 text-xl text-[#0f766e] transition-transform group-hover:translate-x-1">
+                    →
                   </span>
                 </Link>
               </li>
@@ -134,7 +134,7 @@ export default function DentalInicio() {
             <p className="absolute -bottom-5 -right-2 rounded-2xl bg-[#14b8a6] px-5 py-3 text-sm font-bold text-[#0f2a2a] shadow-xl sm:-right-6">Directora médica</p>
           </div>
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#5eead4]">Conoce a quien te va a atender</p>
+            <p className="text-sm font-semibold text-[#5eead4]">Quién te va a atender</p>
             <blockquote className="mt-4 text-2xl font-extrabold leading-snug tracking-tight sm:text-3xl">“{HISTORIA.cita}”</blockquote>
             <div className="mt-6 space-y-4 text-[17px] leading-relaxed text-white/80">
               {HISTORIA.parrafos.map((p) => (
@@ -151,25 +151,43 @@ export default function DentalInicio() {
       {/* ============ Tratamientos ============ */}
       <section id="tratamientos" className="scroll-mt-20">
         <div className="mx-auto max-w-6xl px-5 py-20">
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Tratamientos y precios</h2>
-          <p className="mt-3 max-w-xl text-[#3f5f5b]">Precios de referencia. En tu evaluación te damos el presupuesto exacto por escrito.</p>
-          <ul className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {TRATAMIENTOS.map((t) => (
-              <li key={t.id}>
-                <Link
-                  href={`${AGENDAR}?tratamiento=${t.id}`}
-                  className="group flex h-full flex-col rounded-2xl border border-[#e2efed] p-6 transition-colors hover:border-[#0f766e]"
-                >
-                  <span className="text-lg font-extrabold">{t.nombre}</span>
-                  <span className="mt-2 flex-1 text-[15px] leading-relaxed text-[#3f5f5b]">{t.resumen}</span>
-                  <span className="mt-5 flex items-baseline justify-between border-t border-[#e2efed] pt-4">
-                    <span className="text-sm text-[#3f5f5b]">{t.minutos} min</span>
-                    <span className="font-extrabold text-[#0f766e]">desde S/ {t.desde}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr] md:items-end">
+            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Tratamientos y precios</h2>
+            <p className="max-w-md text-[#3f5f5b] md:justify-self-end">
+              Precios de referencia. En tu evaluación te damos el presupuesto exacto por escrito.
+            </p>
+          </div>
+          <table className="mt-10 w-full border-collapse text-left">
+            <caption className="sr-only">Tratamientos, duración y precio desde</caption>
+            <thead className="text-sm text-[#3f5f5b]">
+              <tr className="border-b-2 border-[#0f2a2a]">
+                <th scope="col" className="py-3 pr-4 font-semibold">
+                  Tratamiento
+                </th>
+                <th scope="col" className="hidden py-3 pr-4 font-semibold sm:table-cell">
+                  Duración
+                </th>
+                <th scope="col" className="py-3 text-right font-semibold">
+                  Desde
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {TRATAMIENTOS.map((t) => (
+                <tr key={t.id} className="group border-b border-[#d5e6e2] align-top">
+                  <th scope="row" className="py-5 pr-4 font-normal">
+                    <Link href={`${AGENDAR}?tratamiento=${t.id}`} className="text-lg font-extrabold group-hover:text-[#0f766e]">
+                      {t.nombre}
+                    </Link>
+                    <span className="mt-1 block max-w-xl text-[15px] leading-relaxed text-[#3f5f5b]">{t.resumen}</span>
+                    <span className="mt-1 block text-sm text-[#3f5f5b] sm:hidden">{t.minutos} min</span>
+                  </th>
+                  <td className="hidden whitespace-nowrap py-5 pr-4 tabular-nums text-[#3f5f5b] sm:table-cell">{t.minutos} min</td>
+                  <td className="whitespace-nowrap py-5 text-right text-lg font-extrabold tabular-nums text-[#0f766e]">S/ {t.desde}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           <p className="mt-6 text-[15px] text-[#3f5f5b]">
             Pagas con <strong className="font-bold text-[#0f2a2a]">Yape, Plin, tarjeta o efectivo</strong>. Ortodoncia e implantes, en cuotas sin intereses.
           </p>
@@ -181,7 +199,7 @@ export default function DentalInicio() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 py-20 lg:grid-cols-2">
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Así es tu primera visita</h2>
-            <p className="mt-3 max-w-md text-[#3f5f5b]">Sin sorpresas: sabes qué va a pasar desde que cruzas la puerta.</p>
+            <p className="mt-3 max-w-md text-[#3f5f5b]">Esto es lo que pasa desde que llegas hasta que sales.</p>
             <ol className="mt-8 space-y-6">
               {PRIMERA_VISITA.map((paso, i) => (
                 <li key={paso.titulo} className="flex gap-4">
@@ -285,12 +303,16 @@ export default function DentalInicio() {
 
       {/* ============ Urgencias ============ */}
       <section className="px-5">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 rounded-3xl bg-[#b91c1c] px-8 py-10 text-white md:flex-row md:items-center">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 rounded-2xl border border-[#f1d5d2] border-l-4 border-l-[#b91c1c] bg-[#fdf6f5] px-6 py-7 sm:px-8 md:flex-row md:items-center">
           <div>
-            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">¿Dolor fuerte o un golpe en la boca?</h2>
-            <p className="mt-2 text-white">En horario de atención te damos el primer espacio libre del día. No esperes a que pase solo.</p>
+            <h2 className="text-2xl font-extrabold tracking-tight">¿Dolor fuerte o un golpe en la boca?</h2>
+            <p className="mt-2 max-w-xl text-[#5b3b37]">
+              En horario de atención te damos el primer espacio libre del día. No esperes a que el dolor pase solo.
+            </p>
           </div>
-          <p className="shrink-0 rounded-full bg-white px-6 py-3 text-lg font-extrabold text-[#b91c1c]">Llama al {CLINICA.telefono}</p>
+          <p className="shrink-0 text-lg font-extrabold text-[#b91c1c]">
+            Llama al <span className="whitespace-nowrap">{CLINICA.telefono}</span>
+          </p>
         </div>
       </section>
 

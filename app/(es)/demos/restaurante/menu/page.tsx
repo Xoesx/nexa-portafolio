@@ -4,8 +4,8 @@ import { Footer } from "../components/Footer";
 import { MenuCliente } from "./MenuCliente";
 
 export const metadata: Metadata = {
-  title: "Menú | Sabor Criollo",
-  description: "Carta completa: entradas, principales, postres y bebidas. Precios en soles.",
+  title: "Carta | Sabor Criollo",
+  description: "Carta completa: entradas, platos de la selva, principales, postres y bebidas. Precios en soles con IGV.",
 };
 
 export default function MenuPage() {

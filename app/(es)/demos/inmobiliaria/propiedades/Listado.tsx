@@ -4,35 +4,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Mapa } from "../components/Mapa";
 import { TarjetaPropiedad } from "../components/TarjetaPropiedad";
-import { ACTIVAS, DISTRITOS, enSoles, TIPO_DE_CAMBIO, TIPOS, type Propiedad, type Tipo } from "../data";
+import { ACTIVAS, DISTRITOS, TIPO_DE_CAMBIO, TIPOS, type Tipo } from "../data";
+import { buscar, filtrosActivos, filtrosDesdeURL, ORDENES } from "../lib/busqueda";
 import { aPunto } from "../lib/puntos";
-
-const ORDENES = {
-  recientes: "Más recientes",
-  "precio-asc": "Precio: menor a mayor",
-  "precio-desc": "Precio: mayor a menor",
-  area: "Mayor área",
-} as const;
-type Orden = keyof typeof ORDENES;
 
 const selector =
   "mt-1.5 block min-h-11 w-full rounded-xl border border-[#e7e1d8] bg-white px-3 text-[15px] outline-none focus:border-[#b4532a] focus:ring-2 focus:ring-[#b4532a]/20";
 const etiqueta = "text-sm font-semibold text-[#44403c]";
-
-function ordenar(lista: Propiedad[], orden: Orden) {
-  const copia = [...lista];
-  // Para comparar precios en soles y dólares, todo se lleva a soles con el tipo de cambio referencial.
-  switch (orden) {
-    case "precio-asc":
-      return copia.sort((a, b) => enSoles(a) - enSoles(b));
-    case "precio-desc":
-      return copia.sort((a, b) => enSoles(b) - enSoles(a));
-    case "area":
-      return copia.sort((a, b) => b.area - a.area);
-    default:
-      return copia.sort((a, b) => Number(!!b.nueva) - Number(!!a.nueva) || Number(b.codigo) - Number(a.codigo));
-  }
-}
 
 export function Listado() {
   const params = useSearchParams();
@@ -40,13 +18,8 @@ export function Listado() {
   const ruta = usePathname();
   const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
 
-  const op = params.get("op") ?? "";
-  const tipo = (params.get("tipo") ?? "") as Tipo | "";
-  const distrito = params.get("distrito") ?? "";
-  const dorm = Number(params.get("dorm") ?? 0);
-  const max = Number(params.get("max") ?? 0);
-  const moneda = params.get("moneda") === "USD" ? "USD" : "PEN";
-  const orden = (params.get("orden") ?? "recientes") as Orden;
+  const filtros = filtrosDesdeURL(params);
+  const { op, tipo, distrito, dorm, max, moneda, orden } = filtros;
   const vista = params.get("vista") === "mapa" ? "mapa" : "lista";
 
   const actualizar = (cambios: Record<string, string>) => {
@@ -59,20 +32,8 @@ export function Listado() {
     router.replace(q ? `${ruta}?${q}` : ruta, { scroll: false });
   };
 
-  const topeEnSoles = max ? max * (moneda === "USD" ? TIPO_DE_CAMBIO : 1) : Infinity;
-  const resultados = ordenar(
-    ACTIVAS.filter(
-      (p) =>
-        (!op || p.operacion === op) &&
-        (!tipo || p.tipo === tipo) &&
-        (!distrito || p.distrito === distrito) &&
-        p.dormitorios >= dorm &&
-        enSoles(p) <= topeEnSoles,
-    ),
-    ORDENES[orden] ? orden : "recientes",
-  );
-
-  const activos = [op, tipo, distrito, dorm ? "d" : "", max ? "m" : ""].filter(Boolean).length;
+  const resultados = buscar(ACTIVAS, filtros);
+  const activos = filtrosActivos(filtros);
   const limpiar = () => router.replace(vista === "mapa" ? `${ruta}?vista=mapa` : ruta, { scroll: false });
   const sinDormitorios = tipo === "terreno" || tipo === "local";
 

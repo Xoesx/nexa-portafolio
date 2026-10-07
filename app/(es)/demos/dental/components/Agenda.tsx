@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { buscarTratamiento, CLINICA, DOCTORES, doctoresPara, TRATAMIENTOS, type Doctor, type Tratamiento } from "../data";
-import { aISO, crearICS, proximosDias, turnosDel, type Turno } from "../lib/agenda";
+import { aISO, crearICS, horarioDisponible, proximosDias, turnosDel, type Turno } from "../lib/agenda";
 
 const PASOS = ["Tratamiento", "Especialista", "Fecha y hora", "Tus datos"] as const;
 const CUALQUIERA = "cualquiera";
@@ -31,14 +31,29 @@ function Opcion({ activa, onClick, children }: { activa: boolean; onClick: () =>
   );
 }
 
+/**
+ * Horario que llega elegido por enlace (?tratamiento=…&doctor=…&fecha=AAAA-MM-DD&hora=HH:MM), por ejemplo desde
+ * "Próximo horario libre" de la portada. Solo se acepta si el especialista atiende ese tratamiento y la hora sigue libre.
+ */
+function horarioDelEnlace(params: URLSearchParams, tratamiento: Tratamiento | undefined) {
+  const doctorId = params.get("doctor");
+  const fechaISO = params.get("fecha");
+  const hora = params.get("hora");
+  if (!tratamiento || !doctorId || !fechaISO || !hora) return null;
+  if (!doctoresPara(tratamiento.especialidad).some((d) => d.id === doctorId)) return null;
+  return horarioDisponible(proximosDias(12), fechaISO, hora, tratamiento.minutos, doctorId) ? { doctorId, fechaISO, hora } : null;
+}
+
 export function Agenda() {
   // Si el paciente llega desde "¿Qué te está pasando?" o desde un tratamiento, ya viene elegido.
-  const preelegido = buscarTratamiento(useSearchParams().get("tratamiento") ?? "");
-  const [paso, setPaso] = useState(preelegido ? 1 : 0);
+  const params = useSearchParams();
+  const preelegido = buscarTratamiento(params.get("tratamiento") ?? "");
+  const [enlace] = useState(() => horarioDelEnlace(params, preelegido));
+  const [paso, setPaso] = useState(enlace ? 3 : preelegido ? 1 : 0);
   const [tratamientoId, setTratamientoId] = useState<string | null>(preelegido?.id ?? null);
-  const [doctorId, setDoctorId] = useState<string>(CUALQUIERA);
-  const [fechaISO, setFechaISO] = useState<string | null>(null);
-  const [hora, setHora] = useState<string | null>(null);
+  const [doctorId, setDoctorId] = useState<string>(enlace?.doctorId ?? CUALQUIERA);
+  const [fechaISO, setFechaISO] = useState<string | null>(enlace?.fechaISO ?? null);
+  const [hora, setHora] = useState<string | null>(enlace?.hora ?? null);
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [cita, setCita] = useState<Cita | null>(null);
   const titulo = useRef<HTMLHeadingElement>(null);

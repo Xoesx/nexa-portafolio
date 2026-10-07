@@ -5,7 +5,8 @@ import type { Plato } from "../../types";
 import { MENU_COMPLETO } from "../../data/menu";
 import { esImagenSegura, sanitizarTexto } from "../utils/seguridad";
 
-const STORAGE_KEY = "nexa_sabor_criollo_platos_v4";
+// Sube la versión cuando cambia la carta de ejemplo, para que nadie se quede con una copia vieja guardada.
+const STORAGE_KEY = "nexa_sabor_criollo_platos_v5";
 
 type Contexto = {
   platos: Plato[];
@@ -14,7 +15,6 @@ type Contexto = {
   eliminarPlato: (id: string) => void;
   alternarDisponibilidad: (id: string) => void;
   resetearMenu: () => void;
-  limpiarCache: () => void;
 };
 
 const PlatosContext = createContext<Contexto | null>(null);
@@ -62,7 +62,7 @@ export function PlatosProvider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       // Si el storage está lleno, avisar sin romper la app
       if (err instanceof Error && err.name === "QuotaExceededError") {
-        console.warn("localStorage lleno. Limpia el caché desde el admin.");
+        console.warn("localStorage lleno. Restaura la carta desde el panel para liberar espacio.");
       }
     }
   }, [platos, cargado]);
@@ -92,13 +92,6 @@ export function PlatosProvider({ children }: { children: React.ReactNode }) {
     setPlatos(MENU_COMPLETO);
   };
 
-  const limpiarCache = () => {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-      setPlatos(MENU_COMPLETO);
-    } catch {}
-  };
-
   return (
     <PlatosContext.Provider
       value={{
@@ -108,7 +101,6 @@ export function PlatosProvider({ children }: { children: React.ReactNode }) {
         eliminarPlato,
         alternarDisponibilidad,
         resetearMenu,
-        limpiarCache,
       }}
     >
       {children}

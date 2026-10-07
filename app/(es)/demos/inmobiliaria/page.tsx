@@ -19,9 +19,9 @@ const FOTOS_TIPO: Record<Tipo, string> = {
 };
 
 const RAZONES = [
-  { titulo: "Propiedades verificadas", texto: "Revisamos títulos en SUNARP y cargas antes de publicar. Lo que ves está en regla." },
-  { titulo: "Asesoría legal incluida", texto: "Te acompañamos en la minuta, la notaría y la inscripción, sin costos escondidos." },
-  { titulo: "Te ayudamos con el crédito", texto: "Simula tu cuota en cada ficha y te conectamos con el banco que más te conviene." },
+  { titulo: "Papeles revisados", texto: "Antes de publicar pedimos la partida en SUNARP y revisamos que no haya hipotecas ni embargos." },
+  { titulo: "Asesoría legal incluida", texto: "Te acompañamos en la minuta, la notaría y la inscripción. Ese trabajo ya está dentro de nuestra comisión." },
+  { titulo: "Ayuda con el crédito", texto: "Cada ficha trae un simulador de cuota, y si lo necesitas te presentamos con el banco que mejor te trate." },
 ];
 
 export default function InmobiliariaInicio() {
@@ -43,12 +43,13 @@ export default function InmobiliariaInicio() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#1c1917]/90 via-[#1c1917]/60 to-[#1c1917]/10" />
 
         <div className="mx-auto max-w-7xl px-5 pb-14 pt-16 md:pb-20 md:pt-24">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#f3c7a8]">Pucallpa · Yarinacocha · Manantay</p>
+          <p className="text-[15px] font-semibold text-[#f3c7a8]">Inmobiliaria en Pucallpa, Yarinacocha y Manantay</p>
           <h1 className="mt-4 max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-6xl" style={titulo}>
             Encuentra el lugar donde quieres echar raíces.
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/85">
-            Terrenos, casas, departamentos y locales verificados, con asesoría legal y ayuda para tu crédito desde el primer día.
+            Revisamos cada título en SUNARP antes de publicar y te acompañamos hasta la notaría. Busca por distrito y precio, o mira
+            todo en el mapa.
           </p>
 
           <form action={`${BASE}/propiedades`} method="get" className="mt-10 max-w-5xl rounded-2xl bg-[#faf8f5] p-4 shadow-2xl sm:p-5">
@@ -172,8 +173,8 @@ export default function InmobiliariaInicio() {
             </p>
             <dl className="mt-8 grid grid-cols-3 gap-4">
               {DISTRITOS.map((d) => (
-                <div key={d} className="rounded-xl bg-[#f3efe9] p-3">
-                  <dt className="text-xs font-semibold text-[#57534e]">{d}</dt>
+                <div key={d} className="border-l-2 border-[#e7e1d8] pl-3">
+                  <dt className="text-sm text-[#57534e]">{d}</dt>
                   <dd className="text-2xl font-semibold" style={titulo}>
                     {ACTIVAS.filter((p) => p.distrito === d).length}
                   </dd>
@@ -191,17 +192,21 @@ export default function InmobiliariaInicio() {
         </div>
       </section>
 
-      {/* ============ Por qué Raíces ============ */}
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 py-16 md:grid-cols-3">
-        {RAZONES.map((r, i) => (
-          <div key={r.titulo} className="border-t-2 border-[#1c1917] pt-5">
-            <span className="text-sm font-semibold text-[#933f1d]">0{i + 1}</span>
-            <h3 className="mt-2 text-xl font-semibold tracking-tight" style={titulo}>
-              {r.titulo}
-            </h3>
-            <p className="mt-2 leading-relaxed text-[#57534e]">{r.texto}</p>
-          </div>
-        ))}
+      {/* ============ Cómo trabajamos ============ */}
+      <section className="mx-auto max-w-7xl px-5 py-16">
+        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl" style={titulo}>
+          Cómo trabajamos
+        </h2>
+        <div className="mt-8 grid grid-cols-1 gap-10 md:grid-cols-3">
+          {RAZONES.map((r) => (
+            <div key={r.titulo} className="border-t-2 border-[#1c1917] pt-5">
+              <h3 className="text-xl font-semibold tracking-tight" style={titulo}>
+                {r.titulo}
+              </h3>
+              <p className="mt-2 leading-relaxed text-[#57534e]">{r.texto}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ============ Vendidas recientemente ============ */}
@@ -210,7 +215,7 @@ export default function InmobiliariaInicio() {
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl" style={titulo}>
             Vendidas recientemente
           </h2>
-          <p className="mt-2 text-[#57534e]">Familias y negocios que ya encontraron su lugar con nosotros.</p>
+          <p className="mt-2 text-[#57534e]">Lo último que vendimos y cuánto tardó cada una desde que la publicamos.</p>
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
             {VENDIDAS.map((p) => (
               <div key={p.id}>
@@ -231,16 +236,16 @@ export default function InmobiliariaInicio() {
       <section id="asesores" className="scroll-mt-28">
         <div className="mx-auto max-w-7xl px-5 py-16">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl" style={titulo}>
-            Conversa con una persona, no con un formulario
+            Nuestros asesores
           </h2>
-          <p className="mt-2 max-w-xl text-[#57534e]">Cada asesor conoce a fondo su zona y su tipo de propiedad.</p>
+          <p className="mt-2 max-w-xl text-[#57534e]">Cada uno trabaja un tipo de propiedad. Desde la primera visita hasta la firma te atiende la misma persona.</p>
           <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {ASESORES.map((a) => (
-              <li key={a.id} className="overflow-hidden rounded-2xl border border-[#e7e1d8] bg-white">
-                <div className="relative aspect-[4/3] bg-[#efe9e1]">
-                  <Image src={a.foto} alt={`Retrato de ${a.nombre}`} fill sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="object-cover object-top" />
+              <li key={a.id}>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#efe9e1]">
+                  <Image src={a.foto} alt={`Retrato de ${a.nombre}`} fill sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="object-cover object-[center_30%]" />
                 </div>
-                <div className="p-5">
+                <div className="pt-4">
                   <p className="text-lg font-semibold" style={titulo}>
                     {a.nombre}
                   </p>
@@ -262,8 +267,8 @@ export default function InmobiliariaInicio() {
               ¿Quieres vender o alquilar tu propiedad?
             </h2>
             <p className="mt-4 max-w-lg text-lg leading-relaxed text-[#57534e]">
-              Te damos una tasación gratuita en 48 horas, tomamos fotos profesionales y la mostramos a compradores verificados. Solo
-              cobramos si se concreta.
+              Te damos una tasación gratuita en 48 horas y tomamos las fotos nosotros. Solo cobramos comisión si se vende o se
+              alquila.
             </p>
             <ol className="mt-8 space-y-4">
               {["Nos cuentas de tu propiedad", "Visitamos y tasamos en 48 horas", "Publicamos y filtramos interesados", "Te acompañamos hasta la firma"].map(

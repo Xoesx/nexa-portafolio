@@ -14,11 +14,8 @@ export function LegalLayout({
     <div className="min-h-screen bg-[#FBF9F4] text-[#1F1A15]">
       <Header />
       <main className="mx-auto max-w-3xl px-6 py-16 md:py-20">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#C1440E]">
-          Legal
-        </p>
         <h1
-          className="mt-3 text-[38px] leading-[1.1] md:text-[48px]"
+          className="text-[38px] leading-[1.1] md:text-[48px]"
           style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}
         >
           {titulo}

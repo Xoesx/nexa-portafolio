@@ -24,8 +24,8 @@ export const CLINICA = {
   nombre: "Clínica Dental Alba",
   direccion: "Jr. Raimondi 355, Callería, Pucallpa",
   horario: [
-    { dias: "Lunes a viernes", horas: "9:00 – 20:00" },
-    { dias: "Sábado", horas: "9:00 – 14:00" },
+    { dias: "Lunes a viernes", horas: "9:00 a 20:00" },
+    { dias: "Sábado", horas: "9:00 a 14:00" },
   ],
   telefono: "(061) 000 000",
 };
@@ -88,7 +88,7 @@ export const DOCTORES: Doctor[] = [
     cargo: "Directora médica · Rehabilitación oral",
     especialidades: ["general", "implantes", "estetica"],
     foto: u("1559839734-2b71ea197ec2", 800),
-    bio: "Doce años devolviendo sonrisas con implantes y coronas. Formada en la UNMSM con especialidad en Brasil.",
+    bio: "Doce años haciendo implantes y coronas. Se formó en San Marcos y se especializó en rehabilitación oral en Brasil.",
   },
   {
     id: "andres-salazar",
@@ -104,7 +104,7 @@ export const DOCTORES: Doctor[] = [
     cargo: "Odontopediatra",
     especialidades: ["pediatria", "general"],
     foto: u("1622253692010-333f2da6031d", 800),
-    bio: "Hace que la primera visita de los más pequeños sea un juego. Paciencia infinita, cero miedo.",
+    bio: "Convierte la primera visita de los más pequeños en un juego y tiene mucha paciencia con los que llegan asustados.",
   },
 ];
 
@@ -170,7 +170,7 @@ export const PRIMERA_VISITA = [
 ];
 
 export const HISTORIA = {
-  cita: "Mi filosofía es simple: atender a cada paciente como me gustaría que atendieran a mi mamá.",
+  cita: "Atiendo a cada paciente como me gustaría que atendieran a mi mamá.",
   parrafos: [
     "Soy Valeria Ríos y crecí en Pucallpa. Elegí la odontología después de ver a mi abuela dejar de sonreír en las fotos porque le faltaban dientes.",
     "Estudié en San Marcos, me especialicé en rehabilitación oral en Brasil y volví en 2014 para abrir Alba con una idea fija: que ir al dentista deje de dar miedo.",

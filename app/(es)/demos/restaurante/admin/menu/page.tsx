@@ -18,7 +18,7 @@ const VACIO: FormState = {
 };
 
 export default function AdminMenu() {
-  const { platos, agregarPlato, editarPlato, eliminarPlato, alternarDisponibilidad, resetearMenu, limpiarCache } = usePlatos();
+  const { platos, agregarPlato, editarPlato, eliminarPlato, alternarDisponibilidad, resetearMenu } = usePlatos();
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState<FormState>(VACIO);
   const [filtro, setFiltro] = useState("Todos");
@@ -137,7 +137,13 @@ export default function AdminMenu() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={p.imagen} alt={p.nombre} className="h-full w-full object-cover" />
                 ) : (
-                  <div className="grid h-full place-items-center text-4xl text-gray-700">🍽️</div>
+                  <div className="grid h-full place-items-center text-gray-600">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                      <circle cx="12" cy="12" r="7" />
+                      <circle cx="12" cy="12" r="3.5" />
+                    </svg>
+                    <span className="sr-only">Sin foto</span>
+                  </div>
                 )}
                 {p.etiqueta && (
                   <span className="absolute left-3 top-3 rounded-full bg-[#C1440E] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">

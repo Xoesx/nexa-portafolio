@@ -28,28 +28,29 @@ export function Cocinera() {
           </div>
         </div>
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.3em] text-[#C1440E]">Nuestra historia</p>
-          <h2 className="mt-3 text-4xl leading-[1.05] text-[#1F1A15] md:text-5xl" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}>
-            Empezamos con <span className="italic text-[#C1440E]">cuatro mesas</span> y la receta de lomo de mi papá.
+          <h2 className="text-4xl leading-[1.05] text-[#1F1A15] md:text-5xl" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}>
+            Empezamos con cuatro mesas y la receta de lomo de mi papá.
           </h2>
-          <div className="mt-6 max-w-lg space-y-4 text-[16px] leading-relaxed text-[#1F1A15]/75">
-            <p>
-              “Abrimos en 2014 en un local chiquito del Jr. Comercio. Mi papá cocinaba, mi mamá Rosa atendía y yo lavaba platos
-              después del colegio.”
-            </p>
-            <p>
-              “Hoy somos 22 personas, pero el lomo saltado se sigue haciendo igual: en wok, a fuego alto, y uno por uno. Si algún día
-              lo hacemos en serie, cierro el restaurante.”
-            </p>
-          </div>
-          <p className="mt-6 font-semibold text-[#1F1A15]">
-            Miguel Huamán <span className="font-normal text-[#6E6457]">· Cocinero y dueño</span>
-          </p>
+          <figure className="mt-6">
+            <blockquote className="max-w-lg space-y-4 border-l-2 border-[#C1440E] pl-5 text-[16px] leading-relaxed text-[#1F1A15]/80">
+              <p>
+                Abrimos en 2014 en un local chiquito del Jr. Comercio. Mi papá cocinaba, mi mamá Rosa atendía y yo lavaba platos
+                después del colegio.
+              </p>
+              <p>
+                Hoy somos 22 personas, pero el lomo saltado se sigue haciendo igual: en wok, a fuego alto y uno por uno. Si algún día
+                lo hacemos en serie, cierro el restaurante.
+              </p>
+            </blockquote>
+            <figcaption className="mt-6 pl-5 font-semibold text-[#1F1A15]">
+              Miguel Huamán <span className="font-normal text-[#6E6457]">· Cocinero y dueño</span>
+            </figcaption>
+          </figure>
           <Link
             href="/demos/restaurante/nosotros"
-            className="mt-8 inline-flex min-h-12 items-center rounded-full bg-[#1F1A15] px-7 text-[13px] font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-[#C1440E]"
+            className="ml-5 mt-8 inline-flex min-h-12 items-center rounded-full bg-[#1F1A15] px-7 text-[15px] font-semibold text-white transition hover:bg-[#C1440E]"
           >
-            Conoce al equipo
+            Cómo empezó todo
           </Link>
         </div>
       </div>

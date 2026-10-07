@@ -99,7 +99,7 @@ export function ImageUploader({ valor, onChange }: Props) {
         </button>
       </div>
 
-      {/* SECCIÓN SUBIR ARCHIVO — siempre montada, solo oculta */}
+      {/* Sección subir archivo: siempre montada, solo se oculta */}
       <div className={`mt-3 ${modo === "subir" ? "block" : "hidden"}`}>
         <input
           ref={inputFileRef}
@@ -135,7 +135,7 @@ export function ImageUploader({ valor, onChange }: Props) {
         </div>
       </div>
 
-      {/* SECCIÓN URL — siempre montada, solo oculta */}
+      {/* Sección URL: siempre montada, solo se oculta */}
       <div className={`mt-3 ${modo === "url" ? "block" : "hidden"}`}>
         <input
           type="url"

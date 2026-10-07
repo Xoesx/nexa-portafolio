@@ -7,7 +7,7 @@ import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { LiveChat } from "./components/LiveChat";
 
 // Fuentes del primer pantallazo: precargarlas evita que el título cambie de tamaño al cargar (CLS).
-const FUENTES_CRITICAS = ["/fonts/Cormorant-400.woff2", "/fonts/Cormorant-500-Italic.woff2"];
+const FUENTES_CRITICAS = ["/fonts/Cormorant-400.woff2"];
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-body" });
 

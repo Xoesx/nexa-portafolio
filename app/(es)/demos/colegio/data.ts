@@ -1,3 +1,5 @@
+import type { Etapa } from "./lib/calendario";
+
 const u = (id: string, w = 1400) => `https://images.unsplash.com/photo-${id}?w=${w}&q=80`;
 
 export const ANIO_ESCOLAR = 2027;
@@ -41,7 +43,7 @@ export const NIVELES: Nivel[] = [
     horario: "8:00 a 13:00",
     pension: 380,
     foto: u("1588072432836-e10032774350", 1000),
-    resumen: "Aprenden jugando: lenguaje, motricidad y emociones en aulas de máximo 18 niños con dos maestras.",
+    resumen: "Aulas de 18 niños como máximo y dos maestras en cada una. Buena parte del día se aprende jugando, y cada aula cuida su parcela del huerto.",
     destacados: ["Máximo 18 niños por aula", "Inglés desde los 3 años", "Psicomotricidad y música", "Huerto escolar"],
   },
   {
@@ -51,7 +53,7 @@ export const NIVELES: Nivel[] = [
     horario: "7:45 a 14:30",
     pension: 450,
     foto: u("1529390079861-591de354faf5", 1000),
-    resumen: "Lectura, matemática y ciencia con proyectos reales. Cada alumno tiene un tutor que conoce su ritmo.",
+    resumen: "El mismo tutor acompaña al grupo dos años seguidos, así que conoce bien a cada alumno. Leen un libro al mes y desde 3.° grado llevan robótica.",
     destacados: ["Plan lector mensual", "Robótica desde 3.° grado", "Tutoría personalizada", "Talleres de arte y deporte"],
   },
   {
@@ -61,27 +63,29 @@ export const NIVELES: Nivel[] = [
     horario: "7:45 a 15:00",
     pension: 520,
     foto: u("1571260899304-425eee4c7efc", 1000),
-    resumen: "Preparación preuniversitaria desde 4.° año, orientación vocacional y certificación internacional de inglés.",
-    destacados: ["Inglés con certificación Cambridge", "Pre universitaria desde 4.°", "Orientación vocacional", "Laboratorio de ciencias"],
+    resumen: "En 4.° y 5.° año hay preparación preuniversitaria por las tardes y orientación vocacional con la psicóloga. Terminan rindiendo el examen de inglés de Cambridge.",
+    destacados: ["Inglés con certificación Cambridge", "Preuniversitaria desde 4.° año", "Orientación vocacional", "Laboratorio de ciencias"],
   },
 ];
 
 export const PILARES = [
-  { titulo: "Inglés todos los días", texto: "Cinco horas semanales desde inicial y examen internacional al terminar la secundaria." },
-  { titulo: "Ciencia y tecnología", texto: "Robótica, programación y laboratorio desde primaria, con proyectos que se exponen en feria." },
-  { titulo: "Acompañamiento cercano", texto: "Psicóloga por nivel y reuniones con cada familia dos veces al año, no solo cuando hay problemas." },
-  { titulo: "Arte y deporte", texto: "Danza, música, fútbol y vóley en la jornada escolar, sin costo adicional." },
+  { titulo: "Inglés todos los días", texto: "Cinco horas a la semana desde inicial. En 5.° de secundaria rinden el B1 Preliminary de Cambridge." },
+  { titulo: "Ciencia y tecnología", texto: "Robótica desde 3.° de primaria y laboratorio en secundaria. Cada año llevamos proyectos a la feria regional." },
+  { titulo: "Una psicóloga por nivel", texto: "Y dos reuniones al año con cada familia para hablar de cómo está su hijo, aparte de la entrega de libretas." },
+  { titulo: "Arte y deporte en el horario", texto: "Danza, música, fútbol y vóley dentro de la jornada escolar. No se pagan aparte." },
 ];
 
-export const FECHAS_ADMISION = [
-  { fecha: "2026-10-24", titulo: "Jornada de puertas abiertas", detalle: "Conoce las aulas, a los profesores y resuelve tus dudas. 9:00 a 12:00." },
-  { fecha: "2026-11-07", titulo: "Cierre de preinscripciones", detalle: "Último día para registrar a tu hijo en línea." },
-  { fecha: "2026-11-14", titulo: "Evaluación y entrevista", detalle: "Evaluación según el nivel y entrevista con la familia." },
-  { fecha: "2026-11-21", titulo: "Publicación de resultados", detalle: "Te escribimos por correo y por WhatsApp." },
-  { fecha: "2026-12-01", titulo: "Matrícula", detalle: "Del 1 al 19 de diciembre, en línea o en la secretaría." },
+/** Ordenadas por fecha de inicio: el calendario de la portada marca en cuál estamos. */
+export const FECHAS_ADMISION: Etapa[] = [
+  { fecha: "2026-09-14", hasta: "2026-11-07", titulo: "Preinscripción en línea", detalle: "Desde esta web. Al terminar recibes un código y la lista de documentos." },
+  { fecha: "2026-10-24", titulo: "Jornada de puertas abiertas", detalle: "Recorre las aulas con tu hijo y conversa con los profesores, de 9:00 a 12:00." },
+  { fecha: "2026-11-14", titulo: "Evaluación y entrevista", detalle: "Una observación en inicial o una prueba corta desde primaria, y luego una conversación con la familia." },
+  { fecha: "2026-11-21", titulo: "Resultados", detalle: "Te escribimos por correo y por WhatsApp." },
+  { fecha: "2026-12-01", hasta: "2026-12-19", titulo: "Matrícula", detalle: "En línea o en la secretaría." },
 ];
 
-export const VISITAS = ["2026-10-24", "2026-10-31", "2026-11-04", "2026-11-06"];
+/** Las visitas guiadas son los miércoles y sábados, en dos turnos. */
+export const VISITAS = { dias: [3, 6], turnos: ["9:00", "11:00"] } as const;
 
 export const COSTOS = [
   { concepto: "Cuota de ingreso (única vez)", monto: "S/ 600" },
@@ -101,24 +105,25 @@ export const PREGUNTAS = [
   { q: "¿Hay vacantes en todos los grados?", a: "Sí, aunque en inicial 3 años y 1.° de primaria se llenan primero. Te recomendamos preinscribirte cuanto antes." },
   { q: "¿Ofrecen becas o descuentos?", a: "Descuento de 10% en la pensión para el segundo hermano y becas por rendimiento académico desde 3.° de primaria." },
   { q: "¿Tienen movilidad escolar?", a: "Trabajamos con movilidades autorizadas que cubren Callería, Yarinacocha y Manantay. Se contratan aparte." },
-  { q: "¿Cómo es la evaluación de ingreso?", a: "En inicial es una observación de juego. Desde primaria, una evaluación breve de comunicación y matemática, sin presión." },
+  { q: "¿Cómo es la evaluación de ingreso?", a: "En inicial es una observación mientras juega. Desde primaria, una prueba corta de comunicación y matemática que nos sirve para saber en qué apoyarlo los primeros meses." },
 ];
 
 export const MENSAJE_DIRECTORA = {
   nombre: "Mg. Patricia Saldaña",
   cargo: "Directora general",
   parrafos: [
-    "Hace 25 años, mis padres y un grupo de maestros de Pucallpa soñaron con un colegio donde los chicos aprendieran a pensar, no a memorizar. Yo estudié aquí; hoy me toca cuidar ese sueño, que ya tiene 640 alumnos y sus familias.",
-    "Conozco a cada estudiante por su nombre. Sé quién necesita un empujón en matemática y quién está pasando un momento difícil en casa. Eso, para nosotros, es educar.",
+    "Mis padres fundaron Horizonte en 2001 con seis maestros y 48 alumnos. Yo fui de la primera promoción de primaria, y dos de esos maestros todavía enseñan aquí.",
+    "Hoy somos 640 alumnos y me sigo sabiendo el nombre de cada uno. Sé quién necesita un empujón en matemática y quién está pasando un mal momento en casa.",
+    "Si algo te preocupa de tu hijo, pide una cita conmigo en secretaría. Atiendo a las familias los martes y jueves por la tarde.",
   ],
 };
 
 export const DIA = [
-  { hora: "7:45", titulo: "Buenos días", texto: "Los tutores reciben a cada alumno en la puerta. Cinco minutos para saludar, conversar y empezar con calma.", foto: u("1503676382389-4809596d5290", 800) },
-  { hora: "8:00", titulo: "Aprender haciendo", texto: "Matemática con material concreto, ciencia con experimentos y lectura en voz alta en grupos pequeños.", foto: u("1577896851231-70ef18881754", 800) },
-  { hora: "10:15", titulo: "Recreo con fruta", texto: "Quioscos saludables y patios con sombra. Los más grandes cuidan a los pequeños en el patio de inicial.", foto: u("1588075592446-265fd1e6e76f", 800) },
-  { hora: "11:00", titulo: "Inglés todos los días", texto: "Canciones en inicial, proyectos en primaria y debates en secundaria, siempre en inglés.", foto: u("1529390079861-591de354faf5", 800) },
-  { hora: "13:30", titulo: "Talleres", texto: "Robótica, danza, fútbol, vóley o música, según lo que cada alumno elige en el bimestre.", foto: u("1531482615713-2afd69097998", 800) },
+  { hora: "7:45", titulo: "Buenos días", texto: "Cada tutor recibe a su grupo en la puerta del aula y conversan un rato antes de empezar.", foto: u("1503676382389-4809596d5290", 800) },
+  { hora: "8:00", titulo: "Matemática y lectura", texto: "Van en las primeras horas, cuando están más despiertos. Se trabaja con material concreto y en grupos de cuatro.", foto: u("1577896851231-70ef18881754", 800) },
+  { hora: "10:15", titulo: "Recreo", texto: "El quiosco vende fruta, sánguches y refrescos naturales. Los de 6.° grado ayudan a cuidar el patio de inicial.", foto: u("1588075592446-265fd1e6e76f", 800) },
+  { hora: "11:00", titulo: "Inglés", texto: "Una hora diaria, casi siempre con un proyecto. Este bimestre, 4.° grado está grabando un noticiero en inglés.", foto: u("1529390079861-591de354faf5", 800) },
+  { hora: "13:30", titulo: "Talleres", texto: "Robótica, danza, fútbol, vóley o música. Cada alumno elige uno por bimestre.", foto: u("1531482615713-2afd69097998", 800) },
 ];
 
 export const TESTIMONIOS = [
@@ -132,18 +137,18 @@ export const TESTIMONIOS = [
     nombre: "Martín Arévalo",
     rol: "Papá de Diego, 5.° de secundaria",
     foto: u("1500648767791-00dcc994a43e", 400),
-    texto: "La orientación vocacional fue clave. Diego tenía claro qué quería estudiar antes de terminar el colegio y entró a la universidad en su primer intento.",
+    texto: "Diego no sabía qué estudiar hasta 4.° de secundaria. Con la orientación vocacional se decidió por Agroindustrial y entró a la Universidad Nacional de Ucayali en su primer intento.",
   },
   {
     nombre: "Don Julio Panduro",
     rol: "Abuelo de dos exalumnas",
     foto: u("1472099645785-5658abf4ff4e", 400),
-    texto: "Mis dos nietas estudiaron aquí desde inicial. Lo que más valoro es que, además de buenas alumnas, salieron buenas personas.",
+    texto: "Mis dos nietas estudiaron aquí desde inicial. La mayor ya es enfermera y todavía pasa a saludar a su profesora de primaria.",
   },
 ];
 
 export const VIDA_ESCOLAR = [
-  { src: u("1541339907198-e08756dedf3f", 1200), alt: "Promoción lanzando sus birretes al aire en la ceremonia de graduación", pie: "Promoción 2026" },
+  { src: u("1541339907198-e08756dedf3f", 1200), alt: "Promoción lanzando sus birretes al aire en la ceremonia de graduación", pie: "Promoción 2025" },
   { src: u("1588075592446-265fd1e6e76f", 900), alt: "Niños de primaria sentados en el piso del aula durante una actividad", pie: "Lectura en grupo" },
   { src: u("1531482615713-2afd69097998", 900), alt: "Estudiantes de secundaria trabajando juntos en computadoras", pie: "Taller de programación" },
   { src: u("1562774053-701939374585", 900), alt: "Edificio principal del colegio con jardines", pie: "Nuestro campus" },

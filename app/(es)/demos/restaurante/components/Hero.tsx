@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { EstadoLocal } from "./EstadoLocal";
 import { ReservaRapida } from "./ReservaRapida";
 
 export function Hero() {
@@ -17,14 +18,12 @@ export function Hero() {
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:py-24">
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.3em] text-[#E8A87C]">Pucallpa · Cocina criolla y amazónica</p>
+          <p className="text-[15px] text-[#E8A87C]">Cocina criolla y amazónica en Pucallpa</p>
           <h1
-            className="mt-5 text-[3.2rem] leading-[0.98] tracking-[-0.02em] sm:text-[4.4rem]"
+            className="mt-4 text-[3.2rem] leading-[0.98] tracking-[-0.02em] sm:text-[4.4rem]"
             style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}
           >
-            La mesa larga,
-            <br />
-            <span className="italic text-[#E8A87C]">como en casa de la abuela.</span>
+            La mesa larga, como en casa de la abuela.
           </h1>
           <p className="mt-6 max-w-lg text-[17px] leading-relaxed text-white/80">
             Lomo saltado, ceviche, juane y tacacho con cecina, preparados al momento con lo que llega cada mañana del mercado de
@@ -33,7 +32,7 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
             <Link
               href="/demos/restaurante/menu"
-              className="inline-flex min-h-12 items-center rounded-full border border-white/30 px-7 text-[13px] font-semibold uppercase tracking-[0.15em] transition hover:border-[#E8A87C] hover:text-[#E8A87C]"
+              className="inline-flex min-h-12 items-center rounded-full border border-white/30 px-7 text-[15px] font-semibold transition hover:border-[#E8A87C] hover:text-[#E8A87C]"
             >
               Ver la carta
             </Link>
@@ -52,8 +51,10 @@ export function Hero() {
               <dd className="font-semibold">S/ 45 por persona</dd>
             </div>
             <div>
-              <dt className="text-white/60">Horario</dt>
-              <dd className="font-semibold">Todos los días desde las 12:00</dd>
+              <dt className="text-white/60">Hoy</dt>
+              <dd className="font-semibold">
+                <EstadoLocal />
+              </dd>
             </div>
             <div>
               <dt className="text-white/60">Dirección</dt>

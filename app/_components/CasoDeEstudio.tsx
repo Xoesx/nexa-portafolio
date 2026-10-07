@@ -43,6 +43,7 @@ export function CasoDeEstudio({ slug, idioma }: { slug: string; idioma: Idioma }
   const p = lista[indice];
   const siguiente = lista[(indice + 1) % lista.length];
   const plan = planes(idioma).find((x) => x.id === p.plan);
+  const precioPlan = plan ? formatoPrecio(plan.precio, idioma) : null;
   const metricas = METRICAS[p.slug];
   const urlDemo = `${SITIO.url}${p.ruta}`;
   const inicio = RUTA.inicio[idioma];
@@ -261,7 +262,8 @@ export function CasoDeEstudio({ slug, idioma }: { slug: string; idioma: Idioma }
                   <h3 className="font-display text-3xl">{plan.nombre}</h3>
                   <p className="font-display text-3xl">
                     <span className="mr-1 font-sans text-sm font-normal text-tenue">{TEXTOS[idioma].precios.desde}</span>
-                    {formatoPrecio(plan.precio, idioma).principal}
+                    {precioPlan?.principal}
+                    {precioPlan?.secundario && <span className="ml-2 font-mono text-sm font-normal text-tenue">· {precioPlan.secundario}</span>}
                   </p>
                 </div>
                 <ul className="mt-6 space-y-2.5 text-[15px]">

@@ -22,13 +22,13 @@ export default function NotFound() {
       <div className="mt-10 flex flex-wrap justify-center gap-4">
         <Link
           href="/demos/restaurante"
-          className="rounded-full bg-[#C1440E] px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-[#9A3410]"
+          className="rounded-full bg-[#C1440E] px-7 py-4 text-[15px] font-semibold text-white transition hover:bg-[#9A3410]"
         >
           Volver al inicio
         </Link>
         <Link
           href="/demos/restaurante/menu"
-          className="rounded-full border border-[#1F1A15]/20 px-7 py-4 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#1F1A15] transition hover:border-[#C1440E] hover:text-[#C1440E]"
+          className="rounded-full border border-[#1F1A15]/20 px-7 py-4 text-[15px] font-semibold text-[#1F1A15] transition hover:border-[#C1440E] hover:text-[#C1440E]"
         >
           Ver el menú
         </Link>

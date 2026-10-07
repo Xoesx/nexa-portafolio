@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { horarioPorTramos } from "../../lib/horario";
 
 export default function AdminConfiguracion() {
   const [guardado, setGuardado] = useState(false);
@@ -82,16 +83,15 @@ export default function AdminConfiguracion() {
       <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-7">
         <h2 className="text-lg font-bold">Horarios de atención</h2>
         <div className="mt-6 space-y-3">
-          {[
-            { dia: "Lunes – Jueves", valor: "12:00 – 22:00" },
-            { dia: "Viernes – Sábado", valor: "12:00 – 23:30" },
-            { dia: "Domingo", valor: "12:00 – 17:00" },
-          ].map((h) => (
-            <div key={h.dia} className="flex items-center justify-between gap-4">
-              <span className="text-sm text-gray-300">{h.dia}</span>
+          {horarioPorTramos().map((h, i) => (
+            <div key={h.dias} className="flex items-center justify-between gap-4">
+              <label htmlFor={`horario-${i}`} className="text-sm text-gray-300">
+                {h.dias}
+              </label>
               <input
+                id={`horario-${i}`}
                 type="text"
-                defaultValue={h.valor}
+                defaultValue={h.horas}
                 className="w-48 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none focus:border-[#C1440E]"
               />
             </div>

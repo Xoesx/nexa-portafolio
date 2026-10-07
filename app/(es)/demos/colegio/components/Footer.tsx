@@ -9,7 +9,7 @@ export function Footer() {
         <div>
           <Escudo claro />
           <p className="mt-4 max-w-xs text-[15px] italic leading-relaxed text-[#fbf8f3]/80" style={{ fontFamily: "var(--font-hz-titulo)" }}>
-            “{COLEGIO.lema}”
+            {COLEGIO.lema}
           </p>
         </div>
         <div className="text-[15px] leading-relaxed text-[#fbf8f3]/80">

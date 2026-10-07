@@ -1,6 +1,10 @@
 import type { Plato } from "../types";
 
-export const CATEGORIAS = ["Entradas", "Principales", "Postres", "Bebidas"] as const;
+export const CATEGORIAS = ["Entradas", "De la selva", "Principales", "Postres", "Bebidas"] as const;
+
+/** Ancla de cada categoría en la carta: "De la selva" → "de-la-selva". */
+export const idCategoria = (categoria: string) =>
+  categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/\s+/g, "-");
 
 export const MENU_COMPLETO: Plato[] = [
   // ============ ENTRADAS (8) ============
@@ -12,6 +16,12 @@ export const MENU_COMPLETO: Plato[] = [
   { id: "e6", nombre: "Choritos a la chalaca", categoria: "Entradas", precio: 20, descripcion: "Choritos frescos con cebolla, tomate y culantro.", imagen: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=500&q=80", disponible: true },
   { id: "e7", nombre: "Causa de cangrejo", categoria: "Entradas", precio: 24, descripcion: "Causa rellena con cangrejo fresco y palta.", imagen: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", disponible: true },
   { id: "e8", nombre: "Tequeños criollos", categoria: "Entradas", precio: 14, descripcion: "Rellenos de queso andino, fritos al momento.", imagen: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=500&q=80", disponible: true, etiqueta: "Nuevo" },
+
+  // ============ DE LA SELVA (4) ============
+  { id: "s1", nombre: "Juane de gallina", categoria: "De la selva", precio: 28, descripcion: "Arroz sazonado con palillo, presa de gallina, huevo y aceituna, envuelto en hoja de bijao.", imagen: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500&q=80", disponible: true, etiqueta: "Popular" },
+  { id: "s2", nombre: "Tacacho con cecina", categoria: "De la selva", precio: 32, descripcion: "Plátano verde asado y machacado con manteca, cecina ahumada y chorizo regional.", imagen: "https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=500&q=80", disponible: true },
+  { id: "s3", nombre: "Patarashca de doncella", categoria: "De la selva", precio: 38, descripcion: "Pescado del Ucayali cocido en hoja de bijao con cocona, sacha culantro y ají charapita.", imagen: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80", disponible: true, etiqueta: "Chef" },
+  { id: "s4", nombre: "Inchicapi", categoria: "De la selva", precio: 24, descripcion: "Sopa espesa de gallina con maní molido, maíz y yuca. La que pedimos cuando llueve.", imagen: "https://images.unsplash.com/photo-1547592180-85f173990554?w=500&q=80", disponible: true },
 
   // ============ PRINCIPALES (14) ============
   { id: "p1", nombre: "Lomo saltado", categoria: "Principales", precio: 28, descripcion: "Carne de res al wok con cebolla, tomate, papas fritas y arroz.", imagen: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", disponible: true, etiqueta: "Popular" },

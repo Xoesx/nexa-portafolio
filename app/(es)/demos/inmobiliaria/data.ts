@@ -404,7 +404,7 @@ export const PROPIEDADES: Propiedad[] = [
     resumen: "600 m² con piscina, jardín, frutales y espacio para ampliar.",
     descripcion: [
       "Casa de un piso sobre un terreno amplio, con piscina, jardín delantero y frutales en la parte posterior.",
-      "Perfecta para una familia que busca tranquilidad sin alejarse de la ciudad.",
+      "Está a quince minutos del centro, en una calle por la que casi no pasan carros.",
     ],
     caracteristicas: ["Piscina", "Jardín", "Árboles frutales", "Lavandería", "Título en SUNARP"],
     asesor: "carlos-vasquez",

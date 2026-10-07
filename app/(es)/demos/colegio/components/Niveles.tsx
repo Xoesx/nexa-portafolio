@@ -56,7 +56,7 @@ export function Niveles() {
           <Image key={n.foto} src={n.foto} alt={`Estudiantes de ${n.nombre.toLowerCase()} en clase`} fill sizes="(min-width: 1024px) 540px, 100vw" className="object-cover" />
         </div>
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#7a1f2b]">{n.edades}</p>
+          <p className="text-[15px] font-semibold text-[#7a1f2b]">{n.edades}</p>
           <h3 className="mt-2 text-3xl font-semibold" style={{ fontFamily: "var(--font-hz-titulo)" }}>
             {n.nombre}
           </h3>

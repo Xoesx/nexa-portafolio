@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Preinscripcion } from "../components/Preinscripcion";
-import { ANIO_ESCOLAR, COSTOS, FECHAS_ADMISION, fechaLegible, REQUISITOS } from "../data";
+import { ANIO_ESCOLAR, COSTOS, FECHAS_ADMISION, REQUISITOS } from "../data";
+import { rangoLegible } from "../lib/calendario";
 
 export const metadata: Metadata = {
   title: `Admisión ${ANIO_ESCOLAR}`,
@@ -10,10 +12,10 @@ export const metadata: Metadata = {
 const titulo = { fontFamily: "var(--font-hz-titulo)" };
 
 const PROCESO = [
-  { paso: "Preinscríbete en línea", texto: "Te toma tres minutos. El sistema te dice a qué grado corresponde tu hijo." },
-  { paso: "Visita el colegio", texto: "Recorre las aulas con tu hijo y conversa con la coordinadora del nivel." },
-  { paso: "Evaluación y entrevista", texto: "Una observación amable para conocer a tu hijo, sin exámenes difíciles." },
-  { paso: "Matrícula", texto: "Con los resultados, separas la vacante y matriculas en línea o en secretaría." },
+  { paso: "Preinscríbete en línea", texto: "Toma tres minutos. Con la fecha de nacimiento te decimos a qué grado entra tu hijo." },
+  { paso: "Visita el colegio", texto: "Un miércoles o sábado, con tu hijo. Recorren las aulas y conversan con la coordinadora del nivel." },
+  { paso: "Evaluación y entrevista", texto: "En inicial lo observamos mientras juega; desde primaria hay una prueba corta. Después conversamos con la familia." },
+  { paso: "Matrícula", texto: "Con los resultados, separas la vacante y matriculas en línea o en la secretaría." },
 ];
 
 export default function AdmisionPage() {
@@ -21,7 +23,7 @@ export default function AdmisionPage() {
     <main>
       <section className="border-b border-[#ebe3d6] bg-white">
         <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#7a1f2b]">Admisión {ANIO_ESCOLAR}</p>
+          <p className="text-[15px] font-semibold text-[#7a1f2b]">Admisión {ANIO_ESCOLAR}</p>
           <h1 className="mt-3 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl" style={titulo}>
             Cuatro pasos para que tu hijo sea parte de Horizonte
           </h1>
@@ -49,7 +51,10 @@ export default function AdmisionPage() {
               Al terminar recibes un código y la lista de documentos para tu visita.
             </p>
             <div className="mt-8">
-              <Preinscripcion />
+              {/* La preinscripción lee ?nacimiento= de la URL; con Suspense el resto de la página se genera estática. */}
+              <Suspense fallback={<div className="h-[34rem] rounded-2xl border border-[#ebe3d6] bg-white" />}>
+                <Preinscripcion />
+              </Suspense>
             </div>
           </div>
 
@@ -93,8 +98,8 @@ export default function AdmisionPage() {
                 {FECHAS_ADMISION.map((f) => (
                   <li key={f.fecha} className="flex justify-between gap-4">
                     <span className="text-[#fbf8f3]/80">{f.titulo}</span>
-                    <time dateTime={f.fecha} className="shrink-0 font-bold">
-                      {fechaLegible(f.fecha, { day: "numeric", month: "short" }).replace(".", "")}
+                    <time dateTime={f.fecha} className="shrink-0 text-right font-bold">
+                      {rangoLegible(f)}
                     </time>
                   </li>
                 ))}

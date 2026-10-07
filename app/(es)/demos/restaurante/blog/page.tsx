@@ -16,17 +16,14 @@ export default function BlogPage() {
       <Header />
       <main className="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <div className="max-w-2xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#C1440E]">
-            Blog
-          </p>
           <h1
-            className="mt-3 text-[42px] leading-[1.05] md:text-[56px]"
+            className="text-[42px] leading-[1.05] md:text-[56px]"
             style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}
           >
-            Historias de la cocina peruana
+            Desde la cocina
           </h1>
-          <p className="mt-4 text-[16px] leading-relaxed text-[#1F1A15]/70">
-            Ingredientes, técnicas y recetas contadas por quienes las cocinan todos los días.
+          <p className="mt-4 text-[16px] leading-relaxed text-[#1F1A15]/75">
+            Lo que aprendimos cocinando: cómo elegimos el pescado, de dónde sale cada ají y algunas recetas de la casa.
           </p>
         </div>
 
@@ -45,7 +42,7 @@ export default function BlogPage() {
                 />
               </div>
               <div className="mt-5">
-                <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#6E6457]">
+                <div className="flex items-center gap-3 text-[13px] text-[#6E6457]">
                   <span className="text-[#C1440E]">{a.categoria}</span>
                   <span>·</span>
                   <span>{a.lectura} de lectura</span>
@@ -59,7 +56,7 @@ export default function BlogPage() {
                 <p className="mt-2 text-[14px] leading-relaxed text-[#1F1A15]/70">
                   {a.extracto}
                 </p>
-                <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[#6E6457]">
+                <p className="mt-4 text-[13px] text-[#6E6457]">
                   {a.fecha}
                 </p>
               </div>

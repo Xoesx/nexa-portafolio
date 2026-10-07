@@ -62,7 +62,7 @@ export function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className="text-[12px] font-semibold uppercase tracking-wider text-[#1F1A15]/70">
+          <label className="text-[14px] font-semibold text-[#1F1A15]/70">
             Tu nombre
           </label>
           <input
@@ -74,7 +74,7 @@ export function ContactForm() {
           {errores.nombre && <p className="mt-1 text-[11px] text-red-600">{errores.nombre}</p>}
         </div>
         <div>
-          <label className="text-[12px] font-semibold uppercase tracking-wider text-[#1F1A15]/70">
+          <label className="text-[14px] font-semibold text-[#1F1A15]/70">
             Correo
           </label>
           <input
@@ -88,7 +88,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="text-[12px] font-semibold uppercase tracking-wider text-[#1F1A15]/70">
+        <label className="text-[14px] font-semibold text-[#1F1A15]/70">
           Asunto
         </label>
         <input
@@ -101,7 +101,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="text-[12px] font-semibold uppercase tracking-wider text-[#1F1A15]/70">
+        <label className="text-[14px] font-semibold text-[#1F1A15]/70">
           Mensaje
         </label>
         <textarea
@@ -142,7 +142,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={enviando}
-        className="w-full rounded-full bg-[#C1440E] px-6 py-4 text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-[#9A3410] disabled:opacity-60"
+        className="w-full rounded-full bg-[#C1440E] px-6 py-4 text-[15px] font-semibold text-white transition hover:bg-[#9A3410] disabled:opacity-60"
       >
         {enviando ? "Enviando…" : "Enviar mensaje"}
       </button>

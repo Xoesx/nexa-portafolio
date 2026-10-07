@@ -44,6 +44,34 @@ export function turnosDel(fecha: Date, minutos: number, doctorId: string): Turno
   return turnos;
 }
 
+export type HorarioLibre = { fecha: Date; hora: string; doctorId: string };
+
+/**
+ * El primer horario libre entre varios especialistas: recorre los días en orden y, dentro de cada día,
+ * se queda con la hora más temprana que tenga libre cualquiera de ellos.
+ */
+export function primerHorarioLibre(dias: Date[], minutos: number, doctorIds: string[]): HorarioLibre | null {
+  for (const fecha of dias) {
+    let mejor: HorarioLibre | null = null;
+    for (const doctorId of doctorIds) {
+      const libre = turnosDel(fecha, minutos, doctorId).find((t) => t.libre);
+      if (libre && (!mejor || libre.hora < mejor.hora)) mejor = { fecha, hora: libre.hora, doctorId };
+    }
+    if (mejor) return mejor;
+  }
+  return null;
+}
+
+/**
+ * Valida un horario que llega por enlace (?fecha=AAAA-MM-DD&hora=HH:MM): la fecha tiene que estar entre
+ * los días que ofrece la agenda y la hora tiene que estar libre para ese especialista y esa duración.
+ */
+export function horarioDisponible(dias: Date[], fechaISO: string, hora: string, minutos: number, doctorId: string): boolean {
+  const fecha = dias.find((d) => aISO(d) === fechaISO);
+  if (!fecha) return false;
+  return turnosDel(fecha, minutos, doctorId).some((t) => t.hora === hora && t.libre);
+}
+
 /** Archivo .ics para que el paciente guarde la cita en su calendario. */
 export function crearICS({ titulo, inicio, minutos, lugar, detalle }: { titulo: string; inicio: Date; minutos: number; lugar: string; detalle: string }) {
   const fin = new Date(inicio.getTime() + minutos * 60000);

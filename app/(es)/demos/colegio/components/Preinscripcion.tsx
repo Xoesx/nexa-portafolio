@@ -1,10 +1,13 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ANIO_ESCOLAR, fechaLegible, REQUISITOS, VISITAS } from "../data";
-import { gradoSegunNacimiento } from "../lib/grado";
+import { proximasVisitas } from "../lib/calendario";
+import { gradoSegunNacimiento, motivoSinGrado, rangoNacimiento } from "../lib/grado";
 
 const PASOS = ["Estudiante", "Apoderado", "Visita"] as const;
+const RANGO = rangoNacimiento();
 
 const estiloCampo =
   "mt-1.5 block min-h-12 w-full rounded-lg border border-[#d9cfc0] bg-white px-3.5 text-[15px] outline-none transition-colors focus:border-[#7a1f2b] focus:ring-2 focus:ring-[#7a1f2b]/15 aria-[invalid=true]:border-[#b91c1c]";
@@ -19,26 +22,51 @@ const CAMPOS_POR_PASO: string[][] = [
   ["visita", "turno", "acepto"],
 ];
 
-async function crearEsquema() {
+// Zod se carga recién al validar, así no pesa en la carga inicial de la página.
+async function crearEsquema(visitas: string[]) {
   const { z } = await import("zod");
   return z.object({
     nombres: z.string().trim().min(2, "Escribe los nombres del estudiante."),
     apellidos: z.string().trim().min(2, "Escribe los apellidos."),
-    nacimiento: z.string().refine((v) => gradoSegunNacimiento(v) !== null, `La edad no corresponde a ningún grado para ${ANIO_ESCOLAR}.`),
+    nacimiento: z
+      .string()
+      .min(1, "Escribe la fecha de nacimiento.")
+      .refine((v) => gradoSegunNacimiento(v) !== null, { error: (issue) => motivoSinGrado(String(issue.input)) }),
     procedencia: z.string().max(120).optional(),
     apoderado: z.string().trim().min(5, "Escribe el nombre completo del apoderado."),
-    parentesco: z.enum(["madre", "padre", "apoderado"], { message: "Elige el parentesco." }),
+    parentesco: z.enum(["madre", "padre", "apoderado"], { error: "Elige el parentesco." }),
     dni: z.string().trim().regex(/^\d{8}$/, "El DNI tiene 8 dígitos."),
     telefono: z
       .string()
       .transform((v) => v.replace(/[\s-]/g, ""))
       .pipe(z.string().regex(/^9\d{8}$/, "Escribe un celular de 9 dígitos.")),
     correo: z.email("Revisa el correo."),
-    visita: z.enum(VISITAS as [string, ...string[]], { message: "Elige una fecha para tu visita." }),
-    turno: z.enum(["9:00", "15:00"], { message: "Elige el turno." }),
-    acepto: z.literal("si", { message: "Necesitamos tu autorización para continuar." }),
+    visita: z.enum(visitas as [string, ...string[]], { error: "Elige una fecha para tu visita." }),
+    turno: z.enum(VISITAS.turnos, { error: "Elige el turno." }),
+    acepto: z.literal("si", { error: "Necesitamos tu autorización para continuar." }),
   });
 }
+
+type Esquema = Awaited<ReturnType<typeof crearEsquema>>;
+
+/** El primer error de cada campo, solo de los campos que se están revisando. */
+function erroresDe(resultado: ReturnType<Esquema["safeParse"]>, campos: string[]): Errores {
+  const errores: Errores = {};
+  if (resultado.success) return errores;
+  for (const issue of resultado.error.issues) {
+    const campo = String(issue.path[0]);
+    if (campos.includes(campo)) errores[campo] ??= issue.message;
+  }
+  return errores;
+}
+
+/** Una fecha que llega por enlace (desde la calculadora de la portada) solo se usa si corresponde a un grado. */
+const nacimientoDelEnlace = (params: URLSearchParams) => {
+  const valor = params.get("nacimiento") ?? "";
+  return gradoSegunNacimiento(valor) ? valor : "";
+};
+
+const horaLegible = (turno: string) => `${turno} ${Number(turno.split(":")[0]) < 12 ? "a. m." : "p. m."}`;
 
 function Campo({
   nombre,
@@ -76,9 +104,12 @@ const a11y = (nombre: string, errores: Errores) => ({
 });
 
 export function Preinscripcion() {
+  // Este componente se dibuja solo en el navegador (lee la URL dentro de un Suspense), así que puede usar la fecha de hoy.
+  const params = useSearchParams();
+  const [visitas] = useState(() => proximasVisitas(new Date(), VISITAS.dias));
   const [paso, setPaso] = useState(0);
   const [errores, setErrores] = useState<Errores>({});
-  const [nacimiento, setNacimiento] = useState("");
+  const [nacimiento, setNacimiento] = useState(() => nacimientoDelEnlace(params));
   const [resumen, setResumen] = useState<Resumen | null>(null);
   const form = useRef<HTMLFormElement>(null);
   const titulo = useRef<HTMLHeadingElement>(null);
@@ -87,82 +118,75 @@ export function Preinscripcion() {
   const grado = nacimiento ? gradoSegunNacimiento(nacimiento) : null;
 
   useEffect(() => {
+    // Al cambiar de paso, el foco va al título para que los lectores de pantalla lo anuncien.
     if (montado.current) titulo.current?.focus();
     montado.current = true;
   }, [paso, resumen]);
 
-  /** Valida los campos del paso indicado (o todos) y muestra los errores. */
-  const validarPaso = async (hasta: number) => {
+  const enfocar = (campo: string) => requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${campo}"]`)?.focus());
+
+  /** Valida el formulario completo pero muestra solo los errores de los campos indicados. */
+  const validar = async (campos: string[]) => {
     if (!form.current) return null;
-    const esquema = await crearEsquema();
-    const r = esquema.safeParse(Object.fromEntries(new FormData(form.current)));
-    const campos = CAMPOS_POR_PASO.slice(0, hasta + 1).flat();
-    const nuevos: Errores = {};
-    if (!r.success) {
-      for (const i of r.error.issues) {
-        const c = String(i.path[0]);
-        if (campos.includes(c)) nuevos[c] ??= i.message;
-      }
-    }
+    const esquema = await crearEsquema(visitas);
+    const resultado = esquema.safeParse(Object.fromEntries(new FormData(form.current)));
+    const nuevos = erroresDe(resultado, campos);
     setErrores(nuevos);
-    const primero = Object.keys(nuevos)[0];
-    if (primero) {
-      // Si el error está en un paso anterior, volvemos a ese paso.
-      const pasoDelError = CAMPOS_POR_PASO.findIndex((cs) => cs.includes(primero));
-      if (pasoDelError !== paso) setPaso(pasoDelError);
-      requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${primero}"]`)?.focus());
-      return null;
-    }
-    return r.success ? r.data : null;
+    return { resultado, primero: Object.keys(nuevos)[0] };
   };
 
-  /** Para avanzar basta con que los campos del paso actual sean válidos. */
+  /** Para avanzar basta con que los campos del paso actual estén bien. */
   const siguiente = async () => {
-    if (!form.current) return;
-    const esquema = await crearEsquema();
-    const r = esquema.safeParse(Object.fromEntries(new FormData(form.current)));
-    const nuevos: Errores = {};
-    if (!r.success) {
-      for (const i of r.error.issues) {
-        const c = String(i.path[0]);
-        if (CAMPOS_POR_PASO[paso].includes(c)) nuevos[c] ??= i.message;
-      }
-    }
-    setErrores(nuevos);
-    const primero = Object.keys(nuevos)[0];
-    if (primero) {
-      form.current.querySelector<HTMLElement>(`[name="${primero}"]`)?.focus();
-      return;
-    }
-    setPaso((p) => p + 1);
+    const v = await validar(CAMPOS_POR_PASO[paso]);
+    if (!v) return;
+    if (v.primero) enfocar(v.primero);
+    else setPaso((p) => p + 1);
   };
 
   const enviar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const datos = await validarPaso(2);
-    if (!datos) return;
-    const g = gradoSegunNacimiento(datos.nacimiento)!;
-    const codigo = `HZ-${ANIO_ESCOLAR}-${String(Math.floor(1000 + Math.random() * 9000))}`;
+    const v = await validar(CAMPOS_POR_PASO.flat());
+    if (!v) return;
+    const { resultado, primero } = v;
+    if (primero) {
+      // Si el error está en un paso anterior, se vuelve a ese paso.
+      setPaso(CAMPOS_POR_PASO.findIndex((campos) => campos.includes(primero)));
+      enfocar(primero);
+      return;
+    }
+    if (!resultado.success) return;
+    const datos = resultado.data;
     setResumen({
-      codigo,
+      codigo: `HZ-${ANIO_ESCOLAR}-${String(Math.floor(1000 + Math.random() * 9000))}`,
       estudiante: `${datos.nombres} ${datos.apellidos}`,
-      grado: g.grado,
+      grado: gradoSegunNacimiento(datos.nacimiento)?.grado ?? "",
       apoderado: datos.apoderado,
       visita: fechaLegible(datos.visita, { weekday: "long", day: "numeric", month: "long" }),
-      turno: datos.turno,
+      turno: horaLegible(datos.turno),
+    });
+  };
+
+  const cambiarNacimiento = (valor: string) => {
+    setNacimiento(valor);
+    // El aviso de la fecha se actualiza mientras la escriben, sin esperar a "Continuar".
+    setErrores((previos) => {
+      const siguientes = { ...previos };
+      if (valor && !gradoSegunNacimiento(valor)) siguientes.nacimiento = motivoSinGrado(valor);
+      else delete siguientes.nacimiento;
+      return siguientes;
     });
   };
 
   if (resumen) {
     return (
       <div role="status" className="rounded-2xl border border-[#ebe3d6] bg-white p-6 sm:p-10">
-        <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#7a1f2b]">Preinscripción recibida</p>
+        <p className="text-[15px] font-semibold text-[#7a1f2b]">Preinscripción recibida</p>
         <h3 ref={titulo} tabIndex={-1} className="mt-2 text-3xl font-semibold outline-none" style={{ fontFamily: "var(--font-hz-titulo)" }}>
           Código {resumen.codigo}
         </h3>
         <p className="mt-3 max-w-lg leading-relaxed text-[#5a4f47]">
           Guarda este código. Te esperamos con {resumen.estudiante.split(" ")[0]} el <span className="font-bold">{resumen.visita}</span> a
-          las {resumen.turno}.
+          las {resumen.turno}
         </p>
         <dl className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[#ebe3d6] bg-[#ebe3d6] sm:grid-cols-3">
           {[
@@ -195,6 +219,7 @@ export function Preinscripcion() {
               setResumen(null);
               setPaso(0);
               setNacimiento("");
+              setErrores({});
             }}
             className="min-h-12 rounded-lg border border-[#d9cfc0] px-6 font-bold hover:border-[#7a1f2b]"
           >
@@ -234,17 +259,21 @@ export function Preinscripcion() {
           <input {...a11y("apellidos", errores)} autoComplete="off" className={estiloCampo} />
         </Campo>
         <Campo nombre="nacimiento" etiqueta="Fecha de nacimiento" error={errores.nacimiento}>
-          <input {...a11y("nacimiento", errores)} type="date" value={nacimiento} onChange={(e) => setNacimiento(e.target.value)} className={estiloCampo} />
+          <input
+            {...a11y("nacimiento", errores)}
+            type="date"
+            min={RANGO.min}
+            max={RANGO.max}
+            value={nacimiento}
+            onChange={(e) => cambiarNacimiento(e.target.value)}
+            className={estiloCampo}
+          />
         </Campo>
         <div aria-live="polite" className="self-end">
-          {grado ? (
+          {grado && (
             <p className="rounded-lg bg-[#fbf3dc] px-4 py-3 text-[15px]">
               En {ANIO_ESCOLAR} le corresponde <strong>{grado.grado}</strong>.
             </p>
-          ) : (
-            nacimiento && (
-              <p className="rounded-lg bg-[#fdeaea] px-4 py-3 text-[15px] text-[#8a1c1c]">Esa edad no corresponde a ningún grado para {ANIO_ESCOLAR}.</p>
-            )
           )}
         </div>
         <Campo nombre="procedencia" etiqueta="Colegio de procedencia (opcional)" className="sm:col-span-2">
@@ -287,7 +316,7 @@ export function Preinscripcion() {
             Fecha de la visita guiada
           </p>
           <div role="radiogroup" aria-labelledby="pi-visita-label" className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {VISITAS.map((v, i) => (
+            {visitas.map((v, i) => (
               <label key={v} className="flex min-h-14 cursor-pointer items-center justify-center rounded-lg border border-[#d9cfc0] px-3 text-center text-[15px] font-bold has-[:checked]:border-[#7a1f2b] has-[:checked]:bg-[#7a1f2b] has-[:checked]:text-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#7a1f2b]/40">
                 <input
                   type="radio"
@@ -309,13 +338,13 @@ export function Preinscripcion() {
         </div>
         <div>
           <p id="pi-turno-label" className="text-sm font-bold text-[#3d342e]">
-            Turno
+            Hora
           </p>
           <div role="radiogroup" aria-labelledby="pi-turno-label" className="mt-2 grid max-w-sm grid-cols-2 gap-3">
-            {["9:00", "15:00"].map((t) => (
+            {VISITAS.turnos.map((t) => (
               <label key={t} className="flex min-h-12 cursor-pointer items-center justify-center rounded-lg border border-[#d9cfc0] font-bold has-[:checked]:border-[#7a1f2b] has-[:checked]:bg-[#7a1f2b] has-[:checked]:text-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#7a1f2b]/40">
                 <input type="radio" name="turno" value={t} className="sr-only" aria-describedby={errores.turno ? "pi-turno-error" : undefined} />
-                {t === "9:00" ? "Mañana · 9:00" : "Tarde · 15:00"}
+                {horaLegible(t)}
               </label>
             ))}
           </div>

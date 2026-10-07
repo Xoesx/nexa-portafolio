@@ -2,41 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useSyncExternalStore } from "react";
+import { aISO, turnosDelDia } from "../lib/disponibilidad";
 import { wa } from "../lib/whatsapp";
-
-// Horario de atención por día de la semana (0 = domingo): [apertura, cierre] en horas.
-const HORARIO: Record<number, [number, number]> = {
-  0: [12, 17],
-  1: [12, 22],
-  2: [12, 22],
-  3: [12, 22],
-  4: [12, 22],
-  5: [12, 23.5],
-  6: [12, 23.5],
-};
-
-const aISO = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
-// Hash estable: misma fecha, hora y tamaño de grupo dan siempre la misma disponibilidad.
-function hash(texto: string) {
-  let h = 2166136261;
-  for (let i = 0; i < texto.length; i++) h = Math.imul(h ^ texto.charCodeAt(i), 16777619);
-  return (h >>> 0) / 4294967295;
-}
-
-function turnos(fecha: Date, personas: number, ahora: Date) {
-  const [abre, cierra] = HORARIO[fecha.getDay()];
-  const lista: { hora: string; libre: boolean }[] = [];
-  const esHoy = aISO(fecha) === aISO(ahora);
-  // La última mesa se da una hora antes del cierre.
-  for (let m = abre * 60; m <= (cierra - 1) * 60; m += 30) {
-    if (esHoy && m <= ahora.getHours() * 60 + ahora.getMinutes() + 30) continue;
-    const hora = `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
-    // Los grupos grandes encuentran menos mesas libres.
-    lista.push({ hora, libre: hash(`${aISO(fecha)}|${hora}|${personas > 4 ? "g" : "p"}`) > (personas > 4 ? 0.55 : 0.3) });
-  }
-  return lista;
-}
 
 const sinSuscripcion = () => () => {};
 
@@ -56,8 +23,8 @@ export function ReservaRapida() {
 
   // Si no se eligió un día, mostramos el primero que todavía tiene mesas (hoy puede estar cerrado o lleno).
   const dia =
-    dias.find((d) => aISO(d) === diaISO) ?? dias.find((d) => turnos(d, personas, new Date()).some((t) => t.libre)) ?? dias[0];
-  const lista = useMemo(() => (dia ? turnos(dia, personas, new Date()) : []), [dia, personas]);
+    dias.find((d) => aISO(d) === diaISO) ?? dias.find((d) => turnosDelDia(d, personas, new Date()).some((t) => t.libre)) ?? dias[0];
+  const lista = useMemo(() => (dia ? turnosDelDia(dia, personas, new Date()) : []), [dia, personas]);
   const grupoGrande = personas > 8;
 
   const etiquetaDia = (d: Date, i: number) =>
@@ -73,7 +40,7 @@ export function ReservaRapida() {
       <p className="text-[22px] leading-tight" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 500 }}>
         Reserva tu mesa
       </p>
-      <p className="mt-1 text-[13px] text-[#6E6457]">Confirmación inmediata · sin costo</p>
+      <p className="mt-1 text-[13px] text-[#6E6457]">Te confirmamos al instante y no se cobra nada por reservar.</p>
 
       {/* Personas */}
       <div className="mt-5 flex items-center justify-between rounded-2xl border border-[#1F1A15]/10 px-4 py-2">
@@ -136,7 +103,7 @@ export function ReservaRapida() {
                     }}
                     className="flex min-w-[3.9rem] shrink-0 flex-col items-center rounded-2xl border border-[#1F1A15]/10 px-2 py-2 transition-colors hover:border-[#C1440E] aria-checked:border-[#C1440E] aria-checked:bg-[#C1440E] aria-checked:text-white"
                   >
-                    <span className="text-[11px] font-semibold uppercase">{etiquetaDia(d, i)}</span>
+                    <span className="text-[12px] font-semibold first-letter:uppercase">{etiquetaDia(d, i)}</span>
                     <span className="text-lg font-semibold">{d.getDate()}</span>
                   </button>
                 ))

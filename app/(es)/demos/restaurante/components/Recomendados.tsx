@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 const platos = [
   {
@@ -21,7 +20,7 @@ const platos = [
     descripcion: "Pato guisado con culantro, cerveza negra y arroz verde.",
     precio: 32,
     img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80",
-    badge: "Nuevo",
+    badge: null,
   },
   {
     nombre: "Anticuchos",
@@ -34,34 +33,19 @@ const platos = [
 
 export function Recomendados() {
   return (
-    <section className="bg-[#FBF9F4] px-6 py-20">
+    <section className="bg-[#FBF9F4] px-6 pb-20 pt-6">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#C1440E]">
-              Especial del chef
-            </p>
-            <h2
-              className="mt-3 text-3xl tracking-[-0.01em] md:text-4xl"
-              style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}
-            >
-              Nuestros platos populares
-            </h2>
-          </div>
-          <Link
-            href="/demos/restaurante/menu"
-            className="border-b border-[#1F1A15]/30 pb-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#1F1A15]/70 transition hover:border-[#C1440E] hover:text-[#C1440E]"
-          >
-            Ver menú completo →
-          </Link>
-        </div>
+        <h2 className="text-3xl tracking-[-0.01em] md:text-4xl" style={{ fontFamily: "var(--font-display), Georgia, serif", fontWeight: 400 }}>
+          Lo que más se pide
+        </h2>
+        <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-[#6E6457]">Los cuatro platos que más salen de la cocina cada semana.</p>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {platos.map((p) => (
             <article key={p.nombre} className="group">
               <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#F0E7D5]">
                 {p.badge && (
-                  <span className="absolute left-4 top-4 z-10 rounded-full bg-[#C1440E] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                  <span className="absolute left-4 top-4 z-10 rounded-full bg-[#C1440E] px-3 py-1 text-[12px] font-semibold text-white">
                     {p.badge}
                   </span>
                 )}
@@ -79,7 +63,7 @@ export function Recomendados() {
                   >
                     {p.nombre}
                   </h3>
-                  <p className="mt-1 text-[12px] leading-snug text-[#6E6457]">
+                  <p className="mt-1 text-[14px] leading-snug text-[#6E6457]">
                     {p.descripcion}
                   </p>
                 </div>

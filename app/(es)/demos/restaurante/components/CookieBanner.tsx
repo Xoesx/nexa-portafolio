@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { leerConsent, guardarConsent, type NivelConsent } from "../lib/consent";
+import { leerConsent, guardarConsent } from "../lib/consent";
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false);
@@ -32,7 +32,7 @@ export function CookieBanner() {
         <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-6">
           <div className="flex-1">
             <p className="text-[15px] font-semibold text-[#1F1A15]">
-              🍪 Cuidamos tu privacidad
+              Cookies
             </p>
             <p className="mt-1.5 text-[13px] leading-relaxed text-[#1F1A15]/70">
               Usamos cookies esenciales para que el sitio funcione. Si aceptas, también
@@ -49,13 +49,13 @@ export function CookieBanner() {
           <div className="flex flex-col gap-2 sm:flex-row">
             <button
               onClick={soloEsenciales}
-              className="rounded-full border border-[#1F1A15]/15 px-5 py-2.5 text-[12px] font-semibold uppercase tracking-wider text-[#1F1A15]/70 transition hover:border-[#1F1A15]/40 hover:text-[#1F1A15]"
+              className="rounded-full border border-[#1F1A15]/15 px-5 py-2.5 text-[14px] font-semibold text-[#1F1A15]/70 transition hover:border-[#1F1A15]/40 hover:text-[#1F1A15]"
             >
               Solo esenciales
             </button>
             <button
               onClick={aceptarTodo}
-              className="rounded-full bg-[#C1440E] px-5 py-2.5 text-[12px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#9A3410]"
+              className="rounded-full bg-[#C1440E] px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-[#9A3410]"
             >
               Aceptar todo
             </button>
