@@ -49,8 +49,8 @@ export function Portada({ hero, producto }: { hero: Hero; producto: Producto }) 
           <Image
             src={FOTOS.producto.src}
             alt={FOTOS.producto.alt}
-            width={320}
-            height={320}
+            width={FOTOS.producto.width}
+            height={FOTOS.producto.height}
             sizes="(min-width: 896px) 152px, 104px"
             className={s.productoFoto}
           />

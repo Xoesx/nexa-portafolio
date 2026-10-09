@@ -23,8 +23,8 @@
   --tinta-suave: #5f5f5f;
   --tenue: #6b6b6b;
   --sugerencia: #6e6e6e;
-  --foto: #b09c8b;
-  --lila: #8f7684;
+  --foto: #9d8cb3;
+  --foto-producto: #d6ccc5;
 
   --sombra-tarjeta: 0 50px 90px -42px rgb(70 46 30 / 0.5), 0 16px 32px -20px rgb(70 46 30 / 0.3);
   --sombra-producto: 0 24px 44px -22px rgb(28 14 6 / 0.6), 0 4px 12px -6px rgb(28 14 6 / 0.2);
@@ -553,32 +553,34 @@
   isolation: isolate;
 }
 
+/* La cabeza y el auricular están un poco a la izquierda del centro de la foto. */
 .foto {
   object-fit: cover;
-  object-position: 50% 32%;
+  object-position: 47% 50%;
 }
 
-/* Más oscuro donde va el texto, casi nada sobre el rostro y los auriculares. */
+/* Oscurece solo donde va el texto (abajo a la izquierda) y deja limpios el rostro y el auricular.
+   Violeta muy oscuro, del tono de la foto, para no agrisar el lila. Medido: texto ≥ 4.5:1. */
 .velo {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(
-      90deg,
-      rgb(34 19 11 / 0.5) 0%,
-      rgb(34 19 11 / 0.32) 26%,
-      rgb(34 19 11 / 0.1) 46%,
-      rgb(34 19 11 / 0) 62%
+    radial-gradient(
+      ellipse 76% 82% at 4% 90%,
+      rgb(22 14 36 / 0.68) 0%,
+      rgb(22 14 36 / 0.5) 50%,
+      rgb(22 14 36 / 0) 84%
     ),
-    linear-gradient(0deg, rgb(24 12 6 / 0.42) 0%, rgb(24 12 6 / 0.12) 26%, rgb(24 12 6 / 0) 46%);
+    linear-gradient(90deg, rgb(31 20 48 / 0.42) 0%, rgb(31 20 48 / 0.2) 30%, rgb(31 20 48 / 0) 56%),
+    linear-gradient(0deg, rgb(24 15 38 / 0.38) 0%, rgb(24 15 38 / 0) 40%);
   pointer-events: none;
 }
 
 /* Punto sobre los auriculares de la foto: lleva a la tarjeta de SonicWave. */
 .punto {
   position: absolute;
-  left: 66%;
-  top: 48%;
+  left: 42.5%;
+  top: 44%;
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -639,7 +641,9 @@
   font-weight: 500;
   line-height: 1.24;
   letter-spacing: -0.005em;
-  text-shadow: 0 1px 24px rgb(40 20 10 / 0.18);
+  text-shadow:
+    0 1px 2px rgb(22 14 36 / 0.22),
+    0 2px 28px rgb(22 14 36 / 0.32);
 }
 
 /* Cada frase en su línea, como en la referencia; si no cabe, se parte por dentro. */
@@ -650,7 +654,7 @@
 .descripcion {
   max-width: 22em;
   margin: calc(8 * var(--u)) 0 0;
-  color: rgb(255 255 255 / 0.88);
+  color: rgb(255 255 255 / 0.92);
   font-size: var(--fs-descripcion);
   line-height: 1.42;
   text-wrap: pretty;
@@ -742,7 +746,7 @@
   height: auto;
   aspect-ratio: 1;
   border-radius: calc(var(--radio-producto) - var(--relleno-producto));
-  background: var(--lila);
+  background: var(--foto-producto);
   object-fit: cover;
 }
 
@@ -854,6 +858,17 @@
 
   .indicadores {
     margin-bottom: 1.125rem;
+  }
+
+  /* El texto ocupa todo el ancho abajo: el velo sube desde el borde inferior. */
+  .velo {
+    background: linear-gradient(
+      0deg,
+      rgb(22 14 36 / 0.84) 0%,
+      rgb(22 14 36 / 0.7) 45%,
+      rgb(22 14 36 / 0.4) 66%,
+      rgb(22 14 36 / 0) 88%
+    );
   }
 
   /* La tarjeta del producto queda justo debajo: el punto sobre la foto ya no hace falta. */

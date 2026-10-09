@@ -58,7 +58,7 @@ export function Cabecera() {
 
         <div className={s.anclaje}>
           <button type="button" className={`${s.avatar} ${s.disparador}`} aria-label="Perfil" popoverTarget="aviso-perfil">
-            <Image src={FOTOS.avatar.src} alt={FOTOS.avatar.alt} width={96} height={96} sizes="48px" />
+            <Image src={FOTOS.avatar.src} alt={FOTOS.avatar.alt} width={FOTOS.avatar.width} height={FOTOS.avatar.height} sizes="48px" />
           </button>
           <Aviso id="aviso-perfil">{AVISOS.perfil}</Aviso>
         </div>

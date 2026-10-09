@@ -21,7 +21,7 @@ Lives at `/demos/veluno` inside the NEXA portfolio (Next.js 16, App Router), nex
 ## Capabilities and Constraints
 - No backend, no catalog, no cart, no checkout, no search engine. Controls that would need one must not pretend to complete an action.
 - Not linked from the portfolio home, case studies or sitemap yet.
-- Photography is stock (Unsplash) stored locally; the reference photos themselves are not available.
+- Photography was supplied by the user (stored in public/demos/veluno); the reference photos themselves are not available.
 
 ## Brand Commitments
 - Name and copy are exactly the reference's: "Veluno", nav "Inicio, Nosotros, Tienda, Novedades, Contacto", "Buscar", "Tecnología inteligente, vida más simple", "Mejora tu día a día con los productos electrónicos de Veluno, diseñados para brindar confort, estilo y rendimiento.", "Comprar ahora", product "SonicWave", "Sonido envolvente con graves profundos, agudos cristalinos y tonos ricos y dinámicos.", "$ 99.99".

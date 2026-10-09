@@ -38,18 +38,25 @@ export const PRODUCTO: Producto = {
   precio: "$ 99.99",
 };
 
-/** Fotos de Unsplash guardadas en public/demos/veluno (licencia de Unsplash). */
+/** Fotos aportadas por el cliente, guardadas en public/demos/veluno. */
 export const FOTOS = {
   hero: {
-    src: "/demos/veluno/hero.jpg",
-    alt: "Mujer pelirroja con auriculares de diadema color crema, de perfil y con los ojos cerrados",
+    src: "/demos/veluno/hero.webp",
+    width: 1672,
+    height: 941,
+    alt: "Mujer de perfil con auriculares de diadema lila y el pelo al viento, sobre un fondo lila",
   },
   producto: {
-    src: "/demos/veluno/sonicwave.jpg",
-    alt: "Mujer de perfil con auriculares inalámbricos sobre un fondo lila",
+    src: "/demos/veluno/sonicwave.webp",
+    width: 830,
+    height: 830,
+    alt: "Mujer de perfil con auriculares de diadema en cobre y azul",
   },
   avatar: {
-    src: "/demos/veluno/avatar.jpg",
+    // Decorativa: el botón que la contiene ya se llama "Perfil".
+    src: "/demos/veluno/avatar.webp",
+    width: 256,
+    height: 256,
     alt: "",
   },
 } as const;
