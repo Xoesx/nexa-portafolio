@@ -42,3 +42,6 @@ next-env.d.ts
 
 # editores
 *.swp
+
+# capturas temporales del MCP de Playwright
+.playwright-mcp/
