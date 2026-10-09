@@ -121,7 +121,7 @@ export const CONTENIDO: Contenido = {
   detalle: {
     titulo: "En detalle.",
     texto: "Cada pieza, pensada para acompañarte.",
-    rotulos: ["El arco.", "Las almohadillas.", "La forma."],
+    rotulos: ["La forma.", "Las almohadillas.", "El arco."],
   },
   cierre: "Tecnología inteligente, vida más simple.",
 };
