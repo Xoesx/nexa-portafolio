@@ -47,7 +47,7 @@ export function Recorrido({ hero, producto }: { hero: Hero; producto: Producto }
 
           <a href={destino} className={l.ficha} aria-label={`${producto.nombre}, ${producto.precio}. Ir a comprar`}>
             <Image
-              src={FOTOS_LANDING.retrato.imagen}
+              src={FOTOS_LANDING.retrato.src}
               alt=""
               sizes="128px"
               placeholder="blur"

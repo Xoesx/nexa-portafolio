@@ -14,7 +14,7 @@ export function Marco({
   foto,
   sizes,
   className,
-  movimiento = "escala",
+  movimiento = "ninguno",
   paralaje = false,
   eager = false,
 }: {
@@ -28,15 +28,18 @@ export function Marco({
   const marco = [x.marco, movimiento !== "ninguno" && m[movimiento], className].filter(Boolean).join(" ");
   const capa = [x.capa, paralaje && m.paralaje].filter(Boolean).join(" ");
 
+  // Las fotos propias traen su desenfoque de carga; las de Unsplash, su color dominante de fondo.
+  const remota = typeof foto.src === "string";
+
   return (
-    <figure className={marco}>
+    <figure className={marco} style={foto.color ? ({ "--color-foto": foto.color } as React.CSSProperties) : undefined}>
       <div className={capa}>
         <Image
-          src={foto.imagen}
+          src={foto.src}
           alt={foto.alt}
           fill
           sizes={sizes}
-          placeholder="blur"
+          placeholder={remota ? "empty" : "blur"}
           loading={eager ? "eager" : undefined}
           className={x.foto}
           style={{ objectPosition: foto.posicion }}

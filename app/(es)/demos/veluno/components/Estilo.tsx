@@ -1,6 +1,5 @@
 import type { Contenido } from "../data";
 import type { Foto } from "../fotos";
-import m from "../movimiento.module.css";
 import x from "../secciones.module.css";
 import { palabraMasLarga } from "./medida";
 import { Marco } from "./Marco";
@@ -16,14 +15,14 @@ export function Estilo({ contenido, fotos }: { contenido: Contenido["estilo"]; f
     <section className={x.estilo} aria-labelledby="titulo-estilo">
       <div className={`${x.bloque} ${x.cabeza}`}>
         <div className={x.columna} style={palabraMasLarga(contenido.titulo)}>
-          <h2 id="titulo-estilo" className={`${x.titulo} ${m.entrada}`}>
+          <h2 id="titulo-estilo" className={x.titulo}>
             {contenido.titulo}
           </h2>
         </div>
         <p className={x.cuerpo}>{contenido.texto}</p>
       </div>
 
-      <div className={`${x.bloque} ${x.triptico}`} role="region" aria-label="Fotos de estilo" tabIndex={0}>
+      <div className={`${x.bloque} ${x.triptico}`} role="region" aria-label="Fotos de estilo">
         <ul className={x.tripticoLista}>
           {fotos.map((foto, i) => (
             <li key={i} className={x.tripticoFoto}>

@@ -1,6 +1,5 @@
 import type { Contenido } from "../data";
 import type { Foto } from "../fotos";
-import m from "../movimiento.module.css";
 import x from "../secciones.module.css";
 import { palabraMasLarga } from "./medida";
 import { Marco } from "./Marco";
@@ -12,7 +11,7 @@ export function Rendimiento({ contenido, foto }: { contenido: Contenido["rendimi
       <div className={x.rendimientoRejilla}>
         <Marco foto={foto} sizes="(min-width: 56rem) 60vw, 100vw" className={x.rendimientoFoto} movimiento="revelado" />
         <div className={`${x.rendimientoTexto} ${x.columna}`} style={palabraMasLarga(contenido.titulo)}>
-          <h2 id="titulo-rendimiento" className={`${x.titulo} ${m.entrada}`}>
+          <h2 id="titulo-rendimiento" className={x.titulo}>
             {contenido.titulo}
           </h2>
           <p className={`${x.cuerpo} ${x.cuerpoClaro}`}>{contenido.texto}</p>

@@ -29,6 +29,25 @@ const PRODUCTO_EXTREMO: Producto = {
 
 // Textos más largos de lo previsto en cada capítulo nuevo (palabras largas, frases de dos líneas).
 const CONTENIDO_EXTREMO: Contenido = {
+  valores: [
+    "Sonido envolvente de verdad",
+    "Graves profundos y controlados",
+    "Agudos cristalinos",
+    "Tonos ricos y dinámicos",
+    "Comodidad",
+    "Personalidad",
+    "Rendimiento",
+  ],
+  destacado: {
+    titulo: "Sonido sin límites, en cualquier lugar.",
+    texto: "Diseñados para una escucha inmersiva, con confort todo el día y estilo para cada ocasión.",
+    accion: "Ver todos los detalles de SonicWave",
+    lateral: "Más allá de lo real, más cerca de ti.",
+  },
+  coleccion: {
+    titulo: "Explora toda la colección Veluno.",
+    texto: "Productos electrónicos diseñados para brindar confort, estilo y rendimiento en cada momento del día.",
+  },
   manifiesto: {
     palabras: ["Comodidad.", "Personalidad.", "Rendimiento."],
     texto: "Las tres ideas con las que Veluno diseña cada uno de sus productos electrónicos, de principio a fin.",
@@ -40,7 +59,11 @@ const CONTENIDO_EXTREMO: Contenido = {
     titulo: "Mejora tu día a día, de la mañana a la noche.",
     momentos: ["Tu música, como la quieres.", "Tu ritmo, siempre.", "Tu momento de desconectar."],
   },
-  detalle: { titulo: "Cada detalle cuenta.", rotulos: ["El arco ajustable.", "El auricular completo."] },
+  detalle: {
+    titulo: "Cada detalle cuenta.",
+    texto: "Cada pieza, pensada para acompañarte desde la mañana hasta la noche.",
+    rotulos: ["El arco ajustable.", "Las almohadillas suaves.", "La forma completa."],
+  },
   cierre: "Tecnología inteligente para todos los días, vida mucho más simple.",
 };
 

@@ -562,13 +562,12 @@
   --tinta: #151515;
 
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem 2rem;
+  flex-direction: column;
+  gap: 1.25rem;
   width: min(100cqw - 2 * var(--borde), 115rem);
   margin-inline: auto;
-  padding: 2rem 0 max(2.5rem, env(safe-area-inset-bottom));
+  padding-top: 2rem;
+  overflow: clip;
   border-top: 1px solid #e6e3df;
   color: #55525b;
   font-size: 0.9375rem;
@@ -576,6 +575,41 @@
 
 .pie p {
   margin: 0;
+}
+
+.pieFila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.pieCreditos summary {
+  width: fit-content;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.pieCreditos p {
+  max-width: 70ch;
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+/* La marca a todo el ancho, cortada por el borde inferior: el cierre de la referencia ampliada. */
+.pieGigante {
+  margin: clamp(1rem, 3vw, 3rem) 0 calc(-0.2em - env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  color: #ebe7f1;
+  font-size: clamp(5rem, 24.5cqw, 29rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .pieMarca {

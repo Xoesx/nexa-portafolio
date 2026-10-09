@@ -16,7 +16,7 @@ export function Compra({ producto }: { producto: Producto }) {
       <div className={l.compraRejilla}>
         <figure className={`${l.compraFoto} ${m.revelado}`}>
           <Image
-            src={FOTOS_LANDING.producto.imagen}
+            src={FOTOS_LANDING.producto.src}
             alt={FOTOS_LANDING.producto.alt}
             sizes="(min-width: 56rem) 50vw, 100vw"
             placeholder="blur"

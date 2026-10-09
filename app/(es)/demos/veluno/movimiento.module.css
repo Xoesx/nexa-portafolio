@@ -12,11 +12,25 @@
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* Títulos: suben un poco y aparecen mientras entran en pantalla. */
-    .entrada {
-      animation: entrar linear both;
+    /* Banda de cualidades: avanza de lado mientras la página baja (no corre sola). */
+    /* Clase doble: gana a la maquetación de secciones.module.css sin depender del orden de carga. */
+    .desfile.desfile {
+      justify-content: flex-start;
+      width: max-content;
+      padding-inline: 0;
+      animation: desfile linear both;
       animation-timeline: view();
-      animation-range: entry 10% entry 100%;
+      animation-range: cover 0% cover 100%;
+    }
+
+    .desfile.desfile > ul {
+      flex-wrap: nowrap;
+      padding-right: 1.4em;
+      white-space: nowrap;
+    }
+
+    .desfile.desfile > ul[aria-hidden] {
+      display: flex;
     }
 
     /* Fotos protagonistas: el marco se abre desde un recorte y la imagen se asienta. */
@@ -42,7 +56,7 @@
 
     /* Paralaje solo con ratón: en pantallas táctiles el scroll ya es directo y no hace falta. */
     @media (pointer: fine) {
-      .paralaje {
+      .paralaje.paralaje {
         --paralaje: clamp(1.5rem, 3vw, 3rem);
 
         inset: calc(-1 * var(--paralaje)) 0;
@@ -83,13 +97,6 @@
       animation: crecer linear both;
       animation-timeline: view();
       animation-range: entry 30% cover 40%;
-    }
-
-    /* Día a día: la línea se dibuja de izquierda a derecha. */
-    .trazo {
-      animation: trazar linear both;
-      animation-timeline: view();
-      animation-range: entry 40% cover 45%;
     }
   }
 }
@@ -152,11 +159,11 @@
   }
 }
 
-@keyframes trazar {
+@keyframes desfile {
   from {
-    scale: 0 1;
+    translate: -4% 0;
   }
   to {
-    scale: 1 1;
+    translate: -46% 0;
   }
 }

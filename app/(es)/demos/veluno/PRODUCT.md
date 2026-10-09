@@ -21,7 +21,7 @@ Lives at `/demos/veluno` inside the NEXA portfolio (Next.js 16, App Router), nex
 ## Capabilities and Constraints
 - No backend, no catalog, no cart, no checkout, no search engine. Controls that would need one must not pretend to complete an action.
 - Not linked from the portfolio home, case studies or sitemap yet.
-- Photography was supplied by the user (stored in public/demos/veluno); the reference photos themselves are not available. The photos show third-party headphones (an Apple-style headset, a Dyson headset with its logo): fine for a private portfolio piece, to be replaced before any public or commercial use.
+- Photography: the user's lilac hero photo (the only image that represents SonicWave, plus its crops), the user's New York skyline photo (cropped to remove billboards and logos), and Unsplash photos for ambience and the other catalog items (credited in the footer). The hero shows an Apple-style headset: fine for a private portfolio piece, to be replaced before any public or commercial use.
 
 ## Brand Commitments
 - Name and copy are exactly the reference's: "Veluno", nav "Inicio, Nosotros, Tienda, Novedades, Contacto", "Buscar", "Tecnología inteligente, vida más simple", "Mejora tu día a día con los productos electrónicos de Veluno, diseñados para brindar confort, estilo y rendimiento.", "Comprar ahora", product "SonicWave", "Sonido envolvente con graves profundos, agudos cristalinos y tonos ricos y dinámicos.", "$ 99.99".
@@ -29,7 +29,7 @@ Lives at `/demos/veluno` inside the NEXA portfolio (Next.js 16, App Router), nex
 - Whether Veluno exists as a real brand is unconfirmed.
 
 ## Evidence on Hand
-Only the reference image. No testimonials, customers, ratings, stock levels, shipping terms, extra products or prices beyond "$ 99.99": none may be invented.
+The original reference image plus the two full-page Veluno references the user supplied later (October 2026). Allowed catalog, decided by the user: SonicWave ($ 99.99) and the reference's fictional products Cylinder Audio Core (from $179.99), VisionTone Smart Glasses (from $1,299.99) and AirBeats Pro Buds (from $699.99); prices read from a low-resolution mockup. Real brands, logos and real products from those references (Apple, Samsung, Sony, iPhone…) stay out. No testimonials, ratings, stock levels, shipping terms or further products or prices may be invented.
 
 ## Product Principles
 1. The reference decides the header and the copy; the landing grows only from what the reference says.

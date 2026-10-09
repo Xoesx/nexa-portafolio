@@ -15,11 +15,11 @@ export function Manifiesto({ contenido, fotos }: { contenido: Contenido["manifie
             <span key={palabra} className={`${x.palabra} ${m.palabra}`}>
               <span className={`${x.miniatura} ${m.miniatura}`} aria-hidden="true">
                 <Image
-                  src={fotos[i].imagen}
+                  src={fotos[i].src}
                   alt=""
                   fill
                   sizes="14rem"
-                  placeholder="blur"
+                  placeholder={typeof fotos[i].src === "string" ? "empty" : "blur"}
                   className={x.foto}
                   style={{ objectPosition: fotos[i].posicion }}
                 />

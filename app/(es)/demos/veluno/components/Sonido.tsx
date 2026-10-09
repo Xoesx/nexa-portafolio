@@ -45,11 +45,11 @@ export function Sonido({ fondo }: { fondo: Foto }) {
         <div className={l.sonidoCapa}>
           <div className={l.sonidoImagen}>
             <Image
-              src={fondo.imagen}
+              src={fondo.src}
               alt=""
               fill
               sizes="(max-aspect-ratio: 1/1) 150vh, 100vw"
-              placeholder="blur"
+              placeholder={typeof fondo.src === "string" ? "empty" : "blur"}
               className={l.sonidoFoto}
               style={{ objectPosition: fondo.posicion }}
             />

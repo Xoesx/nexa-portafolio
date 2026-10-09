@@ -1,9 +1,10 @@
 /*
- * Veluno · capítulos nuevos (maquetación). Los tokens (--lado, --eje, --radio, colores…) vienen de
- * .landing en landing.module.css y se heredan. El movimiento vive aparte, en movimiento.module.css.
+ * Veluno · capítulos de la landing (maquetación). Los tokens (--lado, --eje, --radio, colores…)
+ * vienen de .landing en landing.module.css y se heredan. El movimiento vive aparte, en
+ * movimiento.module.css.
  *
  * Ancho: cada bloque llega a min(pantalla − 2 × borde, 1840 px); el texto se alinea con el eje del
- * logotipo del header (--interior), igual que la portada.
+ * logotipo del header (--interior), igual que la portada. Títulos hasta 6rem, interletrado −0,04em.
  */
 
 .bloque {
@@ -17,10 +18,10 @@
 
 .titulo {
   margin: 0;
-  font-size: clamp(3rem, 8vw, 9rem);
+  font-size: clamp(2.75rem, 6vw, 6rem);
   font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
   text-wrap: balance;
 }
 
@@ -28,7 +29,7 @@
   max-width: 26em;
   margin: 0;
   color: var(--tinta-2);
-  font-size: clamp(1.0625rem, 1.3vw, 1.5rem);
+  font-size: clamp(1.0625rem, 1.3vw, 1.375rem);
   line-height: 1.45;
   text-wrap: pretty;
 }
@@ -44,8 +45,31 @@
 }
 
 .columna .titulo {
-  font-size: min(clamp(3rem, 8vw, 9rem), 96cqi / var(--palabra, 6));
+  font-size: min(clamp(2.75rem, 6vw, 6rem), 96cqi / var(--palabra, 6));
   overflow-wrap: break-word;
+}
+
+/* Botón píldora negro, el mismo de la compra. */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    background-color 160ms ease,
+    transform 160ms var(--ease-salida);
+}
+
+.boton:active {
+  transform: scale(0.97);
 }
 
 /* Foto en su marco: el marco recorta, la capa se desplaza y la imagen se asienta (ver Marco.tsx). */
@@ -55,12 +79,13 @@
   overflow: hidden;
   border-radius: var(--redondeo, var(--radio));
   aspect-ratio: var(--proporcion, 4 / 5);
-  background: var(--foto);
+  background: var(--color-foto, var(--foto));
 }
 
 .capa {
   position: absolute;
   inset: 0;
+  transition: scale 600ms var(--ease-salida);
 }
 
 .foto {
@@ -73,7 +98,7 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: end;
   gap: 1.5rem clamp(1.5rem, 3vw, 4rem);
-  margin-bottom: clamp(2.5rem, 5vw, 6rem);
+  margin-bottom: clamp(2.5rem, 5vw, 5rem);
   padding-inline: var(--interior);
 }
 
@@ -85,29 +110,309 @@
   grid-column: 8 / 13;
 }
 
-/* ---------- Manifiesto ---------- */
-
-.manifiestoBloque {
-  container-type: inline-size;
+/* Filas que en el celular se deslizan con el dedo (ver el final del archivo). */
+.carril,
+.triptico {
+  border-radius: var(--radio);
 }
+
+/* ---------- Cualidades (banda) ---------- */
+
+.valores {
+  overflow: clip;
+  padding-block: clamp(1.75rem, 3.5vw, 3.25rem);
+  border-block: 1px solid #e6e3df;
+  background: var(--lienzo);
+}
+
+/* Sin recorrido: una línea quieta y centrada, sin la copia. */
+.valoresPista {
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--borde);
+}
+
+.valoresLista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6em 1.4em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(1.5rem, 3.4vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.valoresLista[aria-hidden] {
+  display: none;
+}
+
+.valoresLista li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
+.valoresSello {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  color: var(--lila);
+}
+
+/* ---------- Destacado (dos piezas) ---------- */
+
+.destacado {
+  padding-block: var(--seccion) 0;
+  background: var(--lienzo);
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: clamp(0.75rem, 1.4vw, 1.5rem);
+}
+
+.bentoGrande {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: clamp(26rem, 40vw, 42rem);
+  overflow: hidden;
+  border-radius: var(--radio);
+  background: var(--arena);
+}
+
+.bentoTexto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(1rem, 1.6vw, 1.5rem);
+  padding: clamp(2rem, 4vw, 4.5rem);
+}
+
+.bentoTitulo {
+  margin: 0;
+  font-size: clamp(2.5rem, 4.4vw, 4.75rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.bentoTexto .boton {
+  margin-top: clamp(0.25rem, 1vw, 1rem);
+}
+
+.bentoFoto {
+  --proporcion: auto;
+  --redondeo: 0;
+
+  height: 100%;
+}
+
+.bentoLateral {
+  position: relative;
+  min-height: clamp(26rem, 40vw, 42rem);
+  overflow: hidden;
+  border-radius: var(--radio);
+  color: #fff;
+  isolation: isolate;
+}
+
+.bentoLateralFoto {
+  --proporcion: auto;
+  --redondeo: 0;
+
+  position: absolute;
+  inset: 0;
+}
+
+/* Penumbra arriba para que el título se lea sobre cualquier foto. */
+.bentoLateral::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgb(18 16 22 / 0.62) 0%, rgb(18 16 22 / 0.28) 30%, rgb(18 16 22 / 0) 55%);
+  pointer-events: none;
+}
+
+.bentoLateralTitulo {
+  position: absolute;
+  top: clamp(1.5rem, 2.4vw, 2.5rem);
+  left: clamp(1.5rem, 2.4vw, 2.5rem);
+  right: 5.5rem;
+  z-index: 2;
+  max-width: 9em;
+  margin: 0;
+  font-size: clamp(1.625rem, 2.3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.flecha {
+  position: absolute;
+  top: clamp(1.25rem, 2vw, 2.25rem);
+  right: clamp(1.25rem, 2vw, 2.25rem);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--tinta);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    background-color 160ms ease,
+    transform 160ms var(--ease-salida);
+}
+
+.flecha svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: translate 200ms var(--ease-salida);
+}
+
+.flecha:active {
+  transform: scale(0.95);
+}
+
+.bentoLateral :focus-visible {
+  outline-color: #fff;
+}
+
+/* ---------- Colección ---------- */
+
+.coleccion {
+  padding-block: var(--seccion);
+  background: var(--lienzo);
+}
+
+.productos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.4vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.producto {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radio);
+  color: #fff;
+  isolation: isolate;
+  transition: transform 160ms var(--ease-salida);
+}
+
+.productoFoto {
+  --proporcion: 3 / 4;
+  --redondeo: 0;
+}
+
+/* Penumbra al pie: el nombre y el precio se leen sobre cualquier foto. */
+.producto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(0deg, rgb(18 16 22 / 0.78) 0%, rgb(18 16 22 / 0.32) 30%, rgb(18 16 22 / 0) 52%);
+  pointer-events: none;
+}
+
+.productoPie {
+  position: absolute;
+  left: clamp(1.125rem, 1.6vw, 1.75rem);
+  right: clamp(1.125rem, 1.6vw, 1.75rem);
+  bottom: clamp(1.125rem, 1.6vw, 1.75rem);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.productoNombre {
+  margin: 0;
+  font-size: clamp(1.125rem, 1.4vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.productoPrecio {
+  margin: 0;
+  font-size: clamp(1rem, 1.2vw, 1.1875rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.productoPrecio span {
+  color: rgb(255 255 255 / 0.8);
+  font-size: 0.86em;
+  font-weight: 500;
+}
+
+/* Toda la tarjeta es el control (enlace o botón con aviso). */
+.productoAccion {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.productoAccion:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -9px;
+  box-shadow: inset 0 0 0 12px rgb(18 16 22 / 0.35);
+}
+
+.producto:active {
+  transform: scale(0.985);
+}
+
+/* ---------- Manifiesto ---------- */
 
 .manifiesto {
   padding-block: var(--seccion);
   background: var(--lienzo);
 }
 
+.manifiestoBloque {
+  container-type: inline-size;
+}
+
 .manifiestoLinea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.06em;
+  gap: 0.08em;
   margin: 0;
   padding-inline: var(--interior);
   /* Cabe la palabra más larga con su miniatura (1,65 em) y la escalera (2 em). */
-  font-size: min(clamp(3.25rem, 8vw, 10rem), (96cqi - 2 * var(--interior)) / (var(--palabra, 6) + 3.8));
+  font-size: min(clamp(3rem, 7vw, 6rem), (96cqi - 2 * var(--interior)) / (var(--palabra, 6) + 3.8));
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
 }
 
 /* En escalera: cada idea entra un poco más a la derecha. */
@@ -179,10 +484,6 @@
   background: var(--lienzo);
 }
 
-.triptico {
-  border-radius: var(--radio);
-}
-
 .tripticoLista {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -213,11 +514,99 @@
   margin-top: clamp(1.5rem, 4vw, 5rem);
 }
 
+/* ---------- La ciudad (tu día a día) ---------- */
+
+.ciudad {
+  padding-block: var(--seccion);
+  background: var(--arena);
+}
+
+.ciudadRejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1rem, 2vw, 2.5rem);
+}
+
+.ciudadPortada {
+  position: relative;
+  min-height: clamp(30rem, 50vw, 54rem);
+  overflow: hidden;
+  border-radius: var(--radio);
+  color: #fff;
+  isolation: isolate;
+}
+
+.ciudadFoto {
+  --proporcion: auto;
+  --redondeo: 0;
+
+  position: absolute;
+  inset: 0;
+}
+
+.ciudadVelo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgb(18 16 22 / 0.66) 0%, rgb(18 16 22 / 0.24) 36%, rgb(18 16 22 / 0) 58%);
+  pointer-events: none;
+}
+
+.ciudadTitulo {
+  position: absolute;
+  left: clamp(1.5rem, 3vw, 3.5rem);
+  right: clamp(1.5rem, 3vw, 3.5rem);
+  bottom: clamp(1.5rem, 3vw, 3.5rem);
+  max-width: 8.5em;
+  margin: 0;
+  font-size: clamp(2.75rem, 5.4vw, 6rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgb(18 16 22 / 0.3);
+}
+
+.momentos {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.momento {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.momentoFoto {
+  --proporcion: auto;
+
+  height: 100%;
+  min-height: 9rem;
+}
+
+.momentoRotulo {
+  margin: 0;
+  padding-bottom: 0.2em;
+  font-size: clamp(1.375rem, 2.2vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
 /* ---------- Rendimiento ---------- */
 
 .rendimiento {
   background: var(--noche);
   color: var(--luz);
+}
+
+.rendimiento :focus-visible {
+  outline-color: #fff;
 }
 
 /* A sangre: la foto toca el borde izquierdo de la pantalla y el texto respira a la derecha. */
@@ -229,7 +618,6 @@
 
 .rendimientoFoto {
   --proporcion: auto;
-
   --redondeo: 0 var(--radio) var(--radio) 0;
 
   height: 100%;
@@ -244,60 +632,52 @@
   padding: var(--seccion) max(1.25rem, var(--eje) - var(--lado)) var(--seccion) clamp(2rem, 5vw, 6rem);
 }
 
-/* ---------- Tu día a día ---------- */
+/* ---------- En detalle ---------- */
 
-.dia {
+.detalle {
   padding-block: var(--seccion);
-  background: var(--arena);
+  background: var(--lienzo);
 }
 
-.diaTitulo {
-  padding-inline: var(--interior);
-}
-
-/* Línea decorativa: sin movimiento (o sin soporte) se ve completa. */
-.trazo {
-  display: block;
-  height: 1px;
-  margin: clamp(2.5rem, 5vw, 5rem) var(--interior) clamp(1.5rem, 3vw, 3rem);
-  background: rgb(21 21 21 / 0.28);
-  transform-origin: left center;
-}
-
-.momentos {
+.mosaico {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 2.5rem);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.momento {
-  --proporcion: 4 / 5;
-
+.mosaicoPieza {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 1.6vw, 1.5rem);
+  gap: 0.875rem;
 }
 
-.momentoRotulo {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75em;
+.mosaicoPieza:nth-child(1) {
+  --proporcion: auto;
+
+  grid-column: 1 / 8;
+  grid-row: 1 / 3;
+}
+
+.mosaicoPieza:nth-child(1) .marco {
+  flex: 1 1 auto;
+  min-height: 28rem;
+}
+
+.mosaicoPieza:nth-child(2),
+.mosaicoPieza:nth-child(3) {
+  --proporcion: 4 / 3;
+
+  grid-column: 8 / 13;
+}
+
+.mosaicoRotulo {
   margin: 0;
-  padding-inline: clamp(0.25rem, 0.6vw, 0.5rem);
-  font-size: clamp(1.375rem, 2.2vw, 2.25rem);
+  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
-}
-
-.momentoNumero {
-  color: var(--tinta-2);
-  font-size: 0.45em;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 /* ---------- Final (cierre a pantalla completa) ---------- */
@@ -315,7 +695,6 @@
 
 .finalFoto {
   --proporcion: auto;
-
   --redondeo: 0;
 
   position: absolute;
@@ -335,16 +714,42 @@
   max-width: 12em;
   margin: 0;
   padding-inline: 1.25rem;
-  font-size: clamp(2.75rem, 7vw, 8rem);
+  font-size: clamp(2.75rem, 6.4vw, 6rem);
   font-weight: 500;
   line-height: 0.98;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   text-align: center;
   text-wrap: balance;
   text-shadow: 0 2px 30px rgb(18 16 22 / 0.35);
 }
 
+/* ---------- Puntero fino ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .boton:hover {
+    background: #2b2a2e;
+  }
+
+  .flecha:hover {
+    background: var(--luz);
+  }
+
+  .flecha:hover svg {
+    translate: 2px -2px;
+  }
+
+  .producto:hover .capa {
+    scale: 1.04;
+  }
+}
+
 /* ---------- Tableta ---------- */
+
+@media (max-width: 64rem) {
+  .productos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 @media (max-width: 56rem) {
   .cabeza > :first-child,
@@ -358,8 +763,35 @@
     padding-inline: var(--interior);
   }
 
+  .bento,
+  .bentoGrande,
+  .ciudadRejilla,
   .rendimientoRejilla {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bentoFoto {
+    --proporcion: 4 / 3;
+
+    height: auto;
+  }
+
+  .bentoLateral {
+    min-height: min(36rem, 120vw);
+  }
+
+  .ciudadPortada {
+    min-height: min(40rem, 110vw);
+  }
+
+  .momentos {
+    grid-template-rows: none;
+  }
+
+  .momentoFoto {
+    --proporcion: 4 / 5;
+
+    height: auto;
   }
 
   .rendimientoFoto {
@@ -374,12 +806,23 @@
   .rendimientoTexto {
     padding: clamp(3rem, 10vw, 5rem) var(--interior) var(--seccion);
   }
+
+  .mosaicoPieza:nth-child(n) {
+    --proporcion: 4 / 3;
+
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .mosaicoPieza:nth-child(1) .marco {
+    min-height: 0;
+  }
 }
 
 /* ---------- Celular ---------- */
 
 @media (max-width: 47.99rem) {
-  /* Los retratos se deslizan con el dedo; asoma el siguiente para que se note que hay más. */
+  .carril,
   .triptico {
     width: 100%;
     overflow-x: auto;
@@ -389,6 +832,7 @@
     scrollbar-width: none;
   }
 
+  .productos,
   .tripticoLista {
     display: flex;
     gap: 0.75rem;
@@ -396,20 +840,22 @@
     padding-inline: var(--borde);
   }
 
+  .producto,
   .tripticoFoto:nth-child(n) {
-    --proporcion: 4 / 5;
-
-    width: 78vw;
+    width: 76vw;
     margin-top: 0;
     scroll-snap-align: start;
   }
 
-  .momentos {
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(2.5rem, 10vw, 4rem);
+  .tripticoFoto:nth-child(n) {
+    --proporcion: 4 / 5;
   }
 
   .manifiestoLinea {
     font-size: min(clamp(2.75rem, 13vw, 4rem), (96cqi - 2 * var(--interior)) / (var(--palabra, 6) + 1.8));
+  }
+
+  .bentoTexto {
+    padding: 2rem 1.5rem;
   }
 }
