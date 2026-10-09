@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { SONIDO } from "../data";
+import type { Foto } from "../fotos";
 import l from "../landing.module.css";
 
 /*
@@ -35,9 +37,25 @@ const ONDAS = [
   ]),
 ];
 
-export function Sonido() {
+export function Sonido({ fondo }: { fondo: Foto }) {
   return (
     <section className={l.sonido} aria-labelledby="titulo-sonido">
+      {/* Foto de ambiente casi a oscuras, fija detrás del texto mientras dura el capítulo. */}
+      <div className={l.sonidoFondo} aria-hidden="true">
+        <div className={l.sonidoCapa}>
+          <div className={l.sonidoImagen}>
+            <Image
+              src={fondo.imagen}
+              alt=""
+              fill
+              sizes="(max-aspect-ratio: 1/1) 150vh, 100vw"
+              placeholder="blur"
+              className={l.sonidoFoto}
+              style={{ objectPosition: fondo.posicion }}
+            />
+          </div>
+        </div>
+      </div>
       <div className={l.sonidoEscenario}>
         <div className={l.sonidoTexto}>
           <h2 id="titulo-sonido" className={l.sonidoTitulo}>

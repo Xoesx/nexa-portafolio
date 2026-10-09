@@ -46,26 +46,6 @@ export const FOTOS = {
     height: 941,
     alt: "Mujer de perfil con auriculares de diadema lila y el pelo al viento, sobre un fondo lila",
   },
-  producto: {
-    src: "/demos/veluno/sonicwave.webp",
-    width: 830,
-    height: 830,
-    alt: "Mujer de perfil con auriculares de diadema en cobre y azul",
-  },
-  /** La misma sesión de fotos completa, para la sección de diseño. */
-  productoCompleto: {
-    src: "/demos/veluno/sonicwave-completa.webp",
-    width: 1254,
-    height: 1254,
-    alt: "Mujer de perfil con auriculares de diadema en cobre y azul y una chaqueta teñida",
-  },
-  /** Recorte del auricular de la foto del producto, sin ampliar. */
-  auricular: {
-    src: "/demos/veluno/sonicwave-auricular.webp",
-    width: 420,
-    height: 420,
-    alt: "Primer plano del auricular en cobre con su arco gris",
-  },
   avatar: {
     // Decorativa: el botón que la contiene ya se llama "Perfil".
     src: "/demos/veluno/avatar.webp",
@@ -90,11 +70,33 @@ export const SONIDO = {
   cualidades: ["Graves profundos.", "Agudos cristalinos.", "Tonos ricos y dinámicos."],
 } as const;
 
-export const DISENO = {
-  titulo: "Confort, estilo y rendimiento.",
-  texto:
-    "Las tres ideas con las que Veluno diseña sus productos electrónicos, reunidas en unos auriculares de diadema.",
-} as const;
+/*
+ * Textos de los capítulos nuevos. Son frases editoriales que nacen de la copia original (confort,
+ * estilo, rendimiento, día a día, tecnología inteligente): no afirman especificaciones, cifras,
+ * autonomía, cancelación de ruido, materiales ni nada que la referencia no diga.
+ */
+export type Contenido = {
+  manifiesto: { palabras: readonly [string, string, string]; texto: string };
+  confort: { titulo: string; texto: string };
+  estilo: { titulo: string; texto: string };
+  rendimiento: { titulo: string; texto: string };
+  diaADia: { titulo: string; momentos: readonly [string, string, string] };
+  detalle: { titulo: string; rotulos: readonly [string, string] };
+  cierre: string;
+};
+
+export const CONTENIDO: Contenido = {
+  manifiesto: {
+    palabras: ["Confort.", "Estilo.", "Rendimiento."],
+    texto: "Las tres ideas con las que Veluno diseña sus productos.",
+  },
+  confort: { titulo: "Confort.", texto: "Ponte cómodo. Lo demás es música." },
+  estilo: { titulo: "Estilo.", texto: "Combina con quien eres." },
+  rendimiento: { titulo: "Rendimiento.", texto: "Tecnología inteligente, sin complicaciones." },
+  diaADia: { titulo: "Mejora tu día a día.", momentos: ["Tu música.", "Tu ritmo.", "Tu momento."] },
+  detalle: { titulo: "En detalle.", rotulos: ["El arco.", "El auricular."] },
+  cierre: "Tecnología inteligente, vida más simple.",
+};
 
 export const PIE = "Recreación de portafolio hecha por NEXA. Veluno no tiene una tienda conectada." as const;
 

@@ -8,7 +8,15 @@ const outfit = Outfit({ subsets: ["latin"], display: "swap", variable: "--font-v
 export const metadata: Metadata = {
   title: "Veluno | Tecnología inteligente, vida más simple",
   description:
-    "Demo de NEXA: recreación visual de la portada de Veluno, una tienda de electrónica: su cabecera y un recorrido por los auriculares SonicWave.",
+    "Demo de NEXA: landing de Veluno, una tienda de electrónica, con un recorrido por los auriculares SonicWave: sonido, confort, estilo y rendimiento.",
+  // Vista previa propia al compartir el enlace (si no, hereda la de NEXA).
+  openGraph: {
+    type: "website",
+    locale: "es_PE",
+    url: "/demos/veluno",
+    title: "Veluno | Tecnología inteligente, vida más simple",
+    description: "Demo de NEXA: landing de los auriculares SonicWave de Veluno.",
+  },
   // Recreación sin tienda real detrás: no se ofrece a los buscadores.
   robots: { index: false, follow: false },
 };

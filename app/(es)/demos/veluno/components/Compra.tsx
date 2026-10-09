@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { AVISOS, FOTOS, type Producto } from "../data";
+import { AVISOS, type Producto } from "../data";
+import { FOTOS_LANDING } from "../fotos";
 import l from "../landing.module.css";
+import m from "../movimiento.module.css";
 import s from "../veluno.module.css";
 import { Aviso } from "./Aviso";
 
@@ -12,13 +14,13 @@ export function Compra({ producto }: { producto: Producto }) {
   return (
     <section id="comprar" className={l.compra} aria-labelledby="titulo-compra">
       <div className={l.compraRejilla}>
-        <figure className={l.compraFoto}>
+        <figure className={`${l.compraFoto} ${m.revelado}`}>
           <Image
-            src={FOTOS.producto.src}
-            alt={FOTOS.producto.alt}
-            width={FOTOS.producto.width}
-            height={FOTOS.producto.height}
+            src={FOTOS_LANDING.producto.imagen}
+            alt={FOTOS_LANDING.producto.alt}
             sizes="(min-width: 56rem) 50vw, 100vw"
+            placeholder="blur"
+            style={{ objectPosition: FOTOS_LANDING.producto.posicion }}
           />
         </figure>
 

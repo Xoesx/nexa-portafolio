@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Landing } from "../components/Landing";
-import { HERO, PRODUCTO, type Hero, type Producto } from "../data";
+import { CONTENIDO, HERO, PRODUCTO, type Contenido, type Hero, type Producto } from "../data";
 
 /*
  * Solo en desarrollo (break-ui): la portada con los textos más largos que alguien podría
@@ -25,6 +25,23 @@ const PRODUCTO_EXTREMO: Producto = {
     "y dinámicos.",
   ],
   precio: "$ 1,299.99",
+};
+
+// Textos más largos de lo previsto en cada capítulo nuevo (palabras largas, frases de dos líneas).
+const CONTENIDO_EXTREMO: Contenido = {
+  manifiesto: {
+    palabras: ["Comodidad.", "Personalidad.", "Rendimiento."],
+    texto: "Las tres ideas con las que Veluno diseña cada uno de sus productos electrónicos, de principio a fin.",
+  },
+  confort: { titulo: "Comodidad absoluta.", texto: "Ponte cómodo, cierra los ojos y deja que lo demás sea solo música." },
+  estilo: { titulo: "Personalidad.", texto: "Combina con quien eres, con lo que llevas puesto y con adonde vas." },
+  rendimiento: { titulo: "Rendimiento extraordinario.", texto: "Tecnología inteligente pensada para tu día, sin complicaciones ni pasos de más." },
+  diaADia: {
+    titulo: "Mejora tu día a día, de la mañana a la noche.",
+    momentos: ["Tu música, como la quieres.", "Tu ritmo, siempre.", "Tu momento de desconectar."],
+  },
+  detalle: { titulo: "Cada detalle cuenta.", rotulos: ["El arco ajustable.", "El auricular completo."] },
+  cierre: "Tecnología inteligente para todos los días, vida mucho más simple.",
 };
 
 const barra: React.CSSProperties = {
@@ -57,7 +74,11 @@ export default async function PruebasVeluno({ searchParams }: PageProps<"/demos/
 
   return (
     <>
-      <Landing hero={extremo ? HERO_EXTREMO : HERO} producto={extremo ? PRODUCTO_EXTREMO : PRODUCTO} />
+      <Landing
+        hero={extremo ? HERO_EXTREMO : HERO}
+        producto={extremo ? PRODUCTO_EXTREMO : PRODUCTO}
+        contenido={extremo ? CONTENIDO_EXTREMO : CONTENIDO}
+      />
       <nav aria-label="Datos de prueba" style={barra}>
         <Link href="?datos=demo" style={opcion(!extremo)} aria-current={!extremo || undefined}>
           Demo

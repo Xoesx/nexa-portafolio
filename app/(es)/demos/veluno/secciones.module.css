@@ -1,0 +1,415 @@
+/*
+ * Veluno · capítulos nuevos (maquetación). Los tokens (--lado, --eje, --radio, colores…) vienen de
+ * .landing en landing.module.css y se heredan. El movimiento vive aparte, en movimiento.module.css.
+ *
+ * Ancho: cada bloque llega a min(pantalla − 2 × borde, 1840 px); el texto se alinea con el eje del
+ * logotipo del header (--interior), igual que la portada.
+ */
+
+.bloque {
+  --interior: max(0.75rem, var(--eje) - var(--lado));
+
+  width: min(100cqw - 2 * var(--borde), var(--ancho-max));
+  margin-inline: auto;
+}
+
+/* ---------- Piezas comunes ---------- */
+
+.titulo {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 9rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.cuerpo {
+  max-width: 26em;
+  margin: 0;
+  color: var(--tinta-2);
+  font-size: clamp(1.0625rem, 1.3vw, 1.5rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.cuerpoClaro {
+  color: var(--luz-2);
+}
+
+/* Columnas de texto estrechas: el título se mide contra su columna. --palabra es el ancho de la
+   palabra más larga en em (lo calcula el componente con palabraMasLarga), así nunca se sale. */
+.columna {
+  container-type: inline-size;
+}
+
+.columna .titulo {
+  font-size: min(clamp(3rem, 8vw, 9rem), 96cqi / var(--palabra, 6));
+  overflow-wrap: break-word;
+}
+
+/* Foto en su marco: el marco recorta, la capa se desplaza y la imagen se asienta (ver Marco.tsx). */
+.marco {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--redondeo, var(--radio));
+  aspect-ratio: var(--proporcion, 4 / 5);
+  background: var(--foto);
+}
+
+.capa {
+  position: absolute;
+  inset: 0;
+}
+
+.foto {
+  object-fit: cover;
+}
+
+/* Encabezado de sección: título a la izquierda (en el eje) y texto a la derecha, alineados abajo. */
+.cabeza {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: end;
+  gap: 1.5rem clamp(1.5rem, 3vw, 4rem);
+  margin-bottom: clamp(2.5rem, 5vw, 6rem);
+  padding-inline: var(--interior);
+}
+
+.cabeza > :first-child {
+  grid-column: 1 / 8;
+}
+
+.cabeza > :last-child {
+  grid-column: 8 / 13;
+}
+
+/* ---------- Manifiesto ---------- */
+
+.manifiestoBloque {
+  container-type: inline-size;
+}
+
+.manifiesto {
+  padding-block: var(--seccion);
+  background: var(--lienzo);
+}
+
+.manifiestoLinea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06em;
+  margin: 0;
+  padding-inline: var(--interior);
+  /* Cabe la palabra más larga con su miniatura (1,65 em) y la escalera (2 em). */
+  font-size: min(clamp(3.25rem, 8vw, 10rem), (96cqi - 2 * var(--interior)) / (var(--palabra, 6) + 3.8));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+/* En escalera: cada idea entra un poco más a la derecha. */
+@media (min-width: 48rem) {
+  .palabra:nth-child(2) {
+    margin-left: 1em;
+  }
+
+  .palabra:nth-child(3) {
+    margin-left: 2em;
+  }
+}
+
+.palabra {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+/* Miniatura dentro de la línea: una píldora con foto, a la altura de las minúsculas. */
+.miniatura {
+  position: relative;
+  flex: none;
+  width: 1.45em;
+  height: 0.78em;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--foto);
+}
+
+.manifiestoTexto {
+  margin: clamp(2rem, 4vw, 4.5rem) 0 0 auto;
+  padding-inline: var(--interior);
+  max-width: calc(22em + 2 * var(--interior));
+}
+
+/* ---------- Confort ---------- */
+
+.confort {
+  padding-block: var(--seccion);
+  background: var(--arena);
+}
+
+.confortRejilla {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(1.5rem, 3vw, 4rem);
+}
+
+.confortFoto {
+  --proporcion: 3 / 2;
+
+  grid-column: 1 / 9;
+}
+
+.confortTexto {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  grid-column: 9 / 13;
+  padding-bottom: clamp(0rem, 2vw, 2rem);
+}
+
+/* ---------- Estilo ---------- */
+
+.estilo {
+  padding-block: var(--seccion);
+  background: var(--lienzo);
+}
+
+.triptico {
+  border-radius: var(--radio);
+}
+
+.tripticoLista {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tripticoFoto:nth-child(1) {
+  --proporcion: 4 / 5;
+
+  grid-column: 1 / 6;
+}
+
+.tripticoFoto:nth-child(2) {
+  --proporcion: 3 / 4;
+
+  grid-column: 6 / 10;
+  margin-top: clamp(4rem, 12vw, 14rem);
+}
+
+.tripticoFoto:nth-child(3) {
+  --proporcion: 2 / 3;
+
+  grid-column: 10 / 13;
+  margin-top: clamp(1.5rem, 4vw, 5rem);
+}
+
+/* ---------- Rendimiento ---------- */
+
+.rendimiento {
+  background: var(--noche);
+  color: var(--luz);
+}
+
+/* A sangre: la foto toca el borde izquierdo de la pantalla y el texto respira a la derecha. */
+.rendimientoRejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: min(100svh, 64rem);
+}
+
+.rendimientoFoto {
+  --proporcion: auto;
+
+  --redondeo: 0 var(--radio) var(--radio) 0;
+
+  height: 100%;
+  min-height: 32rem;
+}
+
+.rendimientoTexto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  padding: var(--seccion) max(1.25rem, var(--eje) - var(--lado)) var(--seccion) clamp(2rem, 5vw, 6rem);
+}
+
+/* ---------- Tu día a día ---------- */
+
+.dia {
+  padding-block: var(--seccion);
+  background: var(--arena);
+}
+
+.diaTitulo {
+  padding-inline: var(--interior);
+}
+
+/* Línea decorativa: sin movimiento (o sin soporte) se ve completa. */
+.trazo {
+  display: block;
+  height: 1px;
+  margin: clamp(2.5rem, 5vw, 5rem) var(--interior) clamp(1.5rem, 3vw, 3rem);
+  background: rgb(21 21 21 / 0.28);
+  transform-origin: left center;
+}
+
+.momentos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.momento {
+  --proporcion: 4 / 5;
+
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.6vw, 1.5rem);
+}
+
+.momentoRotulo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75em;
+  margin: 0;
+  padding-inline: clamp(0.25rem, 0.6vw, 0.5rem);
+  font-size: clamp(1.375rem, 2.2vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.momentoNumero {
+  color: var(--tinta-2);
+  font-size: 0.45em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Final (cierre a pantalla completa) ---------- */
+
+.final {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: min(100svh, 64rem);
+  min-height: 32rem;
+  overflow: hidden;
+  background: var(--noche);
+  color: #fff;
+}
+
+.finalFoto {
+  --proporcion: auto;
+
+  --redondeo: 0;
+
+  position: absolute;
+  inset: 0;
+}
+
+.finalVelo {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgb(18 16 22 / 0.5) 0%, rgb(18 16 22 / 0.2) 70%, rgb(18 16 22 / 0) 100%),
+    linear-gradient(180deg, rgb(18 16 22 / 0.15) 0%, rgb(18 16 22 / 0.35) 100%);
+}
+
+.finalTexto {
+  position: relative;
+  max-width: 12em;
+  margin: 0;
+  padding-inline: 1.25rem;
+  font-size: clamp(2.75rem, 7vw, 8rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgb(18 16 22 / 0.35);
+}
+
+/* ---------- Tableta ---------- */
+
+@media (max-width: 56rem) {
+  .cabeza > :first-child,
+  .cabeza > :last-child,
+  .confortFoto,
+  .confortTexto {
+    grid-column: 1 / -1;
+  }
+
+  .confortTexto {
+    padding-inline: var(--interior);
+  }
+
+  .rendimientoRejilla {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rendimientoFoto {
+    --proporcion: 4 / 5;
+
+    height: auto;
+    min-height: 0;
+    max-height: 80svh;
+    width: calc(100% - var(--borde));
+  }
+
+  .rendimientoTexto {
+    padding: clamp(3rem, 10vw, 5rem) var(--interior) var(--seccion);
+  }
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 47.99rem) {
+  /* Los retratos se deslizan con el dedo; asoma el siguiente para que se note que hay más. */
+  .triptico {
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--borde);
+    scrollbar-width: none;
+  }
+
+  .tripticoLista {
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+    padding-inline: var(--borde);
+  }
+
+  .tripticoFoto:nth-child(n) {
+    --proporcion: 4 / 5;
+
+    width: 78vw;
+    margin-top: 0;
+    scroll-snap-align: start;
+  }
+
+  .momentos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .manifiestoLinea {
+    font-size: min(clamp(2.75rem, 13vw, 4rem), (96cqi - 2 * var(--interior)) / (var(--palabra, 6) + 1.8));
+  }
+}

@@ -1,0 +1,162 @@
+/*
+ * Veluno · capa de movimiento de los capítulos nuevos (y de la compra).
+ *
+ * Todo va ligado al scroll con animation-timeline: view(), sin JavaScript, y solo existe con soporte
+ * y sin "reducir movimiento": en cualquier otro caso cada clase no hace nada y la página se ve quieta
+ * y completa. Los keyframes de un CSS Module no se comparten entre archivos, por eso viven aquí juntos.
+ *
+ * Cada efecto usa su propia propiedad (translate, scale, clip-path, opacity) para que dos efectos
+ * sobre la misma foto no se pisen. Los rangos terminan pronto (entrada completa o cover ≤ 50 %) para
+ * que nada quede a medias al llegar al final de la página.
+ */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Títulos: suben un poco y aparecen mientras entran en pantalla. */
+    .entrada {
+      animation: entrar linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+
+    /* Fotos protagonistas: el marco se abre desde un recorte y la imagen se asienta. */
+    .revelado {
+      animation: revelar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    .revelado img,
+    .escala img {
+      animation: asentar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+
+    /* Cierre: la foto se aleja mientras la sección cruza la pantalla. */
+    .alejar img {
+      animation: alejar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+
+    /* Paralaje solo con ratón: en pantallas táctiles el scroll ya es directo y no hace falta. */
+    @media (pointer: fine) {
+      .paralaje {
+        --paralaje: clamp(1.5rem, 3vw, 3rem);
+
+        inset: calc(-1 * var(--paralaje)) 0;
+        animation: deslizar linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+
+      /* En el tríptico cada columna va a su velocidad. */
+      li:nth-child(2) > * > .paralaje {
+        --paralaje: clamp(2.5rem, 5vw, 5rem);
+      }
+
+      li:nth-child(3) > * > .paralaje {
+        --paralaje: clamp(1rem, 2vw, 2rem);
+      }
+    }
+
+    /* Manifiesto: cada palabra llega a su turno; su miniatura crece desde dentro de la línea. */
+    .palabra {
+      animation: entrar linear both;
+      animation-timeline: view();
+    }
+
+    .palabra:nth-child(1) {
+      animation-range: entry 0% entry 70%;
+    }
+
+    .palabra:nth-child(2) {
+      animation-range: entry 20% entry 90%;
+    }
+
+    .palabra:nth-child(3) {
+      animation-range: entry 40% entry 100%;
+    }
+
+    .miniatura {
+      animation: crecer linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 40%;
+    }
+
+    /* Día a día: la línea se dibuja de izquierda a derecha. */
+    .trazo {
+      animation: trazar linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 45%;
+    }
+  }
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes revelar {
+  from {
+    clip-path: inset(9% 7% 9% 7% round var(--redondeo, var(--radio)));
+  }
+  to {
+    clip-path: inset(0 0 0 0 round var(--redondeo, var(--radio)));
+  }
+}
+
+@keyframes asentar {
+  from {
+    scale: 1.12;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes alejar {
+  from {
+    scale: 1.16;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes deslizar {
+  from {
+    translate: 0 var(--paralaje);
+  }
+  to {
+    translate: 0 calc(-1 * var(--paralaje));
+  }
+}
+
+@keyframes crecer {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes trazar {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}

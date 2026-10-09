@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FOTOS, RECORRIDO, type Hero, type Producto } from "../data";
+import { FOTOS_LANDING } from "../fotos";
 import l from "../landing.module.css";
 import s from "../veluno.module.css";
 import { CapaPortada } from "./CapaPortada";
@@ -46,12 +47,12 @@ export function Recorrido({ hero, producto }: { hero: Hero; producto: Producto }
 
           <a href={destino} className={l.ficha} aria-label={`${producto.nombre}, ${producto.precio}. Ir a comprar`}>
             <Image
-              src={FOTOS.producto.src}
+              src={FOTOS_LANDING.retrato.imagen}
               alt=""
-              width={FOTOS.producto.width}
-              height={FOTOS.producto.height}
-              sizes="120px"
+              sizes="128px"
+              placeholder="blur"
               className={l.fichaFoto}
+              style={{ objectPosition: FOTOS_LANDING.retrato.posicion }}
             />
             <span className={l.fichaTexto}>
               <span className={l.fichaNombre}>{producto.nombre}</span>
