@@ -1,19 +1,14 @@
 /*
- * Veluno: recreación de la portada de referencia.
+ * Veluno: la escena, el header y sus avisos. Las secciones de la landing están en landing.module.css.
  *
- * Medidas: la tarjeta es un contenedor (container queries) y `--u` vale 1 px de la referencia,
- * donde el ancho útil de la tarjeta (el del banner) mide 437 px. Así cada medida tomada de la
- * imagen se escribe tal cual (`calc(18 * var(--u))`) y la composición escala sin deformarse.
- * Los textos pequeños llevan un mínimo en rem para que sigan siendo legibles.
+ * El header se conserva tal cual: vive en `.marcoCabecera`, que repite el ancho de la tarjeta
+ * original y es el contenedor (`tarjeta`) del que sale `--u` = 1 px de la referencia (437 px de
+ * ancho útil). Mientras ese marco no cambie, el header se ve idéntico.
  */
 
-/* ---------- Escena: el paisaje al atardecer ---------- */
+/* ---------- Escena ---------- */
 
 .escena {
-  /* Paisaje */
-  --cielo: #79adaa;
-  --colina: #5f4b1d;
-
   /* Interfaz */
   --superficie: #fbfbfa;
   --pastilla: #f3f3f2;
@@ -23,51 +18,30 @@
   --tinta-suave: #5f5f5f;
   --tenue: #6b6b6b;
   --sugerencia: #6e6e6e;
-  --foto: #9d8cb3;
-  --foto-producto: #d6ccc5;
 
-  --sombra-tarjeta: 0 50px 90px -42px rgb(70 46 30 / 0.5), 0 16px 32px -20px rgb(70 46 30 / 0.3);
-  --sombra-producto: 0 24px 44px -22px rgb(28 14 6 / 0.6), 0 4px 12px -6px rgb(28 14 6 / 0.2);
   --sombra-flotante: 0 20px 44px -18px rgb(20 12 6 / 0.42), 0 2px 8px rgb(20 12 6 / 0.08);
 
   --ease-salida: cubic-bezier(0.23, 1, 0.32, 1);
   --margen: clamp(12px, 2.4vw, 40px);
   --relleno: clamp(8px, 0.95vw, 14px);
 
+  /* Contenedor de toda la página: las secciones miden con cqw, que ya descuenta la barra de scroll. */
+  container: escena / inline-size;
   flex: 1 0 auto;
-  display: grid;
-  place-items: center;
   min-height: 100svh;
-  padding: max(var(--margen), env(safe-area-inset-top)) max(var(--margen), env(safe-area-inset-right))
-    max(var(--margen), env(safe-area-inset-bottom)) max(var(--margen), env(safe-area-inset-left));
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+  background: var(--superficie);
   font-family: var(--font-veluno), ui-sans-serif, system-ui, sans-serif;
   color: var(--tinta);
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
-
-  /* Colina en sombra con el borde iluminado, sobre el cielo que pasa de turquesa a salmón. */
-  background:
-    radial-gradient(130% 34% at 78% 100%, #3d3614 0%, var(--colina) 46%, #6d5726 62.5%, rgb(109 87 38 / 0) 64.5%),
-    radial-gradient(70% 22% at 62% 84%, rgb(255 196 168 / 0.45), rgb(255 196 168 / 0) 70%),
-    linear-gradient(
-      180deg,
-      var(--cielo) 0%,
-      #8cb3ad 14%,
-      #a7b9b1 28%,
-      #bdbfb3 42%,
-      #d4c0b1 56%,
-      #e7b9a5 68%,
-      #f2ad97 78%,
-      #f6987f 88%,
-      #f08c76 100%
-    );
 }
 
-/* El lienzo del navegador toma el color del cielo (también al estirar la página en el celular). */
+/* El lienzo del navegador toma el color de la página (también al estirar la página en el celular). */
 :global(html):has(.escena),
 :global(body):has(.escena) {
-  background-color: #79adaa;
+  background-color: #fbfbfa;
 }
 
 .escena ::selection {
@@ -103,49 +77,30 @@
 .menuEnlaces :is(a, button),
 .menuFila,
 .disco,
-.avatar,
-.accion,
-.punto {
+.avatar {
   -webkit-user-select: none;
   user-select: none;
 }
 
-/* En celular la tarjeta se apoya arriba y el paisaje queda debajo, como en la referencia. */
-@media (max-width: 40rem) {
-  .escena {
-    place-items: start center;
-  }
-}
+/* ---------- Marco del header ---------- */
 
-/* ---------- Tarjeta blanca ---------- */
-
-.tarjeta {
+.marcoCabecera {
   --u: calc(100cqi / 437);
 
   --fs-marca: clamp(1.25rem, calc(10.5 * var(--u)), 1.875rem);
   --fs-nav: clamp(0.875rem, calc(5.2 * var(--u)), 1rem);
   --fs-buscar: clamp(0.875rem, calc(4.6 * var(--u)), 1rem);
-  --fs-titulo: clamp(1.875rem, calc(18.6 * var(--u)), 4.25rem);
-  --fs-descripcion: clamp(0.9375rem, calc(6.14 * var(--u)), 1.125rem);
-  --fs-accion: clamp(0.875rem, calc(5.45 * var(--u)), 1.0625rem);
-  --fs-nombre: clamp(1.0625rem, calc(7.2 * var(--u)), 1.375rem);
-  --fs-detalle: clamp(0.8125rem, calc(4.45 * var(--u)), 0.9375rem);
-  --fs-precio: clamp(1.0625rem, calc(7 * var(--u)), 1.375rem);
-
-  --radio-lienzo: clamp(1.25rem, calc(12 * var(--u)), 2rem);
 
   container: tarjeta / inline-size;
-  /* En escritorio la tarjeta entera cabe en la pantalla: el ancho se limita por el alto disponible
-     (cabecera 41 u + banner 262 u = 0.6934 del ancho útil). */
+  /* El mismo ancho que tenía la tarjeta: limitado por el alto disponible
+     (cabecera 41 u + banner 262 u = 0.6934 del ancho útil). No cambiarlo: el header escala con él. */
   width: min(
-    100%,
+    100% - 2 * var(--margen),
     87.5rem,
     max(60rem, (100svh - 2 * var(--margen) - 2 * var(--relleno)) / 0.6934 + 2 * var(--relleno))
   );
-  padding: var(--relleno);
-  border-radius: calc(var(--relleno) + clamp(1.25rem, 2.2vw, 2rem));
-  background: var(--superficie);
-  box-shadow: var(--sombra-tarjeta);
+  margin-inline: auto;
+  padding: calc(var(--margen) + var(--relleno)) var(--relleno) 0;
 }
 
 /* ---------- Cabecera ---------- */
@@ -528,287 +483,7 @@
   background: var(--pastilla);
 }
 
-/* ---------- Banner ---------- */
-
-.hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "escena";
-}
-
-.hero > * {
-  grid-area: escena;
-}
-
-.lienzo {
-  position: relative;
-  /* La proporción es el mínimo; si el texto necesita más alto, la foto crece con él. */
-  align-self: stretch;
-  width: 100%;
-  aspect-ratio: 437 / 262;
-  overflow: hidden;
-  border-radius: var(--radio-lienzo);
-  background: var(--foto);
-  isolation: isolate;
-}
-
-/* La cabeza y el auricular están un poco a la izquierda del centro de la foto. */
-.foto {
-  object-fit: cover;
-  object-position: 47% 50%;
-}
-
-/* Oscurece solo donde va el texto (abajo a la izquierda) y deja limpios el rostro y el auricular.
-   Violeta muy oscuro, del tono de la foto, para no agrisar el lila. Medido: texto ≥ 4.5:1. */
-.velo {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      ellipse 76% 82% at 4% 90%,
-      rgb(22 14 36 / 0.68) 0%,
-      rgb(22 14 36 / 0.5) 50%,
-      rgb(22 14 36 / 0) 84%
-    ),
-    linear-gradient(90deg, rgb(31 20 48 / 0.42) 0%, rgb(31 20 48 / 0.2) 30%, rgb(31 20 48 / 0) 56%),
-    linear-gradient(0deg, rgb(24 15 38 / 0.38) 0%, rgb(24 15 38 / 0) 40%);
-  pointer-events: none;
-}
-
-/* Punto sobre los auriculares de la foto: lleva a la tarjeta de SonicWave. */
-.punto {
-  position: absolute;
-  left: 42.5%;
-  top: 44%;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  translate: -50% -50%;
-}
-
-.punto::before,
-.punto::after {
-  content: "";
-  grid-area: 1 / 1;
-  border-radius: 50%;
-}
-
-.punto::before {
-  width: clamp(1.125rem, calc(8 * var(--u)), 1.5rem);
-  aspect-ratio: 1;
-  background: rgb(255 255 255 / 0.3);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.55);
-  transition: transform 200ms var(--ease-salida);
-}
-
-.punto::after {
-  width: clamp(0.5rem, calc(3.6 * var(--u)), 0.625rem);
-  aspect-ratio: 1;
-  background: #fff;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.25);
-}
-
-.punto:focus-visible {
-  outline-color: #fff;
-  outline-offset: 0;
-}
-
-/* ---------- Texto del banner ---------- */
-
-.copia {
-  position: relative;
-  align-self: end;
-  justify-self: start;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: calc(18 * var(--u)) calc(18 * var(--u)) calc(23 * var(--u));
-  color: #fff;
-}
-
-.copia ::selection {
-  background: #fff;
-  color: var(--tinta);
-}
-
-.titulo {
-  max-width: 10.6em;
-  margin: 0;
-  font-size: var(--fs-titulo);
-  font-weight: 500;
-  line-height: 1.24;
-  letter-spacing: -0.005em;
-  text-shadow:
-    0 1px 2px rgb(22 14 36 / 0.22),
-    0 2px 28px rgb(22 14 36 / 0.32);
-}
-
-/* Cada frase en su línea, como en la referencia; si no cabe, se parte por dentro. */
-.titulo span {
-  display: inline-block;
-}
-
-.descripcion {
-  max-width: 22em;
-  margin: calc(8 * var(--u)) 0 0;
-  color: rgb(255 255 255 / 0.92);
-  font-size: var(--fs-descripcion);
-  line-height: 1.42;
-  text-wrap: pretty;
-}
-
-.accion {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: clamp(2.75rem, calc(17 * var(--u)), 3.25rem);
-  margin-top: calc(10 * var(--u));
-  padding: 0 clamp(1.25rem, calc(10 * var(--u)), 2rem);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--tinta);
-  font-size: var(--fs-accion);
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    transform 160ms var(--ease-salida);
-}
-
-.accion:active {
-  transform: scale(0.97);
-}
-
-.copia :focus-visible {
-  outline-color: #fff;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .accion:hover {
-    background: #f2ece7;
-  }
-
-  .punto:hover::before {
-    transform: scale(1.18);
-  }
-}
-
-/* Indicadores del carrusel: solo muestran la primera imagen activa, no hay más diapositivas. */
-.indicadores {
-  position: relative;
-  align-self: end;
-  justify-self: center;
-  display: flex;
-  gap: clamp(0.375rem, calc(4 * var(--u)), 0.75rem);
-  margin-bottom: calc(18.5 * var(--u));
-}
-
-.indicadores span {
-  width: clamp(0.4375rem, calc(5 * var(--u)), 0.75rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 0.36);
-}
-
-.indicadores span:first-child {
-  background: #fff;
-}
-
-/* ---------- Tarjeta de SonicWave ---------- */
-
-.producto {
-  --relleno-producto: clamp(0.5rem, calc(4.5 * var(--u)), 0.875rem);
-  --radio-producto: clamp(1rem, calc(9.5 * var(--u)), 1.5rem);
-
-  position: relative;
-  align-self: end;
-  justify-self: end;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: calc(4.5 * var(--u));
-  width: clamp(19rem, calc(129 * var(--u)), 24rem);
-  margin: 0 calc(25 * var(--u)) calc(60 * var(--u)) 0;
-  padding: var(--relleno-producto);
-  border-radius: var(--radio-producto);
-  background: var(--superficie);
-  color: var(--tinta);
-  box-shadow: var(--sombra-producto);
-  scroll-margin: 1rem;
-}
-
-.productoFoto {
-  display: block;
-  align-self: start;
-  width: clamp(6.5rem, calc(55 * var(--u)), 9.5rem);
-  height: auto;
-  aspect-ratio: 1;
-  border-radius: calc(var(--radio-producto) - var(--relleno-producto));
-  background: var(--foto-producto);
-  object-fit: cover;
-}
-
-.productoTexto {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: calc(3.5 * var(--u)) calc(3 * var(--u)) calc(1 * var(--u)) 0;
-}
-
-.productoNombre {
-  margin: 0;
-  overflow-wrap: break-word;
-  font-size: var(--fs-nombre);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.006em;
-}
-
-.productoDetalle {
-  margin: calc(3 * var(--u)) 0 0;
-  color: var(--tenue);
-  font-size: var(--fs-detalle);
-  line-height: 1.36;
-}
-
-.precio {
-  margin: auto 0 0;
-  padding-top: calc(6 * var(--u));
-  font-size: var(--fs-precio);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.006em;
-}
-
-.producto:target {
-  animation: senalar 800ms var(--ease-salida);
-}
-
-@keyframes senalar {
-  from {
-    box-shadow:
-      var(--sombra-producto),
-      0 0 0 0 rgb(255 255 255 / 0.95);
-  }
-  to {
-    box-shadow:
-      var(--sombra-producto),
-      0 0 0 14px rgb(255 255 255 / 0);
-  }
-}
-
-@keyframes senalar-claro {
-  from {
-    box-shadow: 0 0 0 0 rgb(21 21 21 / 0.35);
-  }
-  to {
-    box-shadow: 0 0 0 12px rgb(21 21 21 / 0);
-  }
-}
-
-/* ---------- Tableta vertical y celular ---------- */
+/* ---------- Header compacto (tableta vertical y celular) ---------- */
 
 @container tarjeta (width < 56rem) {
   /* Con el texto muy ampliado los botones pasan a una segunda fila en vez de desbordar. */
@@ -839,86 +514,6 @@
     width: 2.75rem;
   }
 
-  /* La tarjeta de producto sale del banner y queda debajo, sin tapar el título. */
-  .hero {
-    grid-template-areas:
-      "escena"
-      "producto";
-    row-gap: 0.5rem;
-  }
-
-  .lienzo {
-    aspect-ratio: 16 / 11;
-  }
-
-  /* Los indicadores bajan bajo el botón para no chocar con él, sea cual sea su texto. */
-  .copia {
-    margin: 1.5rem 1.5rem 2.75rem;
-  }
-
-  .indicadores {
-    margin-bottom: 1.125rem;
-  }
-
-  /* El texto ocupa todo el ancho abajo: el velo sube desde el borde inferior. */
-  .velo {
-    background: linear-gradient(
-      0deg,
-      rgb(22 14 36 / 0.84) 0%,
-      rgb(22 14 36 / 0.7) 45%,
-      rgb(22 14 36 / 0.4) 66%,
-      rgb(22 14 36 / 0) 88%
-    );
-  }
-
-  /* La tarjeta del producto queda justo debajo: el punto sobre la foto ya no hace falta. */
-  .punto {
-    display: none;
-  }
-
-  .producto {
-    grid-area: producto;
-    align-self: start;
-    justify-self: stretch;
-    width: auto;
-    margin: 0;
-    background: var(--pastilla);
-    box-shadow: none;
-  }
-
-  .productoFoto {
-    width: min(6.5rem, 30cqi);
-  }
-
-  .productoTexto {
-    padding: 0.25rem 0.5rem 0.125rem 0.25rem;
-  }
-
-  .producto:target {
-    animation-name: senalar-claro;
-  }
-}
-
-@container tarjeta (width < 40rem) {
-  .lienzo {
-    aspect-ratio: 3 / 4;
-  }
-
-  .copia {
-    margin: 1.25rem 1.25rem 2.5rem;
-  }
-
-  .titulo {
-    line-height: 1.14;
-  }
-
-  .indicadores {
-    margin-bottom: 1rem;
-  }
-
-  .productoFoto {
-    width: min(5.75rem, 30cqi);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -927,8 +522,7 @@
   }
 
   .disco:active,
-  .avatar:active,
-  .accion:active {
+  .avatar:active {
     transform: none;
   }
 
@@ -946,14 +540,7 @@
     }
   }
 
-  .punto::before,
   .iconoMenu path {
     transition: none;
-  }
-
-  .producto:target {
-    animation: none;
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
   }
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Portada } from "../components/Portada";
+import { Landing } from "../components/Landing";
 import { HERO, PRODUCTO, type Hero, type Producto } from "../data";
 
 /*
@@ -57,7 +57,7 @@ export default async function PruebasVeluno({ searchParams }: PageProps<"/demos/
 
   return (
     <>
-      <Portada hero={extremo ? HERO_EXTREMO : HERO} producto={extremo ? PRODUCTO_EXTREMO : PRODUCTO} />
+      <Landing hero={extremo ? HERO_EXTREMO : HERO} producto={extremo ? PRODUCTO_EXTREMO : PRODUCTO} />
       <nav aria-label="Datos de prueba" style={barra}>
         <Link href="?datos=demo" style={opcion(!extremo)} aria-current={!extremo || undefined}>
           Demo

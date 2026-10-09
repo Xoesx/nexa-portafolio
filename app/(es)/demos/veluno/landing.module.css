@@ -1,0 +1,1038 @@
+/*
+ * Veluno · landing.
+ *
+ * Geometría: todo se mide contra el ancho real de la página (cqw del contenedor `escena`, sin la
+ * barra de scroll). Las fotos y escenas ocupan casi todo el ancho (hasta 1840 px); el texto de la
+ * portada se alinea con el logotipo del header, que conserva su marco original.
+ *
+ * Movimiento: el recorrido es CSS scroll-driven (animation-timeline), sin JavaScript. Sin soporte o
+ * con movimiento reducido, cada capítulo es una sección quieta y completa.
+ */
+
+/* Se calculan en .landing y se heredan ya en px: así no dependen de quién las use. */
+@property --ancho-tarjeta {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --u-cab {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --alto-cabecera {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --alto-hero {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --eje {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --lado {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --foco-x {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --foco-y {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+/* ---------- Sistema ---------- */
+
+.landing {
+  /* Paleta: el blanco del header, un arena cálido, una noche violeta sacada de la foto y un lila de acento. */
+  --lienzo: #fbfbfa;
+  --arena: #f1eee9;
+  --noche: #121016;
+  --tinta: #151515;
+  --tinta-2: #55525b;
+  --luz: #f4f2f7;
+  --luz-2: #a9a3b5;
+  --apagado: #8b8597;
+  --lila: #b9a6dc;
+  --foto: #9d8cb3;
+  --foto-producto: #d6ccc5;
+
+  --borde: clamp(0.5rem, 2.1vw, 2.5rem);
+  --ancho-max: 115rem;
+  --radio: clamp(1.25rem, 2.2vw, 2.25rem);
+  --seccion: clamp(6rem, 11vw, 12rem);
+
+  /* Geometría del header original (misma fórmula que .marcoCabecera) para alinear la portada con él. */
+  --ancho-tarjeta: min(
+    100cqw - 2 * var(--margen),
+    87.5rem,
+    max(60rem, (100svh - 2 * var(--margen) - 2 * var(--relleno)) / 0.6934 + 2 * var(--relleno))
+  );
+  --u-cab: calc((var(--ancho-tarjeta) - 2 * var(--relleno)) / 437);
+  --alto-cabecera: calc(var(--margen) + var(--relleno) + 41 * var(--u-cab));
+  --eje: calc((100cqw - var(--ancho-tarjeta)) / 2 + var(--relleno) + 18 * var(--u-cab));
+
+  /* La portada llena la pantalla bajo el header (≈ 80–85 % del alto en escritorio). */
+  --alto-hero: clamp(28rem, 100svh - var(--alto-cabecera) - var(--borde), 72rem);
+  --lado: max(var(--borde), (100cqw - var(--ancho-max)) / 2);
+
+  display: block;
+  color: var(--tinta);
+}
+
+/* Header compacto: mismas cuentas con su alto y su margen (ver veluno.module.css). */
+@media (max-width: 60rem) {
+  .landing {
+    --alto-cabecera: calc(var(--margen) + var(--relleno) + 3.5rem);
+    --eje: calc((100cqw - var(--ancho-tarjeta)) / 2 + var(--relleno) + 0.5rem);
+  }
+}
+
+.seccionTitulo {
+  max-width: 9.5em;
+  margin: 0;
+  font-size: clamp(2.5rem, 5.4vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.seccionCuerpo {
+  max-width: 30em;
+  margin: 0;
+  color: var(--tinta-2);
+  font-size: clamp(1.0625rem, 1.25vw, 1.375rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ---------- 1. Recorrido: portada + cámara ---------- */
+
+.viaje {
+  position: relative;
+  view-timeline: --viaje block;
+}
+
+.escenario {
+  /* Tamaño de la foto dentro de la ventana y punto del auricular (46.2 % / 45 % de la foto). */
+  --v-ancho: calc(100cqw - 2 * var(--lado));
+  --v-alto: var(--alto-hero);
+  --img-ancho: max(var(--v-ancho), var(--v-alto) * 1.7768);
+  --img-alto: max(var(--v-alto), var(--v-ancho) / 1.7768);
+  --foco-x: calc(0.462 * var(--img-ancho) - (var(--img-ancho) - var(--v-ancho)) * 0.47);
+  --foco-y: calc(0.45 * var(--img-alto) - (var(--img-alto) - var(--v-alto)) * 0.5);
+
+  /* Encuadre de partida: en celular la foto tal cual; en pantallas anchas, más cerca y corrida a la
+     derecha para que el auricular no quede detrás del título. */
+  --encuadre: 1;
+  --empuje: 0px;
+
+  position: relative;
+  height: var(--alto-hero);
+}
+
+@media (min-width: 64rem) {
+  .escenario {
+    --encuadre: 1.35;
+    --empuje: calc(0.16 * var(--v-ancho));
+  }
+}
+
+.ventana {
+  position: absolute;
+  inset: 0 var(--lado);
+  overflow: hidden;
+  border-radius: var(--radio);
+  background: var(--foto);
+  isolation: isolate;
+}
+
+.camara {
+  object-fit: cover;
+  object-position: 47% 50%;
+  transform-origin: var(--foco-x) var(--foco-y);
+  transform: translateX(var(--empuje)) scale(var(--encuadre));
+}
+
+/* Oscurece solo donde va el texto (abajo a la izquierda). Medido: texto ≥ 4.5:1 sobre la foto. */
+.velo {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 72% 92% at 2% 92%,
+      rgb(22 14 36 / 0.8) 0%,
+      rgb(22 14 36 / 0.62) 50%,
+      rgb(22 14 36 / 0) 88%
+    ),
+    linear-gradient(90deg, rgb(31 20 48 / 0.5) 0%, rgb(31 20 48 / 0.26) 34%, rgb(31 20 48 / 0) 60%),
+    linear-gradient(0deg, rgb(24 15 38 / 0.38) 0%, rgb(24 15 38 / 0) 40%);
+  pointer-events: none;
+}
+
+.penumbra {
+  position: absolute;
+  inset: 0;
+  background: var(--noche);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.portada {
+  position: absolute;
+  top: 0;
+  left: var(--lado);
+  right: var(--lado);
+  height: var(--alto-hero);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: var(--borde) max(1.25rem, var(--eje) - var(--lado)) clamp(1.75rem, 4.2vw, 4.5rem);
+  color: #fff;
+}
+
+.portada :focus-visible {
+  outline-color: #fff;
+}
+
+.copia {
+  position: relative;
+  /* Si un título largo sube hasta el auricular (móvil estrecho), el texto queda por encima del punto. */
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1rem, 1.6vw, 1.75rem);
+}
+
+.titulo {
+  max-width: 11em;
+  margin: 0;
+  font-size: clamp(2.25rem, 3.9vw, 5.25rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  text-shadow:
+    0 1px 2px rgb(22 14 36 / 0.22),
+    0 2px 28px rgb(22 14 36 / 0.32);
+}
+
+/* Cada frase en su línea, como en la referencia; si no cabe, se parte por dentro. */
+.titulo span {
+  display: inline-block;
+}
+
+.descripcion {
+  max-width: 24em;
+  margin: 0;
+  color: rgb(255 255 255 / 0.92);
+  font-size: clamp(1rem, 1.28vw, 1.375rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.accion,
+.compraBoton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    background-color 160ms ease,
+    transform 160ms var(--ease-salida);
+}
+
+.accion {
+  min-height: clamp(2.875rem, 3.4vw, 3.5rem);
+  margin-top: clamp(0.25rem, 0.6vw, 0.75rem);
+  padding: 0 clamp(1.375rem, 2vw, 2.25rem);
+  background: #fff;
+  color: var(--tinta);
+  font-size: clamp(0.9375rem, 1.1vw, 1.125rem);
+}
+
+.accion:active,
+.compraBoton:active {
+  transform: scale(0.97);
+}
+
+/* Ficha del producto: la tarjeta flotante de la referencia, ahora enlace a la compra. */
+.ficha {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  width: clamp(19rem, 25vw, 26rem);
+  padding: 0.75rem 1rem 0.75rem 0.75rem;
+  border-radius: 1.5rem;
+  background: var(--lienzo);
+  color: var(--tinta);
+  text-decoration: none;
+  box-shadow:
+    0 28px 56px -28px rgb(22 14 36 / 0.6),
+    0 6px 14px -8px rgb(22 14 36 / 0.25);
+  transition: transform 200ms var(--ease-salida);
+}
+
+.portada .ficha:focus-visible {
+  outline-color: #fff;
+  outline-offset: 4px;
+}
+
+.fichaFoto {
+  width: clamp(6.5rem, 7.5vw, 8rem);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 0.875rem;
+  background: var(--foto-producto);
+  object-fit: cover;
+}
+
+.fichaTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+  padding-top: 0.25rem;
+}
+
+.fichaNombre {
+  font-size: clamp(1.0625rem, 1.3vw, 1.375rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.fichaDetalle {
+  color: var(--tinta-2);
+  font-size: 0.875rem;
+  line-height: 1.38;
+}
+
+.fichaPrecio {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: clamp(1.0625rem, 1.3vw, 1.375rem);
+  font-weight: 700;
+}
+
+/* Punto sobre el auricular de la foto. */
+.punto {
+  position: absolute;
+  left: calc(var(--foco-x) + var(--empuje));
+  top: var(--foco-y);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.punto::before,
+.punto::after {
+  content: "";
+  grid-area: 1 / 1;
+  border-radius: 50%;
+}
+
+.punto::before {
+  width: 1.5rem;
+  aspect-ratio: 1;
+  background: rgb(255 255 255 / 0.3);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.6);
+  transition: transform 200ms var(--ease-salida);
+}
+
+.punto::after {
+  width: 0.625rem;
+  aspect-ratio: 1;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.25);
+}
+
+.punto:focus-visible {
+  outline-offset: 0;
+}
+
+/* Los pasos de la cámara solo existen con recorrido. */
+.lema,
+.cierre {
+  display: none;
+}
+
+/* ---------- 2. Sonido ---------- */
+
+.sonido {
+  background: var(--noche);
+  color: var(--luz);
+}
+
+.sonidoEscenario {
+  display: grid;
+  grid-template-columns: minmax(0, 11fr) minmax(0, 13fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 5rem);
+  width: min(100cqw - 2 * var(--borde), var(--ancho-max));
+  min-height: 100svh;
+  margin-inline: auto;
+  padding: var(--seccion) max(0rem, var(--eje) - var(--lado));
+}
+
+.sonidoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3.5vw, 3.5rem);
+}
+
+.sonidoTitulo {
+  margin: 0;
+  font-size: clamp(2.75rem, 6vw, 6rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.cualidades {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 1vw, 1rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(1.5rem, 2.9vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.ondas {
+  width: 100%;
+  height: clamp(15rem, 38vw, 36rem);
+  overflow: hidden;
+}
+
+.onda {
+  transform-box: fill-box;
+}
+
+.onda path {
+  fill: none;
+  stroke: var(--lila);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+}
+
+/* ---------- 3. Diseño ---------- */
+
+.diseno {
+  padding-block: var(--seccion);
+  background: var(--arena);
+}
+
+.disenoRejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 8rem);
+  width: min(100cqw - 2 * var(--borde), var(--ancho-max));
+  margin-inline: auto;
+}
+
+.disenoFoto {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radio);
+  aspect-ratio: 1;
+  background: var(--foto-producto);
+}
+
+.disenoFoto img,
+.disenoDetalle img,
+.compraFoto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.disenoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  padding-right: max(0rem, var(--eje) - var(--lado));
+}
+
+.disenoDetalle {
+  width: min(100%, 20rem);
+  margin: clamp(1rem, 3vw, 3rem) 0 0;
+  overflow: hidden;
+  border-radius: calc(var(--radio) * 0.75);
+  aspect-ratio: 1;
+  background: var(--foto-producto);
+  box-shadow: 0 30px 60px -32px rgb(40 30 20 / 0.45);
+}
+
+/* ---------- 4. Compra ---------- */
+
+.compra {
+  padding-block: var(--seccion);
+  background: var(--lienzo);
+}
+
+.compraRejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 8rem);
+  width: min(100cqw - 2 * var(--borde), 92rem);
+  margin-inline: auto;
+}
+
+.compraFoto {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radio);
+  aspect-ratio: 1;
+  background: var(--foto-producto);
+}
+
+.compraTexto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.25rem, 2vw, 2rem);
+}
+
+.compraNombre {
+  margin: 0;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.compraPrecio {
+  margin: 0;
+  font-size: clamp(1.75rem, 2.6vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.compraBoton {
+  min-height: 3.5rem;
+  padding: 0 2.25rem;
+  background: var(--tinta);
+  color: #fff;
+  font-size: 1.0625rem;
+}
+
+/* ---------- Pie ---------- */
+
+.pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  width: min(100cqw - 2 * var(--borde), 115rem);
+  margin-inline: auto;
+  padding: 2rem 0 max(2.5rem, env(safe-area-inset-bottom));
+  border-top: 1px solid #e6e3df;
+  color: #55525b;
+  font-size: 0.9375rem;
+}
+
+.pie p {
+  margin: 0;
+}
+
+.pieMarca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tinta, #151515);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.pieSello {
+  width: 1.5rem;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.pieEnlace {
+  color: #151515;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .accion:hover {
+    background: #f2eef7;
+  }
+
+  .compraBoton:hover {
+    background: #2b2a2e;
+  }
+
+  .ficha:hover {
+    transform: translateY(-3px);
+  }
+
+  .punto:hover::before {
+    transform: scale(1.18);
+  }
+}
+
+/* ---------- Tableta y celular ---------- */
+
+@media (max-width: 56rem) {
+  .sonidoEscenario,
+  .disenoRejilla,
+  .compraRejilla {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sonidoEscenario {
+    align-content: center;
+    padding-inline: 0.75rem;
+  }
+
+  .disenoTexto {
+    padding-right: 0;
+  }
+
+  /* En una columna las fotos no deben pasar de tres cuartos de pantalla. */
+  .disenoFoto {
+    aspect-ratio: 4 / 5;
+    max-height: 75svh;
+  }
+
+  .compraFoto {
+    width: 100%;
+    max-width: 34rem;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  /* En el celular la ficha taparía el título: el producto se presenta al final de la página. */
+  .ficha {
+    display: none;
+  }
+
+  .velo {
+    background: linear-gradient(
+      0deg,
+      rgb(22 14 36 / 0.84) 0%,
+      rgb(22 14 36 / 0.7) 45%,
+      rgb(22 14 36 / 0.4) 66%,
+      rgb(22 14 36 / 0) 88%
+    );
+  }
+
+  .disenoTexto,
+  .compraTexto {
+    padding-inline: 0.75rem;
+  }
+}
+
+/* ---------- Recorrido animado (scroll-driven) ---------- */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* La pantalla queda fija durante 220 svh de scroll; el marco se abre y la cámara avanza. */
+    .viaje {
+      height: calc(100svh + 220svh);
+    }
+
+    .escenario {
+      --v-ancho: 100cqw;
+      --v-alto: 100svh;
+
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: clip;
+    }
+
+    .ventana {
+      inset: 0;
+      border-radius: 0;
+      background: var(--noche);
+      clip-path: inset(0 var(--lado) calc(100svh - var(--alto-hero)) var(--lado) round var(--radio));
+      animation: abrir linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 8% contain 36%;
+    }
+
+    .camara {
+      animation: acercar linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 6% contain 100%;
+    }
+
+    /* El velo de la portada se calcula sobre el marco inicial y se va con el texto. */
+    .velo {
+      background:
+        radial-gradient(
+          ellipse calc(0.72 * (100cqw - 2 * var(--lado))) calc(0.92 * var(--alto-hero)) at
+            calc(var(--lado) + 0.02 * (100cqw - 2 * var(--lado))) calc(0.92 * var(--alto-hero)),
+          rgb(22 14 36 / 0.8) 0%,
+          rgb(22 14 36 / 0.62) 50%,
+          rgb(22 14 36 / 0) 88%
+        ),
+        linear-gradient(
+          90deg,
+          rgb(31 20 48 / 0.5) 0%,
+          rgb(31 20 48 / 0.26) calc(var(--lado) + 0.34 * (100cqw - 2 * var(--lado))),
+          rgb(31 20 48 / 0) calc(var(--lado) + 0.6 * (100cqw - 2 * var(--lado)))
+        ),
+        linear-gradient(
+          180deg,
+          rgb(24 15 38 / 0) calc(0.6 * var(--alto-hero)),
+          rgb(24 15 38 / 0.38) var(--alto-hero)
+        );
+      animation: apagar linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 10% contain 30%;
+    }
+
+    @media (max-width: 47.99rem) {
+      .velo {
+        background: linear-gradient(
+          180deg,
+          rgb(22 14 36 / 0) calc(0.12 * var(--alto-hero)),
+          rgb(22 14 36 / 0.4) calc(0.34 * var(--alto-hero)),
+          rgb(22 14 36 / 0.7) calc(0.55 * var(--alto-hero)),
+          rgb(22 14 36 / 0.84) var(--alto-hero)
+        );
+      }
+    }
+
+    .penumbra {
+      animation: anochecer linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 14% contain 100%;
+    }
+
+    .portada {
+      animation: despedir linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 10% contain 24%;
+    }
+
+    .punto {
+      left: calc(var(--foco-x) + var(--empuje) - var(--lado));
+    }
+
+    .lema,
+    .cierre {
+      display: block;
+      position: absolute;
+      left: var(--eje);
+      right: var(--eje);
+      top: 50%;
+      margin: 0;
+      color: #fff;
+      font-weight: 500;
+      text-wrap: balance;
+      translate: 0 -50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lema {
+      max-width: 10em;
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      animation: lema linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 30% contain 64%;
+    }
+
+    .cierre {
+      font-size: clamp(2.75rem, 7.5vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+      text-align: center;
+      animation: cierre linear both;
+      animation-timeline: --viaje;
+      animation-range: contain 70% contain 100%;
+    }
+
+    /* Sonido: la pantalla queda fija y cada cualidad se enciende por turno, con su onda. */
+    .sonido {
+      height: 300svh;
+      view-timeline: --sonido block;
+    }
+
+    .sonidoEscenario {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      min-height: 0;
+      padding-block: 0;
+    }
+
+    .cualidades li {
+      color: var(--apagado);
+      animation: encender linear both;
+      animation-timeline: --sonido;
+    }
+
+    .cualidades li:nth-child(1) {
+      animation-range: contain 0% contain 36%;
+    }
+
+    .cualidades li:nth-child(2) {
+      animation-range: contain 32% contain 68%;
+    }
+
+    .cualidades li:nth-child(3) {
+      animation-name: encenderFinal;
+      animation-range: contain 64% contain 96%;
+    }
+
+    .onda {
+      animation: avanzar linear both;
+      animation-timeline: --sonido;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .onda path {
+      stroke: var(--apagado);
+      opacity: 0.35;
+      animation: ondaEncendida linear both;
+      animation-timeline: --sonido;
+    }
+
+    .onda:nth-child(1) path {
+      animation-range: contain 0% contain 36%;
+    }
+
+    .onda:nth-child(2) path {
+      animation-range: contain 32% contain 68%;
+    }
+
+    .onda:nth-child(3) path {
+      animation-name: ondaEncendidaFinal;
+      animation-range: contain 64% contain 96%;
+    }
+
+    /* Diseño y compra: las fotos llegan desde un recorte y se asientan. */
+    .disenoFoto,
+    .compraFoto {
+      animation: revelar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+
+    .disenoFoto img,
+    .compraFoto img {
+      animation: asentar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+
+    .disenoDetalle {
+      animation: flotar linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes abrir {
+  to {
+    clip-path: inset(0 0 0 0 round 0px);
+  }
+}
+
+/* Parte del encuadre de la portada y termina con el auricular en el centro de la pantalla. */
+@keyframes acercar {
+  0% {
+    transform: translateX(var(--empuje)) scale(var(--encuadre));
+  }
+  40% {
+    transform: translateX(calc(var(--empuje) * 0.5)) scale(calc(var(--encuadre) * 1.18));
+  }
+  100% {
+    transform: translateX(calc(0.04 * var(--v-ancho))) scale(calc(var(--encuadre) * 1.55));
+  }
+}
+
+@keyframes apagar {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes anochecer {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.42;
+  }
+  60% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Sin visibility: hidden, para que el título siga en el árbol de accesibilidad y los enlaces
+   sigan siendo enfocables con el teclado; solo deja de recibir el puntero cuando ya no se ve. */
+@keyframes despedir {
+  to {
+    opacity: 0;
+    transform: translateY(-2.5rem);
+    pointer-events: none;
+  }
+}
+
+@keyframes lema {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  22%,
+  72% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+}
+
+@keyframes cierre {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  35%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes encender {
+  0% {
+    color: var(--apagado);
+  }
+  22%,
+  78% {
+    color: var(--luz);
+  }
+  100% {
+    color: var(--apagado);
+  }
+}
+
+@keyframes encenderFinal {
+  0% {
+    color: var(--apagado);
+  }
+  30%,
+  100% {
+    color: var(--luz);
+  }
+}
+
+@keyframes avanzar {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ondaEncendida {
+  0% {
+    stroke: var(--apagado);
+    opacity: 0.35;
+  }
+  22%,
+  78% {
+    stroke: var(--lila);
+    opacity: 1;
+  }
+  100% {
+    stroke: var(--apagado);
+    opacity: 0.35;
+  }
+}
+
+@keyframes ondaEncendidaFinal {
+  0% {
+    stroke: var(--apagado);
+    opacity: 0.35;
+  }
+  30%,
+  100% {
+    stroke: var(--lila);
+    opacity: 1;
+  }
+}
+
+@keyframes revelar {
+  from {
+    clip-path: inset(10% 8% 10% 8% round var(--radio));
+  }
+  to {
+    clip-path: inset(0 0 0 0 round var(--radio));
+  }
+}
+
+@keyframes asentar {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes flotar {
+  from {
+    transform: translateY(3rem);
+  }
+  to {
+    transform: translateY(-3rem);
+  }
+}

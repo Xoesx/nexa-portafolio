@@ -1,23 +1,27 @@
 ---
-version: 1
+version: 2
 slug: "app-es-demos-veluno-page-tsx"
 primary_target: "app/(es)/demos/veluno/page.tsx"
-related_targets: []
+related_targets:
+  - "app/(es)/demos/veluno/components/Landing.tsx"
+  - "app/(es)/demos/veluno/landing.module.css"
 ---
 
-Scope: /demos/veluno, first viewport only (one hero card). Mode: Persuade.
-Audience: portfolio visitors judging frontend craft; in the fiction, electronics shoppers. Action: "Comprar ahora" and the SonicWave product card. Constraints: no backend, copy verbatim from the reference, no invented commercial claims.
+Scope: /demos/veluno, the whole landing (header + four chapters + footer). Mode: Persuade.
+Audience: portfolio visitors judging frontend craft; in the fiction, electronics shoppers. Action: "Comprar ahora" (hero CTA and the closing purchase section, which honestly says the demo has no store). Constraints: no backend, header kept exactly as built in v1, copy derived only from the reference's own lines, no invented specs, figures or testimonials.
 
 ## Direction contract
 
-THESIS: A white storefront card floating on a sunset landscape, where one warm close-up photograph does the selling. Refuses the category default of split hero plus product grid; the photo is the page.
+THESIS: One product, one camera. The page is a slow push-in on the SonicWave earcup: the framed hero opens to full bleed, the camera closes in while the room darkens, and the sound chapter takes over in the dark. Refuses the category default of hero + feature grid + specs table; there are no specs to show, so the page sells with framing, rhythm and light.
 
-OWN-WORLD: Sky teal to salmon to olive-hill gradient ground; one white card with large radius; a warm-toned photo banner with a left-weighted dark scrim; white geometric sans display in regular-medium weight; black scalloped sun-flower mark; pale gray pills and icon discs; white floating product chip with a lavender photo.
+OWN-WORLD: Off-white canvas (#fbfbfa) under the untouched header; the lilac AirPods-style photo as a wide rounded frame, aligned to the header logo axis; deep night (#121016) for sound with thin lilac strokes; warm sand (#f1eee9) for the design editorial; Outfit in medium weight, tight tracking at display sizes; black pill buttons on light, white pill on photo.
 
-STORY: Visitor sees a person absorbed in sound, reads "Tecnología inteligente, vida más simple", finds the SonicWave headphones pinned to the photo by a hotspot, and either shops or reads the product chip.
+STORY: Hero (title, description, CTA, SonicWave chip, hotspot on the earcup) → frame opens and the copy leaves → "Diseñados para tu día a día." → night falls → "Así suena SonicWave." → sound chapter, each quality lights up with its own wave → "Confort, estilo y rendimiento." editorial with the copper earcup crop → SonicWave, $ 99.99, Comprar ahora (honest notice) → footer back to NEXA.
 
-FIRST VIEWPORT: Card centered, whole card visible at 1440x900. Header row: mark+wordmark left, five links centered, search pill + heart + cart discs + avatar right. Banner below fills the card: copy block bottom-left (title two lines ~4.5% inset), CTA pill under it; five dots centered at the bottom; product chip lower-right at ~53-77% banner height; hotspot on the headphones.
+FIRST VIEWPORT: Header identical to v1 (same frame, same scale unit). Hero frame ~1380px wide at 1440 (edge margin clamp(.5rem, 2.1vw, 2.5rem), max 115rem), height = viewport minus header (≈79% at 1440×900); copy block bottom-left on the logo axis; chip lower-right; hotspot on the earcup.
 
-FORM: Brief-pinned reference recreation; no concept-seed roll (direction pinned by the user's reference image). Code-led: no image generation available.
+MOTION: CSS scroll-driven animations only (view-timeline), compositor properties plus clip-path; no JS animation loop. Everything sits inside @supports (animation-timeline: view()) and prefers-reduced-motion: no-preference; otherwise the chapters are static sections.
 
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+FORM: Brief-pinned redesign of a reference recreation. Generated video (scroll-world) was not produced: it needs paid credits and the user's explicit authorization.
+
+FINISH: unreviewed and undocumented is unfinished; final captures live in docs/veluno/capturas.
